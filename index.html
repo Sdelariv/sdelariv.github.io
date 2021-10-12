@@ -8,12 +8,9 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cherish&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Pathway+Gothic+One&display=swap" rel="stylesheet">
 
     <style>
-        @font-face {
-            font-family: Pathway Gothic One, Arial, sans-serif;
-            src: url(fonts/PathwayGothicOne-Regular.ttf);
-            }
         h1 {
             text-align:center;
             color:#ED7014;
@@ -26,14 +23,14 @@
         h2 {
             text-align: center;
             color:white;
-            font-family:Pathway Gothic One, Arial, sans-serif;
+            font-family:'Pathway Gothic One', Arial, sans-serif;
             letter-spacing:5px;
             text-shadow: 1px 1px 5px black;
             }
         h3 {
             text-align: center;
             color:white;
-            font-family:Pathway Gothic One, Arial, sans-serif;
+            font-family:'Pathway Gothic One', Arial, sans-serif;
             text-shadow: 1px 1px 5px black;
             letter-spacing:2px;
             }
@@ -44,10 +41,13 @@
             background-size: cover;
         }
 
-        .topnav {
+        .topnavwrapper {
             background-color: black;
-            overflow:hidden;
+        }
 
+        .topnav {
+            overflow:hidden;
+            width:85%;
         }
         .topnav a {
             float: right;
@@ -56,7 +56,7 @@
             padding: 10px 30px;
             color:white;
             text-decoration:none;
-            font-family:Pathway Gothic One;
+            font-family:'Pathway Gothic One', Arial, sans-serif;
         }
 
         .topnav a:hover {
@@ -69,20 +69,21 @@
             color:orange;
         }
 
+
     </style>
 </head>
 
 <body>
-<div class="topnav">
-
-    <a href="">ACADEMIA</a>
-    <a href="">ART</a>
-    <a href="">CODE</a>
-    <a href="">ABOUT</a>
-    <a class="active" href="">HOME</a>
-
-    </ul>
+<div class="topnavwrapper">
+    <div class="topnav">
+        <a class="last" href="">ACADEMIA</a>
+        <a href="">ART</a>
+        <a href="">CODE</a>
+        <a href="">ABOUT</a>
+        <a class="active" href="">HOME</a>
+    </div>
 </div>
+
 
 <div class="center">
     <h2> CODER | ARTIST | ACADEMIC</h2>
