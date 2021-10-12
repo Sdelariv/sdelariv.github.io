@@ -10,7 +10,10 @@
     <link href="https://fonts.googleapis.com/css2?family=Cherish&display=swap" rel="stylesheet">
 
     <style>
-        @font-face { font-family: Pathway Gothic One; src: url(fonts/PathwayGothicOne-Regular.ttf); }
+        @font-face {
+            font-family: Pathway Gothic One, Arial, sans-serif;
+            src: url(fonts/PathwayGothicOne-Regular.ttf);
+            }
         h1 {
             text-align:center;
             color:#ED7014;
@@ -18,35 +21,74 @@
             font-family: 'Cherish', cursive;
             font-weight: normal;
             text-shadow: 1px 1px 5px black;
+                      margin:46px;
               }
         h2 {
             text-align: center;
             color:white;
-            font-family:Pathway Gothic One;
+            font-family:Pathway Gothic One, Arial, sans-serif;
             letter-spacing:5px;
             text-shadow: 1px 1px 5px black;
             }
         h3 {
             text-align: center;
             color:white;
-            font-family:Pathway Gothic One;
+            font-family:Pathway Gothic One, Arial, sans-serif;
             text-shadow: 1px 1px 5px black;
             letter-spacing:2px;
             }
+
         body {
             background-image: url(img/backgroundblack.jpg);
-
-  background-position: center;
-  background-size: cover;
+            background-position: center;
+            background-size: cover;
         }
+
+        .topnav {
+            background-color: black;
+            overflow:hidden;
+
+        }
+        .topnav a {
+            float: right;
+            text-align:center;
+            font-size:18px;
+            padding: 10px 30px;
+            color:white;
+            text-decoration:none;
+            font-family:Pathway Gothic One;
+        }
+
+        .topnav a:hover {
+            background-color: #ED7014;
+            color:black;
+
+        }
+
+       .topnav a.active {
+            color:orange;
+        }
+
     </style>
 </head>
 
 <body>
+<div class="topnav">
 
-<h2> CODER | ARTIST | ACADEMIC</h2>
-<h1>Sven Delarivi&egrave;re&nbsp</h1>
-<h3>- Portfolio website -</h3>
+    <a href="">ACADEMIA</a>
+    <a href="">ART</a>
+    <a href="">CODE</a>
+    <a href="">ABOUT</a>
+    <a class="active" href="">HOME</a>
+
+    </ul>
+</div>
+
+<div class="center">
+    <h2> CODER | ARTIST | ACADEMIC</h2>
+    <h1>Sven Delarivi&egrave;re&nbsp</h1>
+    <h3>- Portfolio website -</h3>
+</div>
 
 </body>
 
