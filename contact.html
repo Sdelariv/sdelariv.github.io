@@ -9,12 +9,12 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cherish&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Pathway+Gothic+One&display=swap" rel="stylesheet">
-
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Condensed&display=swap" rel="stylesheet">
     <style>
         h1 {
             text-align:center;
             color:#ED7014;
-            font-size:120px;
+            font-size:90px;
             font-family: 'Cherish', cursive;
             font-weight: normal;
             text-shadow: 1px 1px 5px black;
@@ -28,16 +28,14 @@
             text-shadow: 1px 1px 5px black;
             }
         h3 {
-            text-align: center;
-            color:white;
+            color:#ED7014;
             font-family:'Pathway Gothic One', Arial, sans-serif;
-            text-shadow: 1px 1px 5px black;
             letter-spacing:2px;
             }
 
         body {
-            background-image: url(img/backgroundblackgreen.jpg);
-            background-position: center;
+            background-image: url(img/backgroundpaper.jpg);
+            background-position: center top;
             background-size: cover;
             background-color:#1F221C;
         }
@@ -79,10 +77,6 @@
             margin-top:5px;
         }
 
-        .center {
-            margin-top: 10%;
-            margin-bottom:14%;
-        }
 
         .footer {
             background-color: black;
@@ -112,10 +106,79 @@
         }
 
         .links > a {
-        float:right;
-        margin-right: 10px;
-        margin-top:2px;
+            float:right;
+            margin-right: 10px;
+            margin-top:2px;
         }
+
+        .center {
+            margin:auto;
+            position:center;
+            width:55%;
+            margin-top: 0%;
+            margin-bottom:14%;
+        }
+
+        .content {
+            background:#F8FCEE;
+            width:60%%;
+            margin-top: -85px;
+            padding: 3%;
+            font-family: 'Roboto Condensed', Arial, sans-serif;
+            font-size:18px;
+            color:black;
+            border-radius:10%;
+            font-weight:500;
+            overflow:hidden;
+        }
+
+        .content > img {
+            float:left;
+            display:inline-block;
+            border-radius:100%;
+            margin-right:10px;
+        }
+
+        .content > a {
+            font-weight:bold;
+            color:#ED7014;
+            text-decoration:none;
+        }
+
+        .col1 {
+        float:left;
+        width:29%;
+        padding-left:2%;
+        padding-right:2%;
+        }
+
+             .col2 {
+        float:left;
+        width:30%;
+        padding-left:2%;
+        padding-right:2%;
+        }
+
+             .col3 {
+        float:left;
+        width:29%;
+        padding-left:2%;
+        padding-right:2%;
+        }
+
+        input {
+        background-color:#210E03;
+        color:#EFDB9C;
+        font-style: Average, serif;
+        border-style:hidden;
+        padding:5px;
+        }
+
+        form {
+        margin-left:10%;
+        font-style:Average;
+        }
+
 
 
     </style>
@@ -127,7 +190,7 @@
         <a href="index.html"><img src="img/logo.png" alt="SD" style="height:32px;"></a>
     </div>
     <div class="topnav">
-        <a href="contact.html">CONTACT</a>
+        <a class="active" href="contact.html">CONTACT</a>
         <a class="last" href="academia.html">ACADEMIA</a>
         <a href="art.html">ART</a>
         <a href="code.html">CODE</a>
@@ -137,9 +200,23 @@
 
 
 <div class="center">
-    <h2> ARTIST | CODER | ACADEMIC</h2>
-    <h1>Sven Delarivi&egrave;re&nbsp</h1>
-    <h3>- Portfolio website -</h3>
+    <h1>Contact</h1>
+    <div class="content">
+        <!--
+        <form action="mailto:sdelariv@gmail.com" method="POST" enctype="text/plain">
+            <label for="name">Name:</label><br>
+            <input type="text" id="name" name="name"><br>
+            <label for="email">Email:</label><br>
+            <input type="email" id="email" name="email"><br>
+            <label for="message">Message:</label><br>
+            <input type="text" id="message" name="message" ><br><br>
+            <input type="submit" value="Submit">
+        </form>
+        -->
+        <p style="text-align:center">Message form coming soon.</p>
+        <a style="float:left; margin-left:5%;" href=mailto:sdelariv@gmail.com">Contact me via email</a>
+    </div>
+
 </div>
 
 <div class="footer">
