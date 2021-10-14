@@ -186,14 +186,28 @@
         padding:0;
         }
 
-        .cvstuff > a {
+        .cvstuff > span {
         text-decoration:none;
         color: #ED7014;
         }
 
-        #cont { display:none }
-       .show:focus + .hide {display: inline; }
-       .show:focus + .hide + #cont {display: block;}
+        .content {
+        display:block;
+        }
+
+        .cont {
+        display:none
+        }
+
+
+        .hide:focus ~ .cont {
+        display:none;
+        }
+
+       .show:focus ~ .cont {
+        display:block;
+        }
+
 
 
     </style>
@@ -229,9 +243,9 @@
 
         <a style="float:right;margin-right:5%" href="mailto:sdelariv@gmail.com">Contact me</a><br>
         <div class="cvstuff">
-        <a href="#show" class="show"><b>Show more</b></a>
-            <a href="#hide" class="hide"><b>/ Hide</b></a>
-        <div id="cont">
+            <span class="show" tabindex="0"><b>Show more</b></span>
+            <span class="hide"tabindex="0"><b>/ Hide</b></span>
+        <div class="cont">
             <p>&nbsp</p>
              <hr>
         <div class="col1">
