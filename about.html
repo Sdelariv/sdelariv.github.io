@@ -186,7 +186,7 @@
         padding:0;
         }
 
-        .cvstuff > span {
+        .cvstuff > a {
         text-decoration:none;
         color: #ED7014;
         }
@@ -195,16 +195,11 @@
         display:block;
         }
 
-        .cont {
-        display:none
-        }
-
-
-        .hide:focus ~ .cont {
+        #cont:not(:target){
         display:none;
         }
 
-       .show:focus ~ .cont {
+        #cont:target {
         display:block;
         }
 
@@ -243,9 +238,9 @@
 
         <a style="float:right;margin-right:5%" href="mailto:sdelariv@gmail.com">Contact me</a><br>
         <div class="cvstuff">
-            <span class="show" tabindex="0"><b>Show more</b></span>
-            <span class="hide"tabindex="0"><b>/ Hide</b></span>
-        <div class="cont">
+            <a href="#cont"><b>Show more</b></a>
+            <a href="#"><b>/ Hide</b></a>
+        <div id="cont">
             <p>&nbsp</p>
              <hr>
         <div class="col1">
