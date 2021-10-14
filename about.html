@@ -35,8 +35,7 @@
 
         body {
             background-image: url(img/backgroundred.jpg);
-            background-position: center;
-            background-size: cover;
+            background-position: center top;
             background-color:#1F221C;
         }
 
@@ -187,6 +186,15 @@
         padding:0;
         }
 
+        .cvstuff > a {
+        text-decoration:none;
+        color: #ED7014;
+        }
+
+        #cont { display:none }
+       .show:focus + .hide {display: inline; }
+       .show:focus + .hide + #cont {display: block;}
+
 
     </style>
 </head>
@@ -218,9 +226,14 @@
             If you are enjoying this experience, then I can recommend visiting other places where I have made my mark.
             You can find me on Facebook, Github, Researchgate, Imdb, Google Scholar, YouTube, and also in real life - occasionally.</p>
 
-        <a style="float:right;margin-right:5%" href=mailto:sdelariv@gmail.com">Contact me</a><br>
-        <p>&nbsp</p>
-        <hr>
+
+        <a style="float:right;margin-right:5%" href="mailto:sdelariv@gmail.com">Contact me</a><br>
+        <div class="cvstuff">
+        <a href="#show" class="show"><b>Show more</b></a>
+            <a href="#hide" class="hide"><b>/ Hide</b></a>
+        <div id="cont">
+            <p>&nbsp</p>
+             <hr>
         <div class="col1">
             <h3>EDUCTATION</h3>
             <ul class="list">
@@ -265,9 +278,9 @@
                 <li>B</li>
             </ul>
         </div>
-
         <a href="https://www.linkedin.com/in/sven-delariviere/" ><img src="img/linkedinbig.png" height="200" style="filter:grayscale(70%)"></a>
-
+        </div>
+        </div>
     </div>
 
 </div>
