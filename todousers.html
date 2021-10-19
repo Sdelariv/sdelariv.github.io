@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>All the Todos + Users</title>
+</head>
+
+<style>
+    h1 {
+        font-family:"Pathway Gothic One";
+        text-align:center;
+        color:gray(40);
+    }
+
+
+    table {
+        font-family:"Courier New";
+        margin:auto;
+        width:50%;
+        text-align:left;
+    }
+
+    td,th {
+        padding:0.5em;
+    }
+
+</style>
+<body>
+
+<h1> All the Todos:</h1>
+
+<div class="todo">
+    <table id="table">
+        <tr>
+            <th>User</th>
+            <th>Title</th>
+            <th>Completed</th>
+        </tr>
+    </table>
+</div>
+
+
+</body>
+
+<script>
+    const table = document.getElementById("table");
+
+
+    for (let i = 1; i < 200; i++) {
+
+        let row = table.insertRow(i);
+
+        let user = row.insertCell(0);
+        let titleTodo = row.insertCell(1);
+        let compl = row.insertCell(2);
+
+        fetch("https://jsonplaceholder.typicode.com/todos")
+            .then( (response) => response.json())
+            .then( (data) => {
+                fetch("https://jsonplaceholder.typicode.com/users")
+                    .then(r => r.json())
+                    .then(d => user.innerHTML = d[data[i].userId - 1].name);
+                titleTodo.innerHTML = data[i].title;
+                compl.innerHTML = data[i].completed;
+            });
+    }
+
+
+
+
+
+</script>
+</html>
