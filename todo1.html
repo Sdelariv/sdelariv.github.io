@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>A single todo</title>
+</head>
+
+<style>
+    h1 {
+        font-family:"Pathway Gothic One";
+        text-align:center;
+        color:gray(40);
+    }
+
+
+    table {
+        font-family:"Courier New";
+        margin:auto;
+        width:50%;
+        text-align:left;
+    }
+
+</style>
+<body>
+
+<h1>Single Todo:</h1>
+
+<div class="todo">
+    <table>
+        <tr>
+            <th>UserId</th>
+            <th>Title</th>
+            <th>Completed</th>
+        </tr>
+        <tr>
+            <td id="userid"></td>
+            <td id="title"></td>
+            <td id="compl"></td>
+        </tr>
+    </table>
+</div>
+
+
+</body>
+
+<script>
+    fetch("https://jsonplaceholder.typicode.com/todos/1")
+    .then( (response) => response.json())
+    .then( (data) => {
+       document.getElementById("userid").innerHTML = data.userId;
+       document.getElementById("compl").innerHTML = data.completed;
+       document.getElementById("title").innerHTML = data.title;
+    });
+</script>
+</html>
