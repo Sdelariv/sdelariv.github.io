@@ -24,10 +24,13 @@
         padding:0.5em;
     }
 
+
 </style>
 <body>
 
-<h1> All the Todos:</h1>
+<h1> ALL TODOS:</h1>
+
+
 
 <div class="todo">
     <table id="table">
@@ -37,6 +40,7 @@
             <th>Completed</th>
         </tr>
     </table>
+
 </div>
 
 
@@ -44,7 +48,6 @@
 
 <script>
     const table = document.getElementById("table");
-
 
     for (let i = 1; i < 200; i++) {
 
@@ -57,13 +60,15 @@
         fetch("https://jsonplaceholder.typicode.com/todos")
             .then( (response) => response.json())
             .then( (data) => {
+                titleTodo.innerHTML = data[i].title;
+                compl.innerHTML = data[i].completed;
                 fetch("https://jsonplaceholder.typicode.com/users")
                     .then(r => r.json())
                     .then(d => user.innerHTML = d[data[i].userId - 1].name);
-                titleTodo.innerHTML = data[i].title;
-                compl.innerHTML = data[i].completed;
             });
     }
+
+
 
 
 
