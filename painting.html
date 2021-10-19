@@ -6,6 +6,10 @@
     <title>Sven Delariviere - Painting</title>
     <link rel="stylesheet" href="stylesheets/General.css">
     <link rel="stylesheet" href="stylesheets/SubnavArt.css">
+
+    <link rel="stylesheet" href="resources/flickity.css">
+    <script src="resources/flickity.pkgd.min.js"></script>
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cherish&display=swap" rel="stylesheet">
@@ -77,6 +81,51 @@
         }
 
 
+
+        * {
+            -webkit-box-sizing: border-box;
+            box-sizing: border-box;
+        }
+
+
+        .gallery {
+            background:#F8FCEE;
+            display:block;
+            overflow:hidden;
+            width:90%;
+            height:10O%;
+            margin:auto;
+            padding-bottom:40px;
+
+        }
+
+        .gallery-cell {
+            width: 66%;
+            height: 750px;
+            margin-right: 10px;
+            background:#F8FCEE;
+            counter-increment: gallery-cell;
+            display:flex;
+            justify-content: center;
+            overflow:hidden;
+        }
+
+        /* cell number */
+        .gallery-cell:before {
+            display: block;
+            text-align: center;
+            line-height: 200px;
+            font-size: 80px;
+            color: grey;
+        }
+
+        .gallery-cell > img {
+            margin:auto;
+            width:100%;
+            overflow:hidden;
+        }
+
+
     </style>
 </head>
 
@@ -107,7 +156,38 @@
             <a  href="writing.html">Writing</a>
         </div>
         <hr>
-        <p>Content coming soon</p>
+        <br>
+
+
+        <div class="gallery js-flickity"
+             data-flickity-options='{ "wrapAround": true }'>
+
+            <div class="gallery-cell" style="width:100%">
+                <img src="img/p4.webp">
+            </div>
+            <div class="gallery-cell"style="width:100%">
+                <img src="img/p7.webp">
+            </div>
+            <div class="gallery-cell" style="height:100%">
+                <img src="img/p6.jpg">
+            </div>
+            <div class="gallery-cell" style="width:100%">
+                <img src="img/p5.webp">
+            </div>
+            <div class="gallery-cell" style="width:100%">
+                <img src="img/p3.webp">
+            </div>
+            <div class="gallery-cell" style="width:100%">
+                <img src="img/p2.webp">
+            </div>
+            <div class="gallery-cell" >
+                <img src="img/p1.webp">
+            </div>
+
+            <br>
+        </div>
+
+
     </div>
 </div>
 
