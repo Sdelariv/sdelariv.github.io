@@ -3,8 +3,8 @@
 <html lang="en">
 
 <head>
-<title>Sven Delariviere - About</title>
-    <link rel="stylesheet" href="General.css">
+    <title>Sven Delariviere - About</title>
+    <link rel="stylesheet" href="stylesheets/General.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cherish&display=swap" rel="stylesheet">
@@ -19,20 +19,20 @@
             font-family: 'Cherish', cursive;
             font-weight: normal;
             text-shadow: 1px 1px 5px black;
-                      margin:46px;
-              }
+            margin:46px;
+        }
         h2 {
             text-align: center;
             color:white;
             font-family:'Pathway Gothic One', Arial, sans-serif;
             letter-spacing:5px;
             text-shadow: 1px 1px 5px black;
-            }
+        }
         h3 {
             color:#ED7014;
             font-family:'Pathway Gothic One', Arial, sans-serif;
             letter-spacing:2px;
-            }
+        }
 
         body {
             background-image: url(img/backgroundred.jpg);
@@ -51,7 +51,6 @@
 
         .content {
             background:#F8FCEE;
-            width:60%%;
             margin-top: -85px;
             padding: 3%;
             font-family: 'Roboto Condensed', Arial, sans-serif;
@@ -76,64 +75,67 @@
         }
 
         .col1 {
-        float:left;
-        width:34%;
-        padding-left:2%;
-        padding-right:2%;
+            float:left;
+            width:34%;
+            padding-left:2%;
+            padding-right:2%;
         }
 
         .col1 p {
-        margin-top:0;
-        margin-bottom:0;
+            margin-top:0;
+            margin-bottom:0;
         }
 
-            .col2 p {
-        margin-top:0;
-        margin-bottom:0;
+        .col2 p {
+            margin-top:0;
+            margin-bottom:0;
         }
 
-             .col2 {
-        float:left;
-        width:33%;
-        padding-left:2%;
-        padding-right:2%;
+        .col2 {
+            float:left;
+            width:33%;
+            padding-left:2%;
+            padding-right:2%;
 
         }
 
-             .col3 {
-        float:left;
-        width:20%;
-        padding-left:2%;
-        padding-right:2%;
+        .col3 {
+            float:left;
+            width:20%;
+            padding-left:2%;
+            padding-right:2%;
         }
 
         .col1 > ul {
-        list-style-type:none;
-        padding:0;
+            list-style-type:none;
+            padding:0;
         }
 
         .col2 > ul {
-        list-style-type:none;
-        padding:0;
+            list-style-type:none;
+            padding:0;
         }
 
         .cvstuff > a {
-        text-decoration:none;
-        color: #ED7014;
+            text-decoration:none;
+            color: #ED7014;
         }
 
         .content {
-        display:block;
+            display:block;
         }
 
         #cont:not(:target){
-        display:none;
+            display:none;
         }
 
         #cont:target {
-        display:block;
+            display:block;
         }
 
+        .orange {
+           color:#ED7014;
+        }
 
 
     </style>
@@ -160,7 +162,7 @@
     <div class="content">
         <img src="img/me.png" height="150">
         <p>Hello. I am Sven, a coder, philosopher and visual artist with an interest in all things beautiful and/or witty.
-            My interests are cinema, theatre, philosophy of science, and politics.</p>
+            My interests are cinema, theatre, philosophy of science, and political theory.</p>
         <p>The purpose of this website is to showcase some of my work online.
             Depending on which side of me interests you most, I suggest you explore either the code, art or academia section.
             If you are enjoying this experience, then I can recommend visiting other places where I have made my mark.
@@ -171,55 +173,55 @@
         <div class="cvstuff">
             <a href="#cont"><b>Show more</b></a>
             <a href="#"><b>/ Hide</b></a>
-        <div id="cont">
-            <p>&nbsp</p>
-             <hr>
-        <div class="col1">
-            <h3>EDUCTATION</h3>
-            <ul class="list">
-                <li><p><b><span style="color:#ED7014">Cursus -</span> Java Developer </b></p>
-                    <p>&lsquo;21-&rsquo;22 | INTEC BRUSSEL, Brussel.</p></li><br>
-                <li><p><b><span style="color:#ED7014">PhD -</span>  Wijsbegeerte en Moraalwetenschappen </b>(Epistemologie - human &amp; artificial understanding)</p>
-                <p> &lsquo;16-&rsquo;20 | VUB, Brussel.</p></li><br>
-                <li><p><b><span style="color:#ED7014">MA -</span>  Wijsbegeerte en Moraalwetenschappen </b>(Logica en Wetenschapsfilosofie - Artificial free will)</p>
-                <p> &lsquo;13-&rsquo;15 | VUB, Brussel.</p></li><br>
-                <li><p><b><span style="color:#ED7014">MA -</span>  Film +<span style="color:#ED7014"> Prepatory Programme -</span>  Wijsbegeerte en Moraalwetenschappen</b></p>
-                <p> &lsquo;11-&rsquo;13 | EHB Rits, Brussel + VUB, Brussel.</p></li><br>
-                <li><p><b><span style="color:#ED7014">BA -</span>  Audiovisuele Kunsten (Film)</b></p>
-                <p> &lsquo;07-&rsquo;11 | EHB Rits, Brussel.</p></li><br>
-            </ul>
-        </div>
+            <div id="cont">
+                <p>&nbsp</p>
+                <hr>
+                <div class="col1">
+                    <h3>EDUCTATION</h3>
+                    <ul class="list">
+                        <li><p><b><span class="orange">Cursus -</span> Java Developer </b></p>
+                            <p>&lsquo;21-&rsquo;22 | INTEC BRUSSEL, Brussel.</p></li><br>
+                        <li><p><b><span class="orange">PhD -</span>  Wijsbegeerte en Moraalwetenschappen </b>(Epistemologie - human &amp; artificial understanding)</p>
+                            <p> &lsquo;16-&rsquo;20 | VUB, Brussel.</p></li><br>
+                        <li><p><b><span class="orange">MA -</span>  Wijsbegeerte en Moraalwetenschappen </b>(Logica en Wetenschapsfilosofie - Artificial free will)</p>
+                            <p> &lsquo;13-&rsquo;15 | VUB, Brussel.</p></li><br>
+                        <li><p><b><span class="orange">MA -</span>  Film +<span class="orange"> Prepatory Programme -</span>  Wijsbegeerte en Moraalwetenschappen</b></p>
+                            <p> &lsquo;11-&rsquo;13 | EHB Rits, Brussel + VUB, Brussel.</p></li><br>
+                        <li><p><b><span class="orange">BA -</span>  Audiovisuele Kunsten (Film)</b></p>
+                            <p> &lsquo;07-&rsquo;11 | EHB Rits, Brussel.</p></li><br>
+                    </ul>
+                </div>
 
-        <div class="col2">
-            <h3>WORK-EXPERIENCE</h3>
-            <ul>
-            <li><p><b><span style="color:#ED7014">Doctoral Researcher,</span>  FWO Aspirant</b></p>
-            <p><i>incl. lesgeven &ldquo;Werkcollege Logica en Wetenschapsfilosofie&rdquo;</i></p>
-            <p>&lsquo;16-&rsquo;20 | Vrije Universiteit Brussel, CLPS.</p></li><br>
-             <li><p><b><span style="color:#ED7014">Bijzonder Academisch Personeel,</span>  Researcher</b></p>
-            <p>&lsquo;15-&rsquo;16 | Vrije Universiteit Brussel, CLPS.</p></li><br>
-                <li><p><b><span style="color:#ED7014">Productie Assistent </span>  Film</b></p>
-                <li><p><i>incl. logistiek, financi&euml;le verantwoordelijkheid &amp; communicatie</i></p>
-            <p>&lsquo;11-&rsquo;15 | Bworg vzw.</p></li><br>
-            </ul>
-        </div>
+                <div class="col2">
+                    <h3>WORK-EXPERIENCE</h3>
+                    <ul>
+                        <li><p><b><span class="orange">Doctoral Researcher,</span>  FWO Aspirant</b></p>
+                            <p><i>incl. lesgeven &ldquo;Werkcollege Logica en Wetenschapsfilosofie&rdquo;</i></p>
+                            <p>&lsquo;16-&rsquo;20 | Vrije Universiteit Brussel, CLPS.</p></li><br>
+                        <li><p><b><span class="orange">Bijzonder Academisch Personeel,</span>  Researcher</b></p>
+                            <p>&lsquo;15-&rsquo;16 | Vrije Universiteit Brussel, CLPS.</p></li><br>
+                        <li><p><b><span class="orange">Productie Assistent </span>  Film</b></p>
+                        <li><p><i>incl. logistiek, financi&euml;le verantwoordelijkheid &amp; communicatie</i></p>
+                            <p>&lsquo;11-&rsquo;15 | Bworg vzw.</p></li><br>
+                    </ul>
+                </div>
 
-        <div class="col3">
+                <div class="col3">
 
-            <h3>VARIA</h3>
-            <h3>&nbsp&nbspLanguages</h3>
-            <ul>
-                <li>Dutch (native)</li>
-                <li>English (excellent)</li>
-                <li>French (basic)</li>
-            </ul>
-            <h3>&nbsp&nbspRijbewijs</h3>
-            <ul>
-                <li>B</li>
-            </ul>
-        </div>
-        <a href="https://www.linkedin.com/in/sven-delariviere/" target="_blank" ><img src="img/linkedinbig.png" height="200" style="filter:grayscale(70%)"></a>
-        </div>
+                    <h3>VARIA</h3>
+                    <h3>&nbsp&nbspLanguages</h3>
+                    <ul>
+                        <li>Dutch (native)</li>
+                        <li>English (excellent)</li>
+                        <li>French (basic)</li>
+                    </ul>
+                    <h3>&nbsp&nbspRijbewijs</h3>
+                    <ul>
+                        <li>B</li>
+                    </ul>
+                </div>
+                <a href="https://www.linkedin.com/in/sven-delariviere/" target="_blank" ><img src="img/linkedinbig.png" height="200" style="filter:grayscale(70%)"></a>
+            </div>
         </div>
     </div>
 

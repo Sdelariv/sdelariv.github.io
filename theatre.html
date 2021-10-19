@@ -3,8 +3,9 @@
 <html lang="en">
 
 <head>
-<title>Sven Delariviere - Theatre</title>
-    <link rel="stylesheet" href="General.css">
+    <title>Sven Delariviere - Theatre</title>
+    <link rel="stylesheet" href="stylesheets/General.css">
+    <link rel="stylesheet" href="stylesheets/SubnavArt.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cherish&display=swap" rel="stylesheet">
@@ -19,20 +20,20 @@
             font-family: 'Cherish', cursive;
             font-weight: normal;
             text-shadow: 1px 1px 5px black;
-                      margin:46px;
-              }
+            margin:46px;
+        }
         h2 {
             color:black;
             font-family: 'Cherish', Times New Roman, cursive;
             letter-spacing:2px;
-            }
+        }
         h3 {
             text-align: center;
             color:white;
             font-family:'Pathway Gothic One', Arial, sans-serif;
             text-shadow: 1px 1px 5px black;
             letter-spacing:2px;
-            }
+        }
 
         body {
             background-image: url(img/backgroundplay.jpg);
@@ -46,17 +47,16 @@
             position:center;
             width:55%;
             margin-top: 0%;
-         margin-bottom:5%;
-                  min-width:1000px;
-             max-width:1000px;
-           margin-lef:auto;
+            margin-bottom:5%;
+            min-width:1000px;
+            max-width:1000px;
+            margin-lef:auto;
             margin-right:auto;
 
         }
 
         .content {
             background:#F8FCEE;
-            width:60%%;
             margin-top: -85px;
             padding: 3%;
             font-family:'Pathway Gothic One', Arial, sans-serif;
@@ -68,61 +68,32 @@
         }
 
         .content > img {
-        width:80%;
-        display:block;
-        margin-top:3%;
-        margin-left:auto;
-        margin-right:auto;
-        }
-
-        .subnav {
-        margin-left:auto;
-        margin-right:auto;
-        width:85%;
-        }
-
-        .subnav > a {
-           text:align:center;
-           display: inline-block;
-           margin-top:1%;
-           margin-bottom:0%;
-            margin-left:7%;
-            margin-right:3%;
-            float:center;
-            text-decoration:none;
-            color:#ED7014;
-            font-size:28px;
-            font-family: 'Pathway Gothic One', cursive;
-            font-weight:bold;
-        }
-
-                .subnav a.active {
-        color:#592B2B;
-        }
-
-        .subnav a:hover{
-        color:#592B2B;
+            width:80%;
+            display:block;
+            margin-top:3%;
+            margin-left:auto;
+            margin-right:auto;
         }
 
         .productions {
-        margin-left:auto;
-        margin-right:auto;
-        margin-top:3%;
-       width:95%;
-       }
+            margin-left:auto;
+            margin-right:auto;
+            margin-top:3%;
+            width:95%;
+        }
 
-               .productions > img {
-        padding:20px;
+        .productions > img {
+            padding:20px;
         }
 
         button {
-        background-color:black;
-        color:white;
+            background-color:black;
+            color:white;
         }
 
         #henrypictures {
-        margin-left:2%;
-        margin-top:-3%;
+            margin-left:2%;
+            margin-top:-3%;
         }
 
     </style>
@@ -235,49 +206,49 @@
 </div>
 
 <script>
-var sliderObjects = [];
-createSliderObjects();
+    var sliderObjects = [];
+    createSliderObjects();
 
-function plusDivs(obj, n) {
-  var parentDiv = $(obj).parent();
-  var matchedDiv;
-  $.each(sliderObjects, function(i, item) {
-    if ($(parentDiv[0]).attr('id') == $(item).attr('id')) {
-      matchedDiv = item;
-      return false;
+    function plusDivs(obj, n) {
+        var parentDiv = $(obj).parent();
+        var matchedDiv;
+        $.each(sliderObjects, function(i, item) {
+            if ($(parentDiv[0]).attr('id') == $(item).attr('id')) {
+                matchedDiv = item;
+                return false;
+            }
+        });
+        matchedDiv.slideIndex=matchedDiv.slideIndex+n;
+        showDivs(matchedDiv, matchedDiv.slideIndex);
     }
-  });
-  matchedDiv.slideIndex=matchedDiv.slideIndex+n;
-  showDivs(matchedDiv, matchedDiv.slideIndex);
-}
 
-function createSliderObjects() {
-  var sliderDivs = $('.slider');
-  $.each(sliderDivs, function(i, item) {
-    var obj = {};
-    obj.id = $(item).attr('id');
-    obj.divContent = item;
-    obj.slideIndex = 1;
-    obj.slideContents = $(item).find('.mySlides');
-    showDivs(obj, 1);
-    sliderObjects.push(obj);
-  });
-}
+    function createSliderObjects() {
+        var sliderDivs = $('.slider');
+        $.each(sliderDivs, function(i, item) {
+            var obj = {};
+            obj.id = $(item).attr('id');
+            obj.divContent = item;
+            obj.slideIndex = 1;
+            obj.slideContents = $(item).find('.mySlides');
+            showDivs(obj, 1);
+            sliderObjects.push(obj);
+        });
+    }
 
-function showDivs(divObject, n) {
-  debugger;
-  var i;
-  if (n > divObject.slideContents.length) {
-    divObject.slideIndex = 1
-  }
-  if (n < 1) {
-    divObject.slideIndex = divObject.slideContents.length
-  }
-  for (i = 0; i < divObject.slideContents.length; i++) {
-    divObject.slideContents[i].style.display = "none";
-  }
-  divObject.slideContents[divObject.slideIndex - 1].style.display = "block";
-}
+    function showDivs(divObject, n) {
+        debugger;
+        var i;
+        if (n > divObject.slideContents.length) {
+            divObject.slideIndex = 1
+        }
+        if (n < 1) {
+            divObject.slideIndex = divObject.slideContents.length
+        }
+        for (i = 0; i < divObject.slideContents.length; i++) {
+            divObject.slideContents[i].style.display = "none";
+        }
+        divObject.slideContents[divObject.slideIndex - 1].style.display = "block";
+    }
 
 </script>
 </body>

@@ -1,0 +1,29 @@
+
+.subnav {
+    margin-left:auto;
+    margin-right:auto;
+    width:85%;
+}
+
+.subnav > a {
+    text-align:center;
+    display: inline-block;
+    margin-top:1%;
+    margin-bottom:0%;
+    margin-left:7%;
+    margin-right:3%;
+    float:center;
+    text-decoration:none;
+    color:#ED7014;
+    font-size:28px;
+    font-family: 'Pathway Gothic One', cursive;
+    font-weight:bold;
+}
+
+.subnav a.active {
+    color:#592B2B;
+}
+
+.subnav a:hover{
+    color:#592B2B;
+}
