@@ -6,6 +6,10 @@
     <title>Sven Delariviere - Graphic</title>
     <link rel="stylesheet" href="stylesheets/General.css">
     <link rel="stylesheet" href="stylesheets/SubnavArt.css">
+    <link rel="stylesheet" href="stylesheets/Slideshow.css">
+
+    <link rel="stylesheet" href="resources/flickity.css">
+    <script src="resources/flickity.pkgd.min.js"></script>
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -25,10 +29,9 @@
         }
         h2 {
             text-align: center;
-            color:white;
+            color:black;
             font-family:'Pathway Gothic One', Arial, sans-serif;
             letter-spacing:5px;
-            text-shadow: 1px 1px 5px black;
         }
         h3 {
             text-align: center;
@@ -40,7 +43,7 @@
 
         body {
             background-image: url(img/backgroundplay.jpg);
-            background-position: center;
+            background-position: center top;
             background-size: cover;
             background-color:#290009;
         }
@@ -75,6 +78,58 @@
             margin-right:auto;
         }
 
+        .role {
+            text-align:center;
+            color:orange;
+        }
+
+        .title {
+            margin-bottom:-15px;
+            text-align:center
+        }
+
+
+        * {
+            -webkit-box-sizing: border-box;
+            box-sizing: border-box;
+        }
+
+
+        .gallery {
+            background: #F8FCEE;
+            display:block;
+            overflow:hidden;
+            width:90%;
+            height:10O%;
+            margin:auto;
+        }
+
+        .gallery-cell {
+            width: 66%;
+            height: 900px;
+            margin-right: 10px;
+            background:#F8FCEE;
+            counter-increment: gallery-cell;
+            display:flex;
+            justify-content: center;
+            overflow:hidden;
+        }
+
+        /* cell number */
+        .gallery-cell:before {
+            display: block;
+            text-align: center;
+            line-height: 200px;
+            font-size: 80px;
+            color: grey;
+        }
+
+        .gallery-cell > img {
+            margin:auto;
+            width:100%;
+            overflow:hidden;
+        }
+
 
     </style>
 </head>
@@ -106,7 +161,52 @@
             <a  href="writing.html">Writing</a>
         </div>
         <hr>
-        <p>Content coming soon</p>
+        <h2 class="title">Posters & Promotional</h2>
+        <p class="role">For film, theatre and an academic conference</p>
+
+        <div class="gallery js-flickity"
+             data-flickity-options='{ "wrapAround": true }'>
+
+            <div class="gallery-cell">
+                <img src="img/posterhamlet.jpg">
+            </div>
+            <div class="gallery-cell">
+                <img src="img/posterforthcoming.jpg">
+            </div>
+            <div class="gallery-cell">
+                <img src="img/posteresbi.jpg">
+            </div>
+            <div class="gallery-cell">
+                <img src="img/posterhenry.jpg">
+            </div>
+            <div class="gallery-cell">
+                <img src="img/postermabj.jpg">
+            </div>
+            <div class="gallery-cell">
+                <img src="img/posterhot.jpg">
+            </div>
+            <div class="gallery-cell">
+                <img src="img/postercoriolanus.jpg">
+            </div>
+            <div class="gallery-cell">
+                <img src="img/paintingclaudius.jpg">
+            </div>
+            <div class="gallery-cell" style="width:100%">
+                <img src="img/infoboek.jpg">
+            </div>
+            <div class="gallery-cell"style="width:100%">
+                <img src="img/infoboek9.jpg">
+            </div>
+            <div class="gallery-cell" style="width:100%">
+                <img src="img/flyerhot.jpg">
+            </div>
+            <div class="gallery-cell" style="width:100%">
+                <img src="img/dvdhenry.jpg">
+            </div>
+            <div class="gallery-cell" style="width:100%">
+                <img src="img/dvdhot.jpg">
+            </div>
+        </div>
     </div>
 </div>
 
@@ -123,6 +223,36 @@
 
 </div>
 
+<script>
+    var slideIndex = 1;
+    showSlides(slideIndex);
+
+    function plusSlides(n) {
+        showSlides(slideIndex += n);
+    }
+
+    function currentSlide(n) {
+        showSlides(slideIndex = n);
+    }
+
+    function showSlides(n) {
+        var i;
+        var slides = document.getElementsByClassName("mySlides");
+        var dots = document.getElementsByClassName("dot");
+        if (n > slides.length) {slideIndex = 1}
+        if (n < 1) {slideIndex = slides.length}
+        for (i = 0; i < slides.length; i++) {
+            slides[i].style.display = "none";
+        }
+        for (i = 0; i < dots.length; i++) {
+            dots[i].className = dots[i].className.replace(" active", "");
+        }
+        slides[slideIndex-1].style.display = "block";
+        dots[slideIndex-1].className += " active";
+    }
+
+
+</script>
 </body>
 
 </html>
