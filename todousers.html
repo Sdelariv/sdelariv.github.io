@@ -60,11 +60,11 @@
         fetch("https://jsonplaceholder.typicode.com/todos")
             .then( (response) => response.json())
             .then( (data) => {
-                titleTodo.innerHTML = data[i].title;
-                compl.innerHTML = data[i].completed;
+                titleTodo.innerHTML = data[i - 1].title;
+                compl.innerHTML = data[i - 1].completed;
                 fetch("https://jsonplaceholder.typicode.com/users")
                     .then(r => r.json())
-                    .then(d => user.innerHTML = d[data[i].userId - 1].name);
+                    .then(d => user.innerHTML = d[data[i - 1].userId].name);
             });
     }
 
