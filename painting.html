@@ -101,7 +101,7 @@
 
         .gallery-cell {
             width: 66%;
-            height: 750px;
+            height: 600px;
             margin-right: 10px;
             background:#F8FCEE;
             counter-increment: gallery-cell;
@@ -123,6 +123,10 @@
             margin:auto;
             width:100%;
             overflow:hidden;
+        }
+
+        p {
+            text-align:center;
         }
 
 
@@ -157,36 +161,42 @@
         </div>
         <hr>
         <br>
-
-
+        <p>Painting is something I've done to relax occasionally. I don't really know what I'm doing, so it's a bit of a hit and miss. </p>
         <div class="gallery js-flickity"
              data-flickity-options='{ "wrapAround": true }'>
 
             <div class="gallery-cell" style="width:100%">
                 <img src="img/p4.webp">
+                <p style="position:absolute;  top:550px;">A Humble Abode in London</p>
             </div>
             <div class="gallery-cell"style="width:100%">
-                <img src="img/p7.webp">
+                <img src="img/p7.webp"style="height:600px; width:auto">
+                <p style="position:absolute; top:550px; color:white;">The Ferryman </p>
             </div>
-            <div class="gallery-cell" style="height:100%">
-                <img src="img/p6.jpg">
+            <div class="gallery-cell" >
+                <img src="img/p6.webp" style="height:600px; width:auto">
+                <p style="position:absolute; top:550px; color:white;">Dragon in London</p>
             </div>
             <div class="gallery-cell" style="width:100%">
                 <img src="img/p5.webp">
+                <p style="position:absolute; top:550px; color:black;">I Am Thy Father's Spirit</p>
             </div>
             <div class="gallery-cell" style="width:100%">
                 <img src="img/p3.webp">
+                <p style="position:absolute; top:550px; color:black;">The Man on the Moor (2012)</p>
             </div>
             <div class="gallery-cell" style="width:100%">
                 <img src="img/p2.webp">
+                <p style="position:absolute; top:550px; color:black;">Dracula's Lair (2011)</p>
             </div>
             <div class="gallery-cell" >
                 <img src="img/p1.webp">
+                <p style="position:absolute; top:550px; color:black;">View of Caledonia (2009)</p>
             </div>
 
-            <br>
         </div>
 
+        <br>
 
     </div>
 </div>
