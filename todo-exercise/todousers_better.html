@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>All the Todos</title>
+    <link rel="stylesheet" href="stylesheet/todo.css">
+</head>
+
+<body>
+
+<h1> All the Todos:</h1>
+
+<div class="todo">
+    <p id="demo">test</p>
+</div>
+
+
+</body>
+
+<script>
+    fetch_func = function() {
+        fetch("https://jsonplaceholder.typicode.com/todos")
+            .then( resp => resp.json())
+            .then( todos => {
+                let allTodos = ''
+                todos.forEach(todo => {
+
+                    fetch( "https://jsonplaceholder.typicode.com/users/" + todo.userId)
+                    .then(resp => resp.json())
+                    .then(user => {
+                        todo.userId = user.name
+                        allTodos = allTodos + todo.userId + " - " + todo.title + " [" + todo.completed + "]<br>"
+                        document.getElementById("demo").innerHTML = allTodos
+                    })
+                })
+            })
+    }
+
+    fetch_func()
+
+
+
+
+</script>
+</html>

@@ -1,0 +1,17 @@
+h1 {
+    font-family:"Pathway Gothic One";
+    text-align:center;
+    color:gray(40);
+}
+
+
+table {
+    font-family:"Courier New";
+    margin:auto;
+    width:50%;
+    text-align:left;
+}
+
+td,th {
+    padding:0.5em;
+}
