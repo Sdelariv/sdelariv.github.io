@@ -24,6 +24,7 @@ td,th {
     overflow:hidden;
 }
 
+
 .left {
     float:left;
     width:30%;
@@ -51,5 +52,8 @@ td,th {
 }
 .below{
     float:left;
+    width:100%;
+    padding-left:10%;
+    padding-right:25%;
     border-top: solid medium black;
 }
