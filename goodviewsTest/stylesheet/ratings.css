@@ -1,0 +1,55 @@
+h1,h2,h3,p {
+    font-family:"Pathway Gothic One";
+    color:gray(40);
+}
+
+
+table {
+    font-family:"Courier New";
+    margin:auto;
+    width:50%;
+    text-align:left;
+}
+
+td,th {
+    padding:0.5em;
+}
+
+.ratings {
+    border-style:solid;
+    border-color:black;
+    border-width: medium;
+    width:35%;
+    margin:auto;
+    overflow:hidden;
+}
+
+.left {
+    float:left;
+    width:30%;
+}
+
+.left > img {
+    width:90%;
+    margin: 5%;
+}
+
+.right {
+    float:right;
+    width:60%;
+    padding-right:5%;
+    padding-left:5%;
+    text-align: left;
+}
+
+.top {
+    float:left;
+    width:90%;
+    overflow:hidden;
+    padding-left:5%;
+    padding-right:5%;
+}
+.below{
+    float:left;
+    border-top: solid medium black;
+}
