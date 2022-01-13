@@ -56,9 +56,9 @@ body {
 .centerwrapper {
     margin:auto;
     width:62%;
-    align:center;
     color:white;
     overflow:hidden;
+    min-width:1000px;
 }
 
 .content-left {
