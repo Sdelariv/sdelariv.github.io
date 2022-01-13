@@ -123,13 +123,28 @@ body {
     font-family:'Pathway Gothic One', Arial, sans-serif;
 }
 
-.content-center p {
+.update {
     border-top:solid 15px #1f182a;
     margin:-3%;
-    padding:5%;
+    padding-left:5%;
+    padding-right:5%;
+    padding-bottom:9%;
+    float:left;
+
 }
 
-h3, h2, p, a {
+.update h2 {
+    text-align:center;
+}
+
+.poster img {
+    float:left;
+    width:40%;
+    margin-right:20px;
+    margin-bottom:15px;
+}
+
+h3, h2, h1, p, a {
     color:white;
     font-family:'Pathway Gothic One', Arial, sans-serif;
     text-shadow: 1px 1px 5px black;
