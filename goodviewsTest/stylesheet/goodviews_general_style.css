@@ -32,6 +32,7 @@
     width:3px;
     padding: 15px;
     text-decoration:none;
+    color:lightgrey;
 }
 
 .topnav a:hover {
@@ -41,7 +42,7 @@
 }
 
 .topnav a.active {
-    color:mediumpurple;
+    color:white;
 }
 
 
@@ -128,9 +129,17 @@ body {
     padding:5%;
 }
 
-h3, h2, p {
+h3, h2, p, a {
     color:white;
     font-family:'Pathway Gothic One', Arial, sans-serif;
     text-shadow: 1px 1px 5px black;
     letter-spacing:2px;
+}
+
+.content-left p {
+    color:lightgrey;
+}
+
+.content-right p {
+    color:lightgrey;
 }
