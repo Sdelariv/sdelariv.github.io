@@ -141,11 +141,16 @@ body {
     margin-top:10px;
 }
 
-h3, h2, h1, p, a {
+h3, h2, h1, h4, p, a {
     color:white;
     font-family:'Pathway Gothic One', Arial, sans-serif;
     text-shadow: 1px 1px 5px black;
     letter-spacing:2px;
+}
+
+h4 {
+    font-family:'Pathway Gothic One', Arial, sans-serif;
+    font-size:17px;
 }
 
 .content-left p {
