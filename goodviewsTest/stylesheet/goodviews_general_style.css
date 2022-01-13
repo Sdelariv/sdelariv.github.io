@@ -1,0 +1,135 @@
+
+.topnavwrapper {
+    background-color: #1f182a;
+    margin-top: 2%;
+    margin-left:-2%;
+    margin-right:-2%;
+    border-style:solid;
+    border-width:5px;
+    border-color:#82758c;
+}
+
+.logo {
+    color:white;
+    padding-left:20%;
+    padding-top:15px;
+    float:left;
+    font-family:"Pathway Gothic One";
+    font-size:34px;
+    letter-spacing:2px;
+}
+
+.topnav {
+    overflow:hidden;
+    color: white;
+    height: 45px;
+    padding-top:30px;
+    padding-left:5px;
+
+}
+
+.topnav a {
+    width:3px;
+    padding: 15px;
+    text-decoration:none;
+}
+
+.topnav a:hover {
+    background-color: black;
+    color: #cdc6ef;
+
+}
+
+.topnav a.active {
+    color:mediumpurple;
+}
+
+
+body {
+    background-position: center;
+    background-size: cover;
+    background-color: #0a080e;
+}
+
+
+.centerwrapper {
+    margin:auto;
+    width:62%;
+    align:center;
+    color:white;
+    overflow:hidden;
+}
+
+.content-left {
+    padding-top:1%;
+    width:21%;
+    padding-right:1%;
+    float:left;
+}
+
+.content-right {
+    padding-top:1%;
+    width:21%;
+    padding-left:2%;
+    float:left;
+}
+
+.content-center {
+    padding:2%;
+}
+
+.filmwrapper-outer {
+    width:50%;
+    float:left;
+    border-left: solid 5px #1f182a;
+    border-right: solid 5px #1f182a;
+    overflow:hidden;
+}
+
+.filmwrapper-center {
+    border-left:dashed 30px #1f182a;
+    border-right:dashed 30px #1f182a;
+    border-bottom:solid 10px #1f182a;
+}
+
+.filmwrapper-inner {
+    border-top: solid 5px #1f182a;
+    border-left: solid 5px #1f182a;
+    border-right: solid 5px #1f182a;
+    overflow:hidden;
+    padding-top:4%;
+}
+
+
+.footer {
+    background-color: #1f182a;
+    padding:10px;
+    width:100%;
+    overflow:hidden;
+    position:relative;
+    bottom:0;
+    border-top: solid 3px #82758c;
+    margin-bottom:-15px;
+}
+
+.footer > p {
+    text-align:center;
+    font-size:18px;
+    margin-top:4px;
+    color:white;
+    text-decoration:none;
+    font-family:'Pathway Gothic One', Arial, sans-serif;
+}
+
+.content-center p {
+    border-top:solid 15px #1f182a;
+    margin:-3%;
+    padding:5%;
+}
+
+h3, h2, p {
+    color:white;
+    font-family:'Pathway Gothic One', Arial, sans-serif;
+    text-shadow: 1px 1px 5px black;
+    letter-spacing:2px;
+}
