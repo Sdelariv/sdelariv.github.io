@@ -148,7 +148,7 @@ h3, h2, h1, h4, p, a {
     letter-spacing:2px;
 }
 
-h4 {
+.update h4 {
     font-family:'Pathway Gothic One', Arial, sans-serif;
     font-size:17px;
 }
