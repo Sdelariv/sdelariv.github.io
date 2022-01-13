@@ -62,15 +62,15 @@ body {
 
 .content-left {
     padding-top:1%;
-    width:23%;
-    padding-right:1%;
+    width:21%;
+    padding-right:3%;
     float:left;
 }
 
 .content-right {
     padding-top:1%;
-    width:23%;
-    padding-left:2%;
+    width:21%;
+    padding-left:3%;
     float:left;
 }
 
