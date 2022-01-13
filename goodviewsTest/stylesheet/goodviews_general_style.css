@@ -62,14 +62,14 @@ body {
 
 .content-left {
     padding-top:1%;
-    width:21%;
+    width:23%;
     padding-right:1%;
     float:left;
 }
 
 .content-right {
     padding-top:1%;
-    width:21%;
+    width:23%;
     padding-left:2%;
     float:left;
 }
@@ -79,7 +79,7 @@ body {
 }
 
 .filmwrapper-outer {
-    width:50%;
+    width:46%;
     float:left;
     border-left: solid 5px #1f182a;
     border-right: solid 5px #1f182a;
