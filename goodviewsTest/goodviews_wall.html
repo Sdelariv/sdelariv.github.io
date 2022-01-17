@@ -42,43 +42,7 @@
         <div class="filmwrapper-center">
             <div class="filmwrapper-inner">
                 <div class="content-center">
-                    <div class="update">
-                        <p><span style="color:#b67db4">Username</span> has rated a film <span style="color:#b67db4">&#9733 &#9733 &#9733 &#9733</span></p>
-                        <div class="poster">
-                            <img src="../img/Hamletposter.webp">
-                        </div>
-                        <h4>TITLE</h4>
-                        <p> Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                            <br> <br>
-                            Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
-                            <br> <br>
-                            Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. </p>
-                    </div>
-                    <div class="update">
-                        <p><span style="color:#b67db4">Username</span> has rated a film <span style="color:#b67db4">&#9733 &#9733 &#9733 &#9733</span></p>
-                        <div class="poster">
-                            <img src="../img/Hamletposter.webp">
-                        </div>
-                        <h4>TITLE</h4>
-                        <p> Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                            <br> <br>
-                            Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
-                            <br> <br>
-                            Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. </p>
-                    </div>
-                    <div class="update">
-                        <p><span style="color:#b67db4">Username</span> has rated a film <span style="color:#b67db4">&#9733 &#9733 &#9733 &#9733</span></p>
-                        <div class="poster">
-                            <img src="../img/Hamletposter.webp">
-                        </div>
-                        <h4>TITLE</h4>
-                        <p> Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                            <br> <br>
-                            Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
-                            <br> <br>
-                            Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. </p>
-                    </div>
-                    <br>
+
                 </div>
             </div>
         </div>
@@ -99,5 +63,92 @@
 </div>
 
 </body>
+
+
+<script>
+    fetch_func = function() {
+        let ratingId = "sdelarivtt4468740"
+        fetch("http://localhost:8080/rating/" + ratingId)
+            .then( resp => resp.json() )
+            .then( rating => {
+                var newRating = createRating(rating);
+                console.log(JSON.stringify(rating));
+                console.log(newRating);
+                document.getElementsByClassName("content-center")[0].innerHTML = createHTML(newRating);
+                console.log(createHTML(rating));
+                var comments = getCommentString(rating);
+
+            })
+    }
+
+    function createRating(rating)
+    {
+        var newRating = {
+            "id":rating.id,
+            "ratingValue":rating.ratingValue,
+            "dateOfRating":rating.dateOfRating,
+            "review":rating.review,
+            "user":rating.user,
+            "film":rating.film
+        }
+
+        return newRating
+    }
+
+    function createHTML(rating)
+    {
+        var html =
+            '<div class="update">\n' +
+            '                        <p><span style="color:#b67db4">' + rating.user.username + '</span> has rated a film <span style="color:#b67db4">&#9733 &#9733 &#9733 &#9733 </span></p>\n' +
+            '                        <div class="poster">\n' +
+            '                            <img src="' + rating.film.posterUrl + '">\n' +
+            '                        </div>\n' +
+            '                        <h4 style="font-size:25px">' + rating.film.title + '</h4>\n' +
+            '                        <p style="margin-top:-25px; color:#b67db4"> <i>' + getNamesString(rating.film.genres).slice(0,-2) + '.</i></p>' +
+            '                        <p> Directed by <i>' + getNamesString(rating.film.director).slice(0,-2) + '.</i></p>' +
+            '                        <p> Written by <i>' + getNamesString(rating.film.writer).slice(0,-2) + '.</i></p>' +
+
+            ' </div>'
+            '<div id="' + rating.id + '">\n' +
+             '                        <p><span style="color:#b67db4"> COMMENTS </span></p>\n' +
+             ' </div>'
+
+        return html;
+    }
+
+
+
+    function getCommentString(rating)
+    {
+        var commentstring = '';
+
+        fetch("http://localhost:8080/comment/findByRatingId?ratingId=" + rating.id)
+            .then( resp => resp.json() )
+            .then(commentList => {
+                commentList.forEach(c => {
+                    if (c != null && c.user != null && c.user.username != null) commentstring = commentstring +
+                            '<strong>' + c.user.username + '</strong><br>'
+                            + c.comment + '<br>'      });
+
+        console.log('just before return: ' + commentstring)
+            })
+    }
+
+    function getNamesString(object)
+    {
+        var string = '';
+        object.forEach(o => string = string + o.name + ", ")
+
+        return string;
+    }
+
+    function getRatingString(rating)
+    {
+    }
+
+    fetch_func()
+
+</script>
+
 
 </html>

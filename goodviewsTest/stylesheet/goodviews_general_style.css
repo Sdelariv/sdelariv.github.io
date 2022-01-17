@@ -99,6 +99,7 @@ body {
     border-right: solid 5px #1f182a;
     overflow:hidden;
     padding-top:4%;
+    padding-right:20px;
 }
 
 
@@ -126,10 +127,11 @@ body {
 .update {
     border-top:solid 15px #1f182a;
     margin:-3%;
-    padding-left:5%;
     padding-right:5%;
     padding-bottom:9%;
     float:left;
+    width:100%;
+    padding-left:30px;
 
 }
 
@@ -159,4 +161,8 @@ h3, h2, h1, h4, p, a {
 
 .content-right p {
     color:lightgrey;
+}
+
+.genres {
+    color:grey;
 }
