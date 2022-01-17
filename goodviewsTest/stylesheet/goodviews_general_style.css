@@ -1,6 +1,7 @@
 
 .topnavwrapper {
     background-color: #1f182a;
+    background: linear-gradient(12deg, #1f182a 34%, #34254b 55%, #0d0a15 82%);
     margin-top: 2%;
     margin-left:-2%;
     margin-right:-3%;
