@@ -1,13 +1,17 @@
 
 .topnavwrapper {
-    background-color: #1f182a;
-    background: linear-gradient(12deg, #1f182a 34%, #34254b 55%, #0d0a15 82%);
+    background: #1f182a linear-gradient(12deg, #1f182a 34%, #34254b 55%, #0d0a15 82%);
+
     margin-top: 2%;
     margin-left:-2%;
     margin-right:-3%;
     border-style:solid;
     border-width:5px;
     border-color:#82758c;
+
+    box-shadow: 0 0px 50px black;
+    z-index:999;
+
 }
 
 .logo {
@@ -60,6 +64,7 @@ body {
     color:white;
     overflow:hidden;
     min-width:800px;
+    z-index:99;
 }
 
 .content-left {
