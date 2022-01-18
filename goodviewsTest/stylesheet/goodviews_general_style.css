@@ -151,6 +151,12 @@ body {
 
 }
 
+.likes {
+    position:absolute;
+    bottom:20px;
+    right:15px
+}
+
 .comments strong {
     color: #b67db4;
 }

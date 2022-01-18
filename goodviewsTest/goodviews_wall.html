@@ -153,12 +153,12 @@
         console.log('adding Likes for ' + rating.film.title)
         var likes = ''
         if (rating.userLikes.length > 0) {
-            likes = '<div class="likes" style="position:absolute; bottom:20px; right:15px"> ' +
+            likes = '<div class="likes"> ' +
                 '<p> <span style="color:#b67db4">' + rating.userLikes[0].username + ' likes this</span></p>' +
                 '</div>'
         }
         if (rating.userLikes.length > 1) {
-            likes = '<div class="likes" style="position:absolute; bottom:20px; right:15px"> ' +
+            likes = '<div class="likes"> ' +
                 ' <p><span style="color:#b67db4">' + getUsernames(rating.userLikes) + ' like this' + '</span></p>' +
                 '</div>'
         }
