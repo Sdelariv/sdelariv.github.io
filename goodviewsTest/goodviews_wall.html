@@ -17,8 +17,8 @@
             <span style="color:#cdc6ef">GOOD</span><span style="font-weight:bold">VIEWS</span>
         </div>
         <div class="topnav">
-            <a href=""> BUTTON </a>
-            <a href=""> BUTTON </a>
+            <a href=""> HOME </a>
+            <a href=""> MY FILMS </a>
         </div>
     </div>
 
@@ -70,38 +70,49 @@
 
 <script>
     var html ='';
+    var ratingIds = [];
 
-    fetch_ratings = function() {
-        console.log('fetch_ratings called');
+    fetch_ratings_and_comments = function() {
+        console.log('FETCHING RATINGS CALLED');
         var ratingIds = [];
 
         let username = "sdelariv"
         fetch("http://localhost:8080/rating/findByUsername?username=" + username)
             .then( resp => resp.json() )
             .then( ratings => { ratings.forEach( rating => {
-                console.log('string of json: ' + JSON.stringify(rating));
 
                 var newRating = createRating(rating);
                 console.log(newRating);
-                html = createRatingHTML(newRating);
 
-                document.getElementsByClassName("content-center")[0].innerHTML = html
+                var ratingId = rating.id;
+                var commentString = '';
 
-                ratingIds.push(rating.id);
-                console.log('html at end: ' + html)
+                fetch("http://localhost:8080/comment/findByRatingId?ratingId=" + ratingId)
+                    .then( resp => resp.json() )
+                    .then(commentList => {
+                        html = createRatingHTML(newRating);
+                        if (commentList.length > 0) {
+                           commentString = createCommentHTML(commentList);
+                            html = html + commentString
+                            console.log('Adding comments for ' + rating.film.title)
+                            document.getElementsByClassName("content-center")[0].innerHTML = html
+                        }
+                    })
             })})
-        console.log('found rating ids ' + ratingIds.length);
     }
 
-    fetch_comments = function(ratingIds) {
-        console.log('fetching comments');
-        for (var i = 0; i < ratingIds.length + 1; i++) {
-            getCommentString(ratingIds[i]);
-        }
+    fetch_ratings_and_comments();
+
+    function createCommentHTML(commentList) {
+        var commentString = '';
+        commentList.forEach(c => {
+            if (c != null && c.user != null && c.user.username != null) commentString = commentString +
+                '<p><strong>' + c.user.username + '</strong>: ' + c.comment + '</p>'      });
+        commentString = '<div class="comments">' + commentString + '</div>'
+        return commentString;
     }
 
 
-    fetch_ratings();
 
     function createRating(rating)
     {
@@ -118,11 +129,6 @@
         return newRating
     }
 
-    function createCommentHTML(rating) {
-        console.log('createCommentHTML called');
-        return html + getCommentString(rating.id);
-
-    }
 
     function createRatingHTML(rating) {
         console.log('createRatingHTML called');
@@ -136,41 +142,37 @@
             '                        <h4 style="font-size:25px">' + rating.film.title + ' <span style="font-size:small">(' + rating.film.releaseYear + ')</span></h4>\n' +
             '                        <p style="margin-top:-25px; color:#b67db4"> <i>' + getNamesString(rating.film.genres).slice(0,-2) + '.</i></p>' +
             '                        <p> Directed by <i>' + getNamesString(rating.film.director).slice(0,-2) + '.</i></p>' +
-            '                        <p> Written by <i>' + getNamesString(rating.film.writer).slice(0,-2) + '.</i></p>' +
-            ' </div>'
-
-            '<div id="' + rating.id + '" class="update">\n' +
-             '                        <p><span style="color:#b67db4"> COMMENTS </span></p>\n' +
-
-             ' </div>'
+            '                        <p> Written by <i>' + getNamesString(rating.film.writer).slice(0,-2) + '.</i></p>'
+            + addLikes(rating) +
+            '</div>'
 
         return html;
     }
 
-    function fillInComments(ratingIds) {
-        console.log('fill in comments called, with ratingIds:')
-        console.log(ratingIds);
-        console.log('ratingIds[0] = ' + ratingIds[0]);
-        var commentString = getCommentString(ratingIds[0])
-        console.log('commentString to fill in:' + commentString)
-        document.getElementById(ratingIds[0]).innerHTML = commentString;
+    function addLikes(rating) {
+        console.log('adding Likes for ' + rating.film.title)
+        var likes = ''
+        if (rating.userLikes.length > 0) {
+            likes = '<div class="likes" style="position:absolute; bottom:20px; right:15px"> ' +
+                '<p> <span style="color:#b67db4">' + rating.userLikes[0].username + ' likes this</span></p>' +
+                '</div>'
+        }
+        if (rating.userLikes.length > 1) {
+            likes = '<div class="likes" style="position:absolute; bottom:20px; right:15px"> ' +
+                ' <p><span style="color:#b67db4">' + getUsernames(rating.userLikes) + ' like this' + '</span></p>' +
+                '</div>'
+        }
+        return likes
     }
 
-    function getCommentString(ratingId)
-    {
-        var commentstring = 'not changed';
-        console.log('getting commentstring for id ' + ratingId);
-        fetch("http://localhost:8080/comment/findByRatingId?ratingId=" + ratingId)
-            .then( resp => resp.json() )
-            .then(commentList => {
-                commentList.forEach(c => {
-                    if (c != null && c.user != null && c.user.username != null) commentstring = commentstring +
-                            '<strong>' + c.user.username + '</strong><br>'
-                            + c.comment + '<br>'      });
-                console.log('commentstring inside function: ' + commentstring)
-            })
-        return commentstring
+    function getUsernames(users) {
+        var usernames = ''
+        users.forEach(u => usernames = usernames + u.username + ', ')
+        return usernames.slice(0, -2) ;
     }
+
+
+
 
     function getNamesString(object)
     {
@@ -190,6 +192,7 @@
         if (ratingValue > 99) ratingString = '&#9733 &#9733 &#9733 &#9733 &#9733 '
         return ratingString;
     }
+
 
 
 
