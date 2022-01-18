@@ -1,23 +1,30 @@
-
+html, body {
+    margin:0;
+    padding:0;
+}
 .topnavwrapper {
     background: #1f182a linear-gradient(12deg, #1f182a 34%, #34254b 55%, #0d0a15 82%);
 
     margin-top: 2%;
-    margin-left:-2%;
-    margin-right:-3%;
-    border-style:solid;
-    border-width:5px;
-    border-color:#82758c;
+    border-top: solid 5px #82758c;
+    border-bottom:solid 5px #82758c;
+
 
     box-shadow: 0 0px 50px black;
     z-index:999;
 
 }
 
+.topnavzone {
+    width:64%;
+    min-width:1000px;
+    margin:auto;
+}
+
 .logo {
     color:white;
-    padding-left:20%;
     padding-top:15px;
+    padding-left:2%;
     float:left;
     font-family:"Pathway Gothic One";
     font-size:34px;
@@ -63,11 +70,12 @@ body {
     width:62%;
     color:white;
     overflow:hidden;
-    min-width:800px;
+    min-width:1000px;
     z-index:99;
 }
 
 .content-left {
+    padding-left:1%;
     padding-top:1%;
     width:21%;
     padding-right:3%;
