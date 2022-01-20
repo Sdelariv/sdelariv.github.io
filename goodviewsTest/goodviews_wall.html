@@ -146,11 +146,11 @@
                     document.getElementById("wts_director_" + counter).innerHTML = 'Directed by ' + directors;
                     document.getElementById("wts_genres_" + counter).innerHTML = '<i>' + genres + '</i>';
                     document.getElementById("wts_poster_" + counter).setAttribute("src",posterUrl);
-                    document.getElementById("seenbutton_" + counter).innerHTML = '<span style="border: solid #1f182a; border-top: none; padding:5px; background-color:#1f182a">RATE<br></span>';
+                    document.getElementById("seenbutton_" + counter).innerHTML = '<a id="rate" href="">RATE</a><br>';
                 }
                 if (counter > 3) {
                     console.log('counter exceeds 3')
-                    document.getElementById("see_more_button").innerHTML = '<a href="">SEE MORE</a>' // TODO: Fill in link to see more of wts's
+                    document.getElementById("see_more_button").innerHTML = '<b><a href="">SEE MORE</a></b>' // TODO: Fill in link to see more of wts's
                 }
             })
             })}

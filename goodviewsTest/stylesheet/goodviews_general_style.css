@@ -217,7 +217,18 @@ h3, h2, h1, h4, p, a {
     float:right;
     color:#b67db4;
     text-decoration:none;
+    font-size:14px;
 }
+
+#rate {
+    text-decoration:none;
+    border: solid #1f182a; border-top: none; padding:5px; background-color:#1f182a
+}
+
+#rate:hover {
+    background-color: #b67db4;
+}
+
 
 .update h4 {
     font-family:'Pathway Gothic One', Arial, sans-serif;
