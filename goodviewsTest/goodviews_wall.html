@@ -31,7 +31,7 @@
         <div class="wts_1">
             <div class="poster_wts">
                 <img id="wts_poster_1" src="">
-                <p class="seenbutton"></p>
+                <p id="seenbutton_1"></p>
             </div>
                 <h4 id="wts_title_1"></h4>
                 <p id="wts_releaseYear_1"></p>
@@ -42,7 +42,7 @@
         <div class="wts_2">
             <div class="poster_wts">
                 <img id="wts_poster_2" src="">
-                <p class="seenbutton"></p>
+                <p id="seenbutton_2"></p>
             </div>
             <h4 id="wts_title_2"></h4>
             <p id="wts_releaseYear_2"></p>
@@ -53,13 +53,15 @@
         <div class="wts_3">
             <div class="poster_wts">
                 <img id="wts_poster_3" src="">
-                <p class="seenbutton"></p>
+                <p id="seenbutton_3"></p>
             </div>
             <h4 id="wts_title_3"></h4>
             <p id="wts_releaseYear_3"></p>
             <p class="genres" id="wts_genres_3"></p>
             <p id="wts_director_3"></p>
         </div>
+
+        <p id="see_more_button"></p>
 
     </div>
     <div class="filmwrapper-outer">
@@ -130,25 +132,25 @@
         fetch("http://localhost:8080/wantToSee/" + username)
             .then( resp => resp.json() )
             .then( wantToSees => { wantToSees.forEach( wts => {
+                counter = counter + 1;
                 if (counter < 4) {
-                    counter = counter + 1;
-                    console.log(JSON.stringify(wts));
+
                     title = wts.film.title;
                     releaseYear = wts.film.releaseYear;
                     directors = getNamesString(wts.film.director).slice(0,-2);
                     posterUrl = wts.film.posterUrl;
                     genres = getNamesString(wts.film.genres).slice(0,-2);
 
+
                     document.getElementById("wts_title_" + counter).innerHTML = title + '<span style="font-size:small"> (' + releaseYear + ')</span>'
                     document.getElementById("wts_director_" + counter).innerHTML = 'Directed by ' + directors;
                     document.getElementById("wts_genres_" + counter).innerHTML = '<i>' + genres + '</i>';
                     document.getElementById("wts_poster_" + counter).setAttribute("src",posterUrl);
-
-
+                    document.getElementById("seenbutton_" + counter).innerHTML = '<span style="border: solid #1f182a; border-top: none; padding:5px; background-color:#1f182a">RATE<br></span>';
                 }
-                seenButtons = document.getElementsByClassName("seenbutton")
-                for( i = 0; i < counter; i++ ) {
-                    seenButtons[i].innerHTML = '<span style="border: solid #1f182a; border-top: none; padding:5px; background-color:#1f182a">SEEN<br></span>';
+                if (counter > 3) {
+                    console.log('counter exceeds 3')
+                    document.getElementById("see_more_button").innerHTML = '<a href="">SEE MORE</a>'
                 }
             })
             })}

@@ -206,11 +206,17 @@ h3, h2, h1, h4, p, a {
     padding-bottom: 30px;
 }
 
-.seenbutton {
+#seenbutton_1, #seenbutton_2, #seenbutton_3 {
     margin:auto;
     text-align:center;
     position:relative;
     bottom:10px;
+}
+
+#see_more_button a {
+    float:right;
+    color:#b67db4;
+    text-decoration:none;
 }
 
 .update h4 {
