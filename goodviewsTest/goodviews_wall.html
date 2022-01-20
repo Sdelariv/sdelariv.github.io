@@ -27,19 +27,40 @@
 <div class="centerwrapper">
     <div class="content-left">
         <h2> WANT TO SEE </h2>
-        <div class="poster">
-            <img src="../img/Hamletposter.webp">
+
+        <div class="wts_1">
+            <div class="poster_wts">
+                <img id="wts_poster_1" src="">
+                <p class="seenbutton"></p>
+            </div>
+                <h4 id="wts_title_1"></h4>
+                <p id="wts_releaseYear_1"></p>
+                <p class="genres" id="wts_genres_1"></p>
+                <p id="wts_director_1"></p>
         </div>
-        <p>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-            </p>
-        <div class="poster">
-            <img src="../img/Hamletposter.webp">
+
+        <div class="wts_2">
+            <div class="poster_wts">
+                <img id="wts_poster_2" src="">
+                <p class="seenbutton"></p>
+            </div>
+            <h4 id="wts_title_2"></h4>
+            <p id="wts_releaseYear_2"></p>
+            <p class="genres" id="wts_genres_2"></p>
+            <p id="wts_director_2"></p>
         </div>
-        <p>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-            <br><br>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+
+        <div class="wts_3">
+            <div class="poster_wts">
+                <img id="wts_poster_3" src="">
+                <p class="seenbutton"></p>
+            </div>
+            <h4 id="wts_title_3"></h4>
+            <p id="wts_releaseYear_3"></p>
+            <p class="genres" id="wts_genres_3"></p>
+            <p id="wts_director_3"></p>
+        </div>
+
     </div>
     <div class="filmwrapper-outer">
         <div class="filmwrapper-center">
@@ -70,13 +91,11 @@
 
 <script>
     var html ='';
-    var ratingIds = [];
+    var username = "sdelariv";
 
     fetch_ratings_and_comments = function() {
         console.log('FETCHING RATINGS CALLED');
-        var ratingIds = [];
 
-        let username = "sdelariv"
         fetch("http://localhost:8080/rating/findByUsername?username=" + username)
             .then( resp => resp.json() )
             .then( ratings => { ratings.forEach( rating => {
@@ -102,6 +121,37 @@
     }
 
     fetch_ratings_and_comments();
+
+    fillInWantToSees();
+
+    function fillInWantToSees() {
+        var counter = 0;
+
+        fetch("http://localhost:8080/wantToSee/" + username)
+            .then( resp => resp.json() )
+            .then( wantToSees => { wantToSees.forEach( wts => {
+                if (counter < 4) {
+                    counter = counter + 1;
+                    console.log(JSON.stringify(wts));
+                    title = wts.film.title;
+                    releaseYear = wts.film.releaseYear;
+                    directors = getNamesString(wts.film.director).slice(0,-2);
+                    posterUrl = wts.film.posterUrl;
+                    genres = getNamesString(wts.film.genres).slice(0,-2);
+
+                    document.getElementById("wts_title_" + counter).innerHTML = title + '<span style="font-size:small"> (' + releaseYear + ')</span>'
+                    document.getElementById("wts_director_" + counter).innerHTML = 'Directed by ' + directors;
+                    document.getElementById("wts_genres_" + counter).innerHTML = '<i>' + genres + '</i>';
+                    document.getElementById("wts_poster_" + counter).setAttribute("src",posterUrl);
+
+
+                }
+                seenButtons = document.getElementsByClassName("seenbutton")
+                for( i = 0; i < counter; i++ ) {
+                    seenButtons[i].innerHTML = '<span style="border: solid #1f182a; border-top: none; padding:5px; background-color:#1f182a">SEEN<br></span>';
+                }
+            })
+            })}
 
     function createCommentHTML(commentList) {
         var commentString = '';

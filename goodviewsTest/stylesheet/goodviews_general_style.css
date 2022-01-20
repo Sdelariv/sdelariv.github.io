@@ -176,13 +176,46 @@ h3, h2, h1, h4, p, a {
     letter-spacing:2px;
 }
 
-.update h4 {
-    font-family:'Pathway Gothic One', Arial, sans-serif;
-    font-size:17px;
+
+.content-left h4 {
+    margin-bottom:0;
+    padding-bottom:0;
+    margin-top:0;
+    padding-top:0;
 }
 
 .content-left p {
+    font-size: 13px;
     color:lightgrey;
+}
+
+.poster_wts {
+    float:left;
+    width:50%;
+    text-align:center;
+    margin-right:10px;
+}
+
+.poster_wts img {
+    width:90%;
+}
+
+.wts_1, .wts_2, .wts_3 {
+    overflow:hidden;
+    padding-top:0;
+    padding-bottom: 30px;
+}
+
+.seenbutton {
+    margin:auto;
+    text-align:center;
+    position:relative;
+    bottom:10px;
+}
+
+.update h4 {
+    font-family:'Pathway Gothic One', Arial, sans-serif;
+    font-size:17px;
 }
 
 .content-right p {
