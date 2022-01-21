@@ -2,8 +2,13 @@ html, body {
     margin:0;
     padding:0;
 }
+
+/* TOP NAV */
+
 .topnavwrapper {
     background: #1f182a linear-gradient(12deg, #1f182a 34%, #34254b 55%, #0d0a15 82%);
+
+    width:100%;
 
     margin-top: 2%;
     border-top: solid 5px #82758c;
@@ -11,38 +16,95 @@ html, body {
 
 
     box-shadow: 0 0px 50px black;
-    z-index:999;
 
 }
 
 .topnavzone {
-    width:64%;
+    width:62%;
     min-width:1000px;
     margin:auto;
+    overflow:hidden;
+    padding-left:2%;
+    padding-right:2%;
 }
+
 
 .logo {
     color:white;
     padding-top:15px;
-    padding-left:2%;
     float:left;
-    font-family:"Pathway Gothic One";
+    font-family:'Pathway Gothic One', Arial, sans-serif;
     font-size:34px;
     letter-spacing:2px;
 }
 
 .topnav {
+    width:34%;
     overflow:hidden;
     color: white;
     height: 45px;
     padding-top:30px;
-    padding-left:5px;
+    padding-left:10px;
 
 }
 
+.searchbar{
+    width:18%;
+    float:right;
+    height: 45px;
+    padding-top:15px;
+    padding-left:5px;
+}
+
+.notifications {
+    width:14%;
+    float:right;
+    height: 45px;
+    padding-top:15px;
+    padding-left:15px;
+    color:white;
+    margin:auto;
+}
+
+.logged_in {
+    width:11%;
+    float:right;
+    height: 100%;
+    color:white;
+    padding-top:5px;
+    background-image:url(../../img/filmroll.png);
+    background-size:cover;
+    background-position:center;
+}
+
+#username_top {
+    font-size:0.85vw;
+}
+
+.logged_in p {
+    word-wrap:break-word;
+    text-align:center;
+    padding-left:3px;
+    padding-right:3px;
+}
+
+#logout {
+    padding-left:10px;
+    padding-right:10px;
+    font-size:1.6vh;
+}
+
+#logout:hover {
+    background-color: black;
+}
+
+#logout:active {
+    border-top: solid #82758c;
+    border-left: solid #82758c;
+}
+
 .topnav a {
-    width:3px;
-    padding: 15px;
+    padding: 13px;
     text-decoration:none;
     color:lightgrey;
 }
@@ -57,6 +119,41 @@ html, body {
     color:white;
 }
 
+input {
+    margin-top:10px;
+    padding-top:5px;
+    padding-bottom:5px;
+    background-color: #1f182a;
+    border:none;
+    color:lightgrey;
+    font-family:'Pathway Gothic One', Arial, sans-serif;
+    font-size:18px;
+    width:80%;
+}
+
+button {
+    background:none;
+    color:#82758c;
+    border:none;
+    width:4%;
+    padding:8px;
+    padding-right:20px;
+}
+
+button:hover {
+    background-color:black;
+}
+
+button:active {
+    border-top: solid #82758c;
+    border-left: solid #82758c;
+}
+
+input:focus {
+    outline: solid #c09dd5;
+}
+
+/*CENTER WRAPPERS*/
 
 body {
     background-position: center;
@@ -67,7 +164,7 @@ body {
 
 .centerwrapper {
     margin:auto;
-    width:62%;
+    width:64%;
     color:white;
     overflow:hidden;
     min-width:1000px;
@@ -75,7 +172,7 @@ body {
 }
 
 .content-left {
-    padding-left:1%;
+    margin-left:2%;
     padding-top:1%;
     width:21%;
     padding-right:3%;
@@ -92,6 +189,8 @@ body {
 .content-center {
     padding:2%;
 }
+
+/*MIDDLE*/
 
 .filmwrapper-outer {
     width:46%;
@@ -116,6 +215,7 @@ body {
     padding-right:20px;
 }
 
+/*FOOTER*/
 
 .footer {
     background-color: #1f182a;
@@ -137,6 +237,8 @@ body {
     text-decoration:none;
     font-family:'Pathway Gothic One', Arial, sans-serif;
 }
+
+/*CONTENT*/
 
 .update, .comments {
     border-top:solid 15px #1f182a;
@@ -230,6 +332,7 @@ h3, h2, h1, h4, p, a {
 }
 
 
+
 .update h4 {
     font-family:'Pathway Gothic One', Arial, sans-serif;
     font-size:17px;
@@ -242,3 +345,4 @@ h3, h2, h1, h4, p, a {
 .genres {
     color:grey;
 }
+
