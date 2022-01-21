@@ -116,7 +116,7 @@
 
 <script>
     var html ='';
-    var username = "bibi";
+    var username = "sdelariv";
 
     fetch_ratings_and_comments = function() {
         console.log('FETCHING RATINGS CALLED');
@@ -190,9 +190,14 @@
     function createCommentHTML(commentList) {
         var commentString = '';
         commentList.forEach(c => {
-            if (c != null && c.user != null && c.user.username != null) commentString = commentString +
-                '<p><strong>' + c.user.username + '</strong>: ' + c.comment + '</p>'      });
-        commentString = '<div class="comments"> <p style="color:grey">COMMENTS:</p> ' + commentString + '</div>'
+            if (c != null && c.user != null && c.user.username != null) {
+                var dateOfComment = new Date(c.dateTime);
+                commentString = commentString +
+                    '<p><strong>' + c.user.username + '</strong>: ' + c.comment +
+                    '<span style="font-size:x-small; color:#756581; float:right;"> ' + dateOfComment.toLocaleString() + '</span></p>'
+            }
+        });
+        commentString = '<div class="comments"><p style="font-size:smaller;text-align:center">COMMENTS </p> ' + commentString + '</div>'
         return commentString;
     }
 
@@ -204,6 +209,7 @@
             "id":rating.id,
             "ratingValue":rating.ratingValue,
             "dateOfRating":rating.dateOfRating,
+            "dateOfReview":rating.dateOfReview,
             "review":rating.review,
             "user":rating.user,
             "film":rating.film,
@@ -217,15 +223,16 @@
     function createRatingHTML(rating) {
         console.log('createRatingHTML called');
         if (rating.review == null) {
+            var dateOfRating = new Date(rating.dateOfRating);
             html = html +
                 '<div class="update">\n' +
-                '                        <span style="float:right"><p>' + rating.dateOfRating + '</p></span>' +
+                '                        <p class="update_date">' + dateOfRating.toLocaleDateString()+ '</p>' +
                 '                        <p><span style="color:#b67db4">' + rating.user.username + '</span> has rated a film <span style="color:#b67db4">' + getRatingString(rating.ratingValue) + '</span></p>\n'
 
         } else {
             html = html +
                 '<div class="update">\n' +
-                '                        <span style="float:right"><p>' + rating.dateOfRating + '</p></span>' +
+                '                        <p class="update_date">' + rating.dateOfReview + '</p>' +
                 '                        <p><span style="color:#b67db4">' + rating.user.username + '</span> has reviewed a film </p>\n' +
                 '<p><span style="color:#b67db4">' + getRatingString(rating.ratingValue) + '</span></p>' +
                 '                        <p>"' + rating.review + '"</p>'

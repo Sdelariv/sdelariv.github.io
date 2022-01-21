@@ -259,7 +259,14 @@ body {
 .likes {
     position:absolute;
     bottom:20px;
-    right:20px
+    right:20px;
+}
+
+.update_date {
+    float:right;
+    color:#756581;
+    font-size:smaller;
+    margin-top:20px;"
 }
 
 .comments strong {
