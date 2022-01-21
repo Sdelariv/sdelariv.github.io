@@ -14,7 +14,6 @@ html, body {
     border-top: solid 5px #82758c;
     border-bottom:solid 5px #82758c;
 
-
     box-shadow: 0 0px 50px black;
 
 }
@@ -49,7 +48,8 @@ html, body {
 }
 
 .searchbar{
-    width:18%;
+    display:inline;
+    width:22%;
     float:right;
     height: 45px;
     padding-top:15px;
@@ -57,6 +57,7 @@ html, body {
 }
 
 .notifications {
+    display:inline;
     width:14%;
     float:right;
     height: 45px;
@@ -64,9 +65,11 @@ html, body {
     padding-left:15px;
     color:white;
     margin:auto;
+
 }
 
 .logged_in {
+    display:inline;
     width:11%;
     float:right;
     height: 100%;
