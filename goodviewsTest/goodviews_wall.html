@@ -192,7 +192,7 @@
         commentList.forEach(c => {
             if (c != null && c.user != null && c.user.username != null) commentString = commentString +
                 '<p><strong>' + c.user.username + '</strong>: ' + c.comment + '</p>'      });
-        commentString = '<div class="comments">' + commentString + '</div>'
+        commentString = '<div class="comments"> <p style="color:grey">COMMENTS:</p> ' + commentString + '</div>'
         return commentString;
     }
 
