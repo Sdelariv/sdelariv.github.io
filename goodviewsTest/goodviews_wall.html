@@ -48,6 +48,7 @@
         <h2> WANT TO SEE </h2>
 
         <div class="wts_1">
+            <p id="wts_present">Nothing in Want-To-See list yet.</p>
             <div class="poster_wts">
                 <img id="wts_poster_1" src="">
                 <p id="seenbutton_1"></p>
@@ -151,7 +152,10 @@
         fetch("http://localhost:8080/wantToSee/" + username)
             .then( resp => resp.json() )
             .then( wantToSees => { wantToSees.forEach( wts => {
+
                 counter = counter + 1;
+                document.getElementById("wts_present").innerHTML = '';
+
                 if (counter < 4) {
 
                     title = wts.film.title;
