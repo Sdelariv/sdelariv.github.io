@@ -118,38 +118,74 @@
     var html ='';
     var username = "sdelariv";
 
-    fetch_ratings_and_comments = function() {
+    fetch_updates = function() {
         console.log('FETCHING RATINGS CALLED');
+        var ratingIds = [];
 
-        fetch("http://localhost:8080/rating/findByUsername?username=" + username)
+        fetch("http://localhost:8080/timeline/" + username)
             .then( resp => resp.json() )
-            .then( ratings => { ratings.forEach( rating => {
+            .then( logUpdates => { logUpdates.forEach( logUpdate => {
+                console.log(JSON.stringify(logUpdate))
 
-                var newRating = createRating(rating);
-                console.log(newRating);
+                if (logUpdate.rating != null) {
+                    var newRating = createRating(logUpdate.rating);
+                    console.log(newRating);
 
-                var ratingId = rating.id;
-                var commentString = '';
+                    var ratingId = newRating.id;
+                    var commentString = '';
 
-                fetch("http://localhost:8080/comment/findByRatingId?ratingId=" + ratingId)
-                    .then( resp => resp.json() )
-                    .then(commentList => {
-                        html = createRatingHTML(newRating);
-                        if (commentList.length > 0) {
-                           commentString = createCommentHTML(commentList);
-                            html = html + commentString
-                            console.log('Adding comments for ' + rating.film.title)
-                            document.getElementsByClassName("content-center")[0].innerHTML = html
-                        }
-                    })
+                        fetch("http://localhost:8080/comment/findByRatingId?ratingId=" + ratingId)
+                            .then( resp => resp.json() )
+                            .then(commentList => {
+
+                                if (!ratingIds.includes(ratingId)) {
+                                    console.log('NO')
+                                    if (newRating.user.username === username) {
+                                        html = createLogUpdateWithYouHTML(logUpdate,commentList);
+                                    } else {
+                                        html = createFullRatingHTML(newRating);
+                                        if (commentList.length > 0) {
+                                            commentString = createCommentHTML(commentList);
+                                            html = html + commentString
+                                            console.log('Adding comments for ' + newRating.film.title)
+                                            document.getElementsByClassName("content-center")[0].innerHTML = html
+                                            ratingIds.push(ratingId);
+                                        }
+                                    }
+                                }
+                            })
+                } else {
+                    html = createGeneralLogUpdateHTML(logUpdate);
+                }
+
             })})
     }
 
-    fetch_ratings_and_comments();
+    fetch_updates();
 
     fillInWantToSees();
 
     fillInUsername();
+
+    function createLogUpdateWithYouHTML(logUpdate, commentList) {
+        html = html +
+            '<div class="update"><p>'+ logUpdate.updateString.replace(username + "'s",'your') + '</p>'
+       if (logUpdate.rating != null) {
+           html = createPartialRatingHTML(logUpdate.rating) + '</div>'
+           if (commentList != null && commentList.length > 0) {
+               var commentString = '';
+               commentString = createCommentHTML(commentList);
+               html = html + commentString
+       }}
+
+        return html ;
+    }
+
+    function createGeneralLogUpdateHTML(logUpdate) {
+        html = html +
+            '<div class="update"><p>'+ logUpdate.updateString + '</p></div>'
+        return html;
+    }
 
     function fillInUsername() {
         document.getElementById("username_top").innerHTML = username + '</br>'
@@ -220,7 +256,7 @@
     }
 
 
-    function createRatingHTML(rating) {
+    function createFullRatingHTML(rating) {
         console.log('createRatingHTML called');
         if (rating.review == null) {
             var dateOfRating = new Date(rating.dateOfRating);
@@ -238,6 +274,12 @@
                 '                        <p>"' + rating.review + '"</p>'
         }
 
+        html = createPartialRatingHTML(rating)
+
+        return html;
+    }
+
+    function createPartialRatingHTML(rating) {
         html = html +
             '                        <div class="poster">\n' +
             '                            <img src="' + rating.film.posterUrl + '">\n' +
@@ -248,10 +290,8 @@
             '                        <p> Written by <i>' + getNamesString(rating.film.writer).slice(0,-2) + '.</i></p>'
             + addLikes(rating) +
             '</div>'
-
         return html;
     }
-
     function addLikes(rating) {
         console.log('adding Likes for ' + rating.film.title)
         var likes = ''

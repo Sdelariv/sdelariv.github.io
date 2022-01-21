@@ -253,7 +253,10 @@ body {
     padding-left:30px;
     position:relative;
     overflow:hidden;
+}
 
+.comments {
+    border-top:solid 10px rgba(31, 24, 42, 0.51)
 }
 
 .likes {
