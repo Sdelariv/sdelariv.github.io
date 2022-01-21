@@ -113,7 +113,7 @@
 
 <script>
     var html ='';
-    var username = "sdelariv";
+    var username = "bibi";
 
     fetch_ratings_and_comments = function() {
         console.log('FETCHING RATINGS CALLED');
@@ -145,6 +145,12 @@
     fetch_ratings_and_comments();
 
     fillInWantToSees();
+
+    fillInUsername();
+
+    function fillInUsername() {
+        document.getElementById("username_top").innerHTML = username + '</br>'
+    }
 
     function fillInWantToSees() {
         var counter = 0;
