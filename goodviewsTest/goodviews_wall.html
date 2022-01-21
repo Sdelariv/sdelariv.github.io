@@ -116,7 +116,7 @@
 
 <script>
     var html ='';
-    var username = "sdelariv";
+    var username = "bibi";
 
     fetch_ratings_and_comments = function() {
         console.log('FETCHING RATINGS CALLED');
@@ -216,10 +216,22 @@
 
     function createRatingHTML(rating) {
         console.log('createRatingHTML called');
+        if (rating.review == null) {
+            html = html +
+                '<div class="update">\n' +
+                '                        <span style="float:right"><p>' + rating.dateOfRating + '</p></span>' +
+                '                        <p><span style="color:#b67db4">' + rating.user.username + '</span> has rated a film <span style="color:#b67db4">' + getRatingString(rating.ratingValue) + '</span></p>\n'
+
+        } else {
+            html = html +
+                '<div class="update">\n' +
+                '                        <span style="float:right"><p>' + rating.dateOfRating + '</p></span>' +
+                '                        <p><span style="color:#b67db4">' + rating.user.username + '</span> has reviewed a film </p>\n' +
+                '<p><span style="color:#b67db4">' + getRatingString(rating.ratingValue) + '</span></p>' +
+                '                        <p>"' + rating.review + '"</p>'
+        }
+
         html = html +
-            '<div class="update">\n' +
-            '                        <span style="float:right"><p>' + rating.dateOfRating + '</p></span>' +
-            '                        <p><span style="color:#b67db4">' + rating.user.username + '</span> has rated a film <span style="color:#b67db4">' + getRatingString(rating.ratingValue) + '</span></p>\n' +
             '                        <div class="poster">\n' +
             '                            <img src="' + rating.film.posterUrl + '">\n' +
             '                        </div>\n' +
