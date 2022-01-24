@@ -377,3 +377,11 @@ h3, h2, h1, h4, p, a {
     color:var(--pink-purple);
 }
 
+#delete_wts_1, #delete_wts_2, #delete_wts_3 {
+    float:right;
+    color:var(--lightpurple);
+    text-decoration:none;
+    padding-left:3px;
+}
+
+

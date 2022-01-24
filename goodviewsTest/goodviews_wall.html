@@ -49,6 +49,7 @@
 
         <div class="wts_1">
             <p id="wts_present">Nothing in Want-To-See list yet.</p>
+            <a id="delete_wts_1" title="Remove from Want-To-See's" href=""></a>
             <div class="poster_wts">
                 <img id="wts_poster_1" src="">
                 <p id="seenbutton_1"></p>
@@ -60,6 +61,7 @@
         </div>
 
         <div class="wts_2">
+            <a id="delete_wts_2" title="Remove from Want-To-See's" href=""></a>
             <div class="poster_wts">
                 <img id="wts_poster_2" src="">
                 <p id="seenbutton_2"></p>
@@ -71,6 +73,7 @@
         </div>
 
         <div class="wts_3">
+            <a id="delete_wts_3" title="Remove from Want-To-See's" href=""></a>
             <div class="poster_wts">
                 <img id="wts_poster_3" src="">
                 <p id="seenbutton_3"></p>
@@ -318,6 +321,7 @@
                     document.getElementById("wts_genres_" + counter).innerHTML = '<i>' + genres + '</i>';
                     document.getElementById("wts_poster_" + counter).setAttribute("src",posterUrl);
                     document.getElementById("seenbutton_" + counter).innerHTML = '<a id="rate" href="">RATE</a><br>';
+                    document.getElementById("delete_wts_" + counter).innerHTML = ' X';
                 }
                 if (counter > 3) {
                     document.getElementById("see_more_button").innerHTML = '<b><a href="">SEE MORE</a></b>' // TODO: Fill in link to see more of wts's
