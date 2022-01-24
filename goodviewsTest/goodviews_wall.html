@@ -82,6 +82,46 @@
         </div>
 
         <p id="see_more_button"></p>
+        <br>
+
+        <h2> NEWLY RATED FILMS </h2>
+        <br>
+
+        <div class="new_rating_1">
+            <div class="poster_new_rating">
+                <img id="new_rating_poster_1" src="">
+                <p id="new_rating_button_1"></p>
+            </div>
+            <h4 id="new_rating_title_1"></h4>
+            <p id="new_rating_releaseYear_1"></p>
+            <p class="genres" id="new_rating_genres_1"></p>
+            <p id="new_rating_director_1"></p>
+            <p id="new_rating_average_1"></p>
+        </div>
+
+        <div class="new_rating_2">
+            <div class="poster_new_rating">
+                <img id="new_rating_poster_2" src="">
+                <p id="new_rating_button_2"></p>
+            </div>
+            <h4 id="new_rating_title_2"></h4>
+            <p id="new_rating_releaseYear_2"></p>
+            <p class="genres" id="new_rating_genres_2"></p>
+            <p id="new_rating_director_2"></p>
+            <p id="new_rating_average_2"></p>
+        </div>
+
+        <div class="new_rating_3">
+            <div class="poster_new_rating">
+                <img id="new_rating_poster_3" src="">
+                <p id="new_rating_button_3"></p>
+            </div>
+            <h4 id="new_rating_title_3"></h4>
+            <p id="new_rating_releaseYear_3"></p>
+            <p class="genres" id="new_rating_genres_3"></p>
+            <p id="new_rating_director_3"></p>
+            <p id="new_rating_average_3"></p>
+        </div>
 
     </div>
     <div class="filmwrapper-outer">
@@ -100,7 +140,7 @@
             <br><br>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
         <br><br>
 
-        <h2> FRIENDLIST </h2>
+        <h2> YOUR FRIENDLIST </h2>
         <div id="friend_list_bar">
             <p> List of friends comes here.</p>
         </div>
@@ -168,26 +208,32 @@
 
     fillInUsername();
 
+    fillInLatestRatings();
 
 
     function fillInFriendList() {
         fetch("http://localhost:8080/friendship/" + username + "/friendlist")
         .then(resp => resp.json())
         .then(friends => {
-
+            console.log(JSON.stringify(friends));
 
             friends.forEach(friend => {
-                console.log(friend);
-                friendlist_html = createFriendHTML(friend);
-                document.getElementById("friend_list_bar").innerHTML = friendlist_html;
-                console.log(friendlist_html);
+
+                fetch("http://localhost:8080/rating/findNumberByUsername?username=" + friend.username)
+                .then(resp => resp.json())
+                .then(rating => {
+                    friendlist_html = createFriendHTML(friend, rating);
+                    document.getElementById("friend_list_bar").innerHTML = friendlist_html;
+                    console.log(friendlist_html);
+                })
+
+
             })
         })
     }
 
-    function createFriendHTML(friend) {
+    function createFriendHTML(friend, numberOfRatings) {
 
-        var numberOfRatings = 'number-of-ratings'
         console.log('create HTML called for ' + friend.username)
         friendlist_html = friendlist_html +
             '<p> &#9642; ' + friend.username + ' <span style="color:grey">(' + numberOfRatings + ' ratings) </span></p>'
@@ -218,6 +264,35 @@
     function fillInUsername() {
         document.getElementById("username_top").innerHTML = username + '</br>'
     }
+
+    function fillInLatestRatings() {
+        var counter = 0;
+
+        fetch("http://localhost:8080/rating/latestRatings")
+            .then( resp => resp.json() )
+            .then( ratings => { ratings.forEach( rating => {
+                console.log("FETCHING LATEST RATINGS")
+                console.log(rating);
+                counter = counter + 1;
+
+                if (counter < 4) {
+
+                    var title = rating.film.title;
+                    var releaseYear = rating.film.releaseYear;
+                    var directors = getNamesString(rating.film.director).slice(0,-2);
+                    var posterUrl = rating.film.posterUrl;
+                    var genres = getNamesString(rating.film.genres).slice(0,-2);
+                    var average = rating.film.averageRating;
+
+                    document.getElementById("new_rating_poster_" + counter).setAttribute("src",posterUrl);
+                    document.getElementById("new_rating_director_" + counter).innerHTML = 'Directed by ' + directors;
+                    document.getElementById("new_rating_genres_" + counter).innerHTML = '<i>' + genres + '</i>';
+                    document.getElementById("new_rating_button_" + counter).innerHTML = '<a id="rate" href="">RATE</a><br>';
+                    document.getElementById("new_rating_title_" + counter).innerHTML = title + '<span style="font-size:small"> (' + releaseYear + ')</span>';
+                    if (average != null) document.getElementById("new_rating_average_" + counter).innerHTML = getRatingString(average) + ' <br>(avg.rating)'
+                }
+            })
+            })}
 
     function fillInWantToSees() {
         var counter = 0;

@@ -310,7 +310,7 @@ h3, h2, h1, h4, p, a {
     color:lightgrey;
 }
 
-.poster_wts {
+.poster_wts, .poster_new_rating {
     float:left;
     width:50%;
     text-align:center;
@@ -321,13 +321,19 @@ h3, h2, h1, h4, p, a {
     width:90%;
 }
 
-.wts_1, .wts_2, .wts_3 {
+.poster_new_rating img {
+    width:90%;
+}
+
+.wts_1, .wts_2, .wts_3,
+.new_rating_1, .new_rating_2, .new_rating_3 {
     overflow:hidden;
     padding-top:0;
     padding-bottom: 30px;
 }
 
-#seenbutton_1, #seenbutton_2, #seenbutton_3 {
+#seenbutton_1, #seenbutton_2, #seenbutton_3,
+#new_rating_button_1, #new_rating_button_2, #new_rating_button_3 {
     margin:auto;
     text-align:center;
     position:relative;
@@ -339,6 +345,8 @@ h3, h2, h1, h4, p, a {
     color:var(--pink-purple);
     text-decoration:none;
     font-size:14px;
+    margin-top:-20px;
+    padding-top:0;
 }
 
 #rate {
