@@ -12,19 +12,17 @@ fillInFriendList();
 fillInWantToSees();
 fillInUsername();
 fillInLatestRatings();
+fillInNotificationCount();
 
 // METHODS
 
 function fetch_updates() {
-    var counter = 0;
 
     fetch("http://localhost:8080/timeline/" + logged_in_username)
         .then( resp => resp.json() )
         .then( logUpdates => {
             logUpdates.forEach( logUpdate => {
-                console.log(JSON.stringify(logUpdate));
 
-                counter = counter + 1;
 
                 if (logUpdate.type === 'FRIENDS') {
                     wall_html = wall_html + createFriendHTML(logUpdate);
@@ -52,6 +50,22 @@ function fetch_updates() {
 
 
 // CREATE HTML
+
+function fillInNotificationCount() {
+    fetch("http://localhost:8080/notifications/findNumberByUsername?username=" + logged_in_username)
+        .then( resp => resp.json() )
+        .then( count => {
+                console.log(JSON.stringify(count));
+                document.getElementById("notifications_icon").innerHTML = '<p>' + count + '</p>'
+        })
+
+    fetch("http://localhost:8080/notifications/findNumberOfFriendRequestsByUsername?username=" + logged_in_username)
+        .then( resp => resp.json() )
+        .then( count => {
+            console.log(JSON.stringify(count));
+            document.getElementById("friendrequest_icon").innerHTML = '<p>' + count + '</p>'
+        })
+}
 
 function createFriendHTML(logUpdate) {
     friendA = logUpdate.user.username;

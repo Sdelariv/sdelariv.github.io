@@ -115,7 +115,7 @@ html, body {
     margin-top:12px;
 }
 
-.notifications p {
+#notifications_icon p, #messages_icon p, #friendrequest_icon p {
     color: white;
     padding-left:5px;
     padding-right:3px;
@@ -438,5 +438,35 @@ h3, h2, h1, h4, p, a {
     text-decoration:none;
     padding-left:3px;
 }
+
+#notification_wrapper, #friendrequests_wrapper, #messages_wrapper {
+    display:none;
+    position:absolute;
+    top:11%;
+    right:19.5%;
+    width:12%;
+    background-color:var(--lightpurple);
+    box-shadow: 0 0px 15px black;
+    padding-left:15px;
+    padding-right:15px;
+}
+
+#notifications_icon:hover, #messages_icon:hover, #friendrequest_icon:hover{
+    background-color:black;
+}
+#notifications_icon:focus + #notification_wrapper{
+    display:block;
+}
+
+#friendrequest_icon:focus + #friendrequests_wrapper{
+    display:block;
+}
+
+#messages_icon:focus + #messages_wrapper{
+    display:block;
+}
+
+
+
 
 
