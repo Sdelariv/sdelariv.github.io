@@ -27,6 +27,7 @@ html, body {
 
     box-shadow: 0 0px 50px black;
 
+
 }
 
 .topnavzone {
@@ -76,7 +77,55 @@ html, body {
     padding-left:15px;
     color:white;
     margin:auto;
+}
 
+#notifications_icon {
+    float:right;
+    background-image:url("/img/notifications.png");
+    background-position:left;
+    background-size:contain;
+    background-repeat:no-repeat;
+    height:24px;
+    width:27px;
+    margin-right:18px;
+    margin-top:12px;
+}
+
+#friendrequest_icon {
+    float:right;
+    background-image:url("/img/friendrequests.png");
+    background-position:left;
+    background-size:contain;
+    background-repeat:no-repeat;
+    height:24px;
+    width:27px;
+    margin-right:18px;
+    margin-top:12px;
+}
+
+#messages_icon {
+    float:right;
+    background-image:url("/img/messages.png");
+    background-position:left;
+    background-size:contain;
+    background-repeat:no-repeat;
+    height:24px;
+    width:27px;
+    margin-right:18px;
+    margin-top:12px;
+}
+
+.notifications p {
+    color: white;
+    padding-left:5px;
+    padding-right:3px;
+    text-align:center;
+
+    background-color: purple;
+    border-radius:500px;
+    margin-top: -13px;
+    margin-right:0px;
+    float:right;
 }
 
 .logged_in {
@@ -234,7 +283,7 @@ body {
 .footer {
     background-color: var(--filmwrapper-purple);
     padding:10px;
-    width:100%;
+    width:98.6%;
     overflow:hidden;
     position:relative;
     bottom:0;

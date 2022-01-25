@@ -218,7 +218,7 @@ function fillInFriendList() {
                 fetch("http://localhost:8080/rating/findNumberByUsername?username=" + friend.username)
                     .then(resp => resp.json())
                     .then(rating => {
-                        friendlist_html = createFriendHTML(friend, rating);
+                        friendlist_html = createFriendListHTML(friend, rating);
                         document.getElementById("friend_list_bar").innerHTML = friendlist_html;
                         console.log(friendlist_html);
                     })
@@ -226,6 +226,16 @@ function fillInFriendList() {
 
             })
         })
+}
+
+
+function createFriendListHTML(friend, numberOfRatings) {
+
+    console.log('create HTML called for ' + friend.username)
+    friendlist_html = friendlist_html +
+        '<p> &#9642; ' + friend.username + ' <span style="color:grey">(' + numberOfRatings + ' ratings) </span></p>'
+
+    return friendlist_html
 }
 
 
@@ -247,9 +257,9 @@ function fillInLatestRatings() {
 
                 var title = rating.film.title;
                 var releaseYear = rating.film.releaseYear;
-                var directors = getNamesString(rating.film.director).slice(0,-2);
+                var directors = getNamesString(rating.film.director);
                 var posterUrl = rating.film.posterUrl;
-                var genres = getNamesString(rating.film.genres).slice(0,-2);
+                var genres = getNamesString(rating.film.genres);
                 var average = rating.film.averageRating;
 
                 document.getElementById("new_rating_poster_" + counter).setAttribute("src",posterUrl);
@@ -276,9 +286,9 @@ function fillInWantToSees() {
 
                 title = wts.film.title;
                 releaseYear = wts.film.releaseYear;
-                directors = getNamesString(wts.film.director).slice(0,-2);
+                directors = getNamesString(wts.film.director);
                 posterUrl = wts.film.posterUrl;
-                genres = getNamesString(wts.film.genres).slice(0,-2);
+                genres = getNamesString(wts.film.genres);
 
 
                 document.getElementById("wts_title_" + counter).innerHTML = title + '<span style="font-size:small"> (' + releaseYear + ')</span>'
@@ -286,7 +296,7 @@ function fillInWantToSees() {
                 document.getElementById("wts_genres_" + counter).innerHTML = '<i>' + genres + '</i>';
                 document.getElementById("wts_poster_" + counter).setAttribute("src",posterUrl);
                 document.getElementById("seenbutton_" + counter).innerHTML = '<a id="rate" href="">RATE</a><br>';
-                document.getElementById("delete_wts_" + counter).innerHTML = ' x';
+                document.getElementById("delete_wts_" + counter).innerHTML = ' X';
             }
             if (counter > 3) {
                 document.getElementById("see_more_button").innerHTML = '<b><a href="">SEE MORE</a></b>' // TODO: Fill in link to see more of wts's
@@ -295,7 +305,9 @@ function fillInWantToSees() {
         })}
 
 
+function addNotificationNumber() {
 
+}
 
 
 
