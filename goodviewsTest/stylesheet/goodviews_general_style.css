@@ -11,6 +11,7 @@ html, body {
     --wts:linear-gradient(20deg, #070e0e 34%, #1f1f26 55%, #070b0c 82%);
     --comment:linear-gradient(20deg, #11060d 34%, #261f21 55%, #10080d 82%);
     --friend:linear-gradient(20deg, #101311 34%, #171c1a 55%, #151717 82%);
+    --comments:linear-gradient(20deg, #09030c 34%, #111113 55%, #0a080c 82%);
 }
 
 /* TOP NAV */

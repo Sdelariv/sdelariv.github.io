@@ -201,7 +201,7 @@ function createCommentHTML(commentList) {
                 '<span style="font-size:x-small; color:#756581; float:right;"> ' + dateOfComment.toLocaleString() + '</span></p>'
         }
     });
-    commentString = '<div class="comments"  style="background-color:#0e0e0e"><p style="font-size:smaller;text-align:center">COMMENTS </p> ' + commentString + '</div>'
+    commentString = '<div class="comments"  style="background:var(--comments)"><p style="font-size:smaller;text-align:center">COMMENTS </p> ' + commentString + '</div>'
 
     return commentString;
 }
