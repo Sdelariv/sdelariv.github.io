@@ -443,12 +443,15 @@ h3, h2, h1, h4, p, a {
     display:none;
     position:absolute;
     top:11%;
-    right:19.5%;
-    width:12%;
+    width:200px;
     background-color:var(--lightpurple);
     box-shadow: 0 0px 15px black;
     padding-left:15px;
     padding-right:15px;
+    font-size:14px;
+    z-index:999;
+    margin-right:20px;
+    margin-left:0;
 }
 
 #notifications_icon:hover, #messages_icon:hover, #friendrequest_icon:hover{

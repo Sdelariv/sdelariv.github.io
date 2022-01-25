@@ -13,6 +13,8 @@ fillInWantToSees();
 fillInUsername();
 fillInLatestRatings();
 fillInNotificationCount();
+fillInNotifications(); // Needs to be on click
+fillInFriendRequests();
 
 // METHODS
 
@@ -55,15 +57,45 @@ function fillInNotificationCount() {
     fetch("http://localhost:8080/notifications/findNumberByUsername?username=" + logged_in_username)
         .then( resp => resp.json() )
         .then( count => {
-                console.log(JSON.stringify(count));
-                document.getElementById("notifications_icon").innerHTML = '<p>' + count + '</p>'
+            if (count > 0) document.getElementById("notifications_icon").innerHTML = '<p>' + count + '</p>'
         })
 
     fetch("http://localhost:8080/notifications/findNumberOfFriendRequestsByUsername?username=" + logged_in_username)
         .then( resp => resp.json() )
         .then( count => {
-            console.log(JSON.stringify(count));
-            document.getElementById("friendrequest_icon").innerHTML = '<p>' + count + '</p>'
+            if (count > 0) document.getElementById("friendrequest_icon").innerHTML = '<p>' + count + '</p>'
+        })
+}
+
+function fillInNotifications() {
+    fetch("http://localhost:8080/notifications/findTenNotifications?username=" + logged_in_username)
+        .then( resp => resp.json() )
+        .then( notifications => {
+            var notification_html = '';
+            notifications.forEach(notification => {
+                if (!notification.seen) notification_html = notification_html + '<p>' + notification.message + '</p>';
+                if (notification.seen) notification_html = notification_html + '<p style="color:grey">' + notification.message + '</p>';
+            })
+
+            notification_html = notification_html + '<a href="" style="color:black;font-size:small;text-shadow: none;text-decoration:none"> SEE MORE NOTIFICATIONS </a><br> <br>'
+
+            document.getElementById("notification_wrapper").innerHTML =  notification_html
+        })
+}
+
+function fillInFriendRequests() {
+    fetch("http://localhost:8080/notifications/findFriendRequests?username=" + logged_in_username)
+        .then( resp => resp.json() )
+        .then( notifications => {
+            var notification_html = '';
+            notifications.forEach(notification => {
+
+                if (!notification.seen) notification_html = notification_html + '<p>' + notification.message + '</p>';
+                if (notification.seen) notification_html = notification_html + '<p style="color:grey">' + notification.message + '</p>';
+                notification_html = notification_html + '<p><a href="">ACCEPT</a> | <a href="""> DECLINE </u></p>'
+            })
+
+            document.getElementById("friendrequests_wrapper").innerHTML =  notification_html
         })
 }
 
