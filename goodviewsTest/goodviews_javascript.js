@@ -1,7 +1,7 @@
 // GENERAL VARIABLES
 
 var wall_html ='';
-var logged_in_username = "bibi";
+var logged_in_username = "sdelariv";
 var friendlist_html = '';
 var ratingid_list = []
 
