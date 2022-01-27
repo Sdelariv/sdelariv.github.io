@@ -1,7 +1,7 @@
 // GENERAL VARIABLES
 
 var wall_html ='';
-var logged_in_username = "sdelariv";
+var logged_in_username = "bibi";
 var friendlist_html = '';
 var ratingid_list = []
 
@@ -25,6 +25,7 @@ function fetch_updates() {
         .then( logUpdates => {
             logUpdates.forEach( logUpdate => {
 
+                console.log(logUpdate);
 
                 if (logUpdate.type === 'FRIENDS') {
                     wall_html = wall_html + createFriendHTML(logUpdate);
@@ -100,15 +101,44 @@ function fillInFriendRequests() {
 }
 
 function createFriendHTML(logUpdate) {
-    friendA = logUpdate.user.username;
-    friendB = logUpdate.otherUser.username;
+    friendA = 'unknownUser';
+    friendB = 'unknownUser';
+    if (logUpdate.user != null && logUpdate.user.username != null) friendA = logUpdate.user.username;
+    if (logUpdate.otherUser != null && logUpdate.otherUser.username != null)  friendB = logUpdate.otherUser.username;
+
 
     if (friendA === logged_in_username) friendA = 'you';
     if (friendB === logged_in_username) friendB = 'you';
 
-    html = '<div class="update" style="background:var(--friend)"><p><span class="color_pink-purple">'+ friendA + '</span> has become friends with <span class="color_pink-purple">'+ friendB + '</span> </p></div>'
+    html =  '<div class="update" style="background:var(--friend)">' +
+        '<p class="update_date">' + createTimeStamp(logUpdate.dateTime) + '</p>' +
+        '<p><span class="color_pink-purple">'+ friendA + '</span> has become friends with <span class="color_pink-purple">'+ friendB + '</span> </p>' +
+        '</div>'
     return html;
 }
+
+function createTimeStamp(dt) {
+    var dateTime = new Date(dt);
+    var now = new Date();
+    var date_html = ''
+    if (datesAreOnSameDay(dateTime,now)) {
+        date_html = 'today';
+    } else {
+        date_html = dateTime.toLocaleDateString()
+    }
+    return date_html;
+}
+
+function datesAreOnSameDay(first, second) {
+    if (first.getFullYear() === second.getFullYear() &&
+        first.getMonth() === second.getMonth() &&
+        first.getDate() === second.getDate()) {
+        return true;
+    }
+
+    return false;
+}
+
 
 function createNewCommentHTML(logUpdate) {
     var html = '';
@@ -122,10 +152,10 @@ function createNewCommentHTML(logUpdate) {
     if (ratingUser === logged_in_username  + '\'s') ratingUser = 'your'
 
     // New Comment heading
-    html = '<div class="update"  style="background:var(--comment)"><p><span class="color_pink-purple">' + logUpdate.user.username + '</span> has commented on ' + ratingUser + ' rating</p>'
+    html = '<div class="update"  style="background:var(--comment)"><p><span class="color_pink-purple">' + logUpdate.user.username + '</span> has commented on <br><br>' + ratingUser + ' rating: ' + getRatingString(logUpdate.rating.ratingValue) + '</p>'
 
     // Film info
-    html = html + createFilmInfo(rating.film) + addLikes(rating) + '</div>'
+    html = html + createFilmInfo(rating.film, logUpdate.userWantsToSee, logUpdate.userHasRated) + addLikes(rating) + '</div>'
 
     // Adding comments
     html = html + createCommentHTML(commentList);
@@ -135,10 +165,12 @@ function createNewCommentHTML(logUpdate) {
 
 function createWtsHTML(logUpdate) {
     var html = '<div class="update" style="background:var(--wts)">'
+        + '<p class="update_date">' + createTimeStamp(logUpdate.dateTime)  + '</p>'
         + '<p><span class="color_pink-purple">' + logUpdate.user.username + '</span> wants to see ' + logUpdate.film.title + '</p>';
 
+
     // Add filminfo
-    html = html + createFilmInfo(logUpdate.film) + '</div>'
+    html = html + createFilmInfo(logUpdate.film, logUpdate.userWantsToSee, logUpdate.userHasRated) + '</div>'
 
     return html;
 }
@@ -149,14 +181,16 @@ function createRatingHTML(logUpdate) {
     var commentList = logUpdate.commentList;
     var html = '';
 
-    // Rating or Review
-    html = html + createRatingHeading(rating);
+    if (!ratingid_list.includes(logUpdate.rating.id)) {
+        // Rating or Review
+        html = html + createRatingHeading(rating);
 
-    // Film info
-    html = html + createFilmInfo(rating.film) + addLikes(rating) + '</div>'
+        // Film info
+        html = html + createFilmInfo(rating.film, logUpdate.userWantsToSee, logUpdate.userHasRated) + addLikes(rating) + '</div>'
 
-    // Adding comments
-    html = html + createCommentHTML(commentList);
+        // Adding comments
+        html = html + createCommentHTML(commentList);
+    }
 
     return html;
 }
@@ -165,16 +199,15 @@ function createRatingHeading(rating) {
     var html = '';
 
     if (rating.review == null) {
-        var dateOfRating = new Date(rating.dateOfRating);
         html = html +
             '<div class="update" style="background:var(--rating)">\n' +
-            '                        <p class="update_date">' + dateOfRating.toLocaleDateString()+ '</p>' +
+            '                        <p class="update_date">' + createTimeStamp(rating.dateOfRating)+ '</p>' +
             '                        <p><span class="color_pink-purple">' + rating.user.username + '</span> has rated a film <span class="color_pink-purple">' + getRatingString(rating.ratingValue) + '</span></p>\n'
 
     } else {
         html = html +
             '<div class="update" style="background:var(--rating)">\n' +
-            '                        <p class="update_date">' + rating.dateOfReview + '</p>' +
+            '                        <p class="update_date">' + createTimeStamp(rating.dateOfReview) + '</p>' +
             '                        <p><span class="color_pink-purple">' + rating.user.username + '</span> has reviewed a film </p>\n' +
             '<p><span class="color_pink-purple">' + getRatingString(rating.ratingValue) + '</span></p>' +
             '                        <p>"' + rating.review + '"</p>'
@@ -182,27 +215,54 @@ function createRatingHeading(rating) {
     return html;
 }
 
-function createFilmInfo(film) {
+function createFilmInfo(film, userWantsToSee, userHasRated) {
     html =
         '                        <div class="poster">\n' +
         '                            <img src="' + film.posterUrl + '">\n' +
         '                        </div>\n' +
         '                        <h4 style="font-size:25px">' + film.title + ' <span style="font-size:small">(' + film.releaseYear + ')</span></h4>\n' +
         '                        <p style="margin-top:-25px; color:var(--pink-purple)"> <i>' + getNamesString(film.genres) + '.</i></p>' +
+        createRateAndWtsButtons(userWantsToSee,userHasRated) +
         '                        <p> Directed by <i>' + getNamesString(film.director) + '.</i></p>' +
         '                        <p> Written by <i>' + getNamesString(film.writer) + '.</i></p>'
 
     return html;
 }
 
+function createRateAndWtsButtons(userWantsToSee,userHasRated) {
+    var button_html = ''
+    console.log(userHasRated);
+
+    if (userHasRated === -1){
+        button_html = button_html + '<button>RATE</button>';
+    } else {
+        button_html = button_html + '<p class="your_rating">YOUR RATING: ' + getRatingString(userHasRated) +'</p>'
+    }
+
+    if (!userWantsToSee && userHasRated === -1) {
+        button_html = button_html + '<button>WANT TO SEE</button>';
+    }
+
+    return button_html;
+}
 
 function getRatingString(ratingValue) {
+    var half_star = '<span class="fa fa-star-half-o"></span> '//'&#xf123; ';
+    var star = '<span class="fa fa-star checked"></span> ' // '&#xf123; '; /* &#9733 */
+    var empty_star = '<span class="fa fa-star-o"></span> '; // '&#9734
     var ratingString = ''
-    if (ratingValue >= 20) ratingString = '&#9733 &#9734 &#9734 &#9734 &#9734'
-    if (ratingValue >= 40) ratingString = '&#9733 &#9733 &#9734 &#9734 &#9734'
-    if (ratingValue >= 60) ratingString = '&#9733 &#9733 &#9733 &#9734 &#9734'
-    if (ratingValue >= 80) ratingString = '&#9733 &#9733 &#9733 &#9733 &#9734'
-    if (ratingValue > 99) ratingString = '&#9733 &#9733 &#9733 &#9733 &#9733 '
+
+    if (ratingValue < 10) ratingString = empty_star + empty_star + empty_star + empty_star + empty_star;
+    if (ratingValue >= 10) ratingString = half_star + empty_star + empty_star + empty_star + empty_star;
+    if (ratingValue >= 20) ratingString = star + empty_star + empty_star + empty_star + empty_star;
+    if (ratingValue >= 30) ratingString = star + half_star + empty_star + empty_star + empty_star;
+    if (ratingValue >= 40) ratingString = star + star + empty_star + empty_star + empty_star;
+    if (ratingValue >= 50) ratingString = star + star + half_star + empty_star + empty_star;
+    if (ratingValue >= 60) ratingString = star + star + star + empty_star + empty_star;
+    if (ratingValue >= 70) ratingString = star + star + star + half_star + empty_star;
+    if (ratingValue >= 80) ratingString = star + star + star + star + empty_star;
+    if (ratingValue >= 90) ratingString = star + star + star + star + half_star;
+    if (ratingValue === 100) ratingString = star + star + star + star + star;
     return ratingString;
 }
 
@@ -212,10 +272,14 @@ function getUsernames(users) {
     return usernames.slice(0, -2) ;
 }
 
-function getNamesString(object)
-{
+function getNamesString(object) {
+    var counter = 0;
     var string = '';
-    object.forEach(o => string = string + o.name + ", ")
+    object.forEach(o => {
+        if (counter < 3) string = string + o.name + ", "
+        if (counter === 3) string = string + "etc..."
+        counter = counter + 1;
+    })
 
     return string.slice(0,-2);
 }
@@ -257,7 +321,6 @@ function fillInFriendList() {
     fetch("http://localhost:8080/friendship/" + logged_in_username + "/friendlist")
         .then(resp => resp.json())
         .then(friends => {
-            console.log(JSON.stringify(friends));
 
             friends.forEach(friend => {
 
@@ -266,7 +329,6 @@ function fillInFriendList() {
                     .then(rating => {
                         friendlist_html = createFriendListHTML(friend, rating);
                         document.getElementById("friend_list_bar").innerHTML = friendlist_html;
-                        console.log(friendlist_html);
                     })
 
 
@@ -296,7 +358,6 @@ function fillInLatestRatings() {
         .then( resp => resp.json() )
         .then( ratings => { ratings.forEach( rating => {
             console.log("FETCHING LATEST RATINGS")
-            console.log(rating);
             counter = counter + 1;
 
             if (counter < 4) {
