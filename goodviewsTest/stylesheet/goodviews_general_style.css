@@ -433,12 +433,7 @@ h3, h2, h1, h4, p, a {
     color:var(--pink-purple);
 }
 
-#delete_wts_1, #delete_wts_2, #delete_wts_3 {
-    float:right;
-    color:var(--lightpurple);
-    text-decoration:none;
-    padding-left:3px;
-}
+
 
 #notification_wrapper, #friendrequests_wrapper, #messages_wrapper {
     display:none;
@@ -501,6 +496,32 @@ h3, h2, h1, h4, p, a {
     color:var(--lightpurple);
 }
 
+#delete_wts_1, #delete_wts_2, #delete_wts_3{
+    float:right;
+    color:var(--lightpurple);
+    padding:0;
+    margin:0;
+    width:20px;
+    height:20px;
+}
+
+.delete_wts_button  {
+    padding:3px;
+    width:20px;
+    height:20px;
+
+}
+
+.delete_wts_button p {
+    font-family:'Pathway Gothic One', Arial, sans-serif;
+    color:white;
+    padding:0;
+    margin:0;
+}
+
+.delete_wts_button:hover {
+    background-color:var(--filmwrapper-purple);
+}
 
 
 

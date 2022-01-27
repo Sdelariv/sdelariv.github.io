@@ -25,8 +25,6 @@ function fetch_updates() {
         .then( logUpdates => {
             logUpdates.forEach( logUpdate => {
 
-                console.log(logUpdate);
-
                 if (logUpdate.type === 'FRIENDS') {
                     wall_html = wall_html + createFriendHTML(logUpdate);
                 }
@@ -222,29 +220,34 @@ function createFilmInfo(film, userWantsToSee, userHasRated) {
         '                        </div>\n' +
         '                        <h4 style="font-size:25px">' + film.title + ' <span style="font-size:small">(' + film.releaseYear + ')</span></h4>\n' +
         '                        <p style="margin-top:-25px; color:var(--pink-purple)"> <i>' + getNamesString(film.genres) + '.</i></p>' +
-        createRateAndWtsButtons(userWantsToSee,userHasRated) +
+        createRateAndWtsButtons(userWantsToSee, userHasRated, film) +
         '                        <p> Directed by <i>' + getNamesString(film.director) + '.</i></p>' +
         '                        <p> Written by <i>' + getNamesString(film.writer) + '.</i></p>'
 
     return html;
 }
 
-function createRateAndWtsButtons(userWantsToSee,userHasRated) {
+function createRateAndWtsButtons(userWantsToSee, userHasRated, film) {
     var button_html = ''
-    console.log(userHasRated);
+    var filmId = film.id;
 
     if (userHasRated === -1){
-        button_html = button_html + '<button>RATE</button>';
+        button_html = button_html +
+            '<button>RATE</button>';
     } else {
-        button_html = button_html + '<p class="your_rating">YOUR RATING: ' + getRatingString(userHasRated) +'</p>'
+        button_html = button_html +
+            '<p class="your_rating">YOUR RATING: ' + getRatingString(userHasRated) +'</p>'
     }
 
     if (!userWantsToSee && userHasRated === -1) {
-        button_html = button_html + '<button>WANT TO SEE</button>';
+        button_html = button_html +
+            '<button id="wts_button_' + filmId + '" type="button" onclick="addToWantToSee(logged_in_username,\'' + filmId+ '\');">WANT TO SEE</button>';
     }
 
     return button_html;
 }
+
+
 
 function getRatingString(ratingValue) {
     var half_star = '<span class="fa fa-star-half-o"></span> '//'&#xf123; ';
@@ -403,7 +406,7 @@ function fillInWantToSees() {
                 document.getElementById("wts_genres_" + counter).innerHTML = '<i>' + genres + '</i>';
                 document.getElementById("wts_poster_" + counter).setAttribute("src",posterUrl);
                 document.getElementById("seenbutton_" + counter).innerHTML = '<a id="rate" href="">RATE</a><br>';
-                document.getElementById("delete_wts_" + counter).innerHTML = ' X';
+                document.getElementById("delete_wts_" + counter).innerHTML = createDeleteButton(wts.id);
             }
             if (counter > 3) {
                 document.getElementById("see_more_button").innerHTML = '<b><a href="">SEE MORE</a></b>' // TODO: Fill in link to see more of wts's
@@ -412,8 +415,52 @@ function fillInWantToSees() {
         })}
 
 
-function addNotificationNumber() {
 
+function addToWantToSee(username,filmId) {
+    console.log(username + ' wants to see ' + filmId);
+    var data = {
+        "username": username,
+        "filmId": filmId
+    }
+
+    fetch("http://localhost:8080/wantToSee/createWTS", {
+        method: 'POST',
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
+    }).then(resp => {
+        document.getElementById("wts_button_" + filmId).innerHTML = '';
+        console.log(resp);
+        fillInWantToSees();
+    })
+}
+
+function createDeleteButton(filmId) {
+    var delete_button_html = '' +
+        '<button id="wts_button_' + filmId + '" class="delete_wts_button" type="button" title="Remove from Want-To-See\'s" onclick="deleteFromWts(logged_in_username,\'' + filmId + '\');"><p>X</p></button>';
+
+    return delete_button_html;
+}
+
+function deleteFromWts(username, wtsId) {
+    console.log(username + ' no longer wants to see ' + wtsId);
+
+    var data = {
+        "id": wtsId
+    }
+
+    fetch("http://localhost:8080/wantToSee/deleteWTS", {
+        method: 'DELETE',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
+    }).then(resp => {
+        console.log(resp);
+        fillInWantToSees();
+    })
 }
 
 
