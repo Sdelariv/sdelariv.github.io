@@ -1,7 +1,7 @@
 // GENERAL VARIABLES
 
 var wall_html ='';
-var logged_in_username = "waddles";
+var logged_in_username = "bibi";
 var friendlist_html = '';
 var ratingid_list = []
 
@@ -15,6 +15,8 @@ fillInLatestRatings();
 fillInNotificationCount();
 fillInNotifications(); // Needs to be on click
 fillInFriendRequests();
+
+
 
 // METHODS
 
@@ -237,13 +239,14 @@ function createRateAndWtsButtons(userWantsToSee, userHasRated, film) {
             '<button type="button" onclick="createRatePopup(logged_in_username,\'' + filmId + '\');">RATE</button>';
     } else {
         button_html = button_html +
-            '<p class="your_rating">YOUR RATING: ' + getRatingString(userHasRated) +'</p>'
+            '<p class="your_rating" onclick="createRatePopup(logged_in_username,\'' + filmId + '\');">YOUR RATING: ' + getRatingString(userHasRated) +'</p>'
     }
 
     if (!userWantsToSee && userHasRated === -1) {
         button_html = button_html +
             '<button id="wts_button_' + filmId + '" type="button" onclick="addToWantToSee(logged_in_username,\'' + filmId+ '\');">WANT TO SEE</button>';
     }
+
 
     return button_html;
 }
@@ -267,7 +270,8 @@ function getRatingString(ratingValue) {
     if (ratingValue >= 70) ratingString = star + star + star + half_star + empty_star;
     if (ratingValue >= 80) ratingString = star + star + star + star + empty_star;
     if (ratingValue >= 90) ratingString = star + star + star + star + half_star;
-    if (ratingValue === 100) ratingString = star + star + star + star + star;
+    if (ratingValue > 99) ratingString = star + star + star + star + star;
+
     return ratingString;
 }
 
@@ -377,9 +381,9 @@ function fillInLatestRatings() {
                 document.getElementById("new_rating_poster_" + counter).setAttribute("src",posterUrl);
                 document.getElementById("new_rating_director_" + counter).innerHTML = 'Directed by ' + directors;
                 document.getElementById("new_rating_genres_" + counter).innerHTML = '<i>' + genres + '</i>';
-                document.getElementById("new_rating_button_" + counter).innerHTML = '<a id="rate" href="">RATE</a><br>';
+                document.getElementById("new_rating_button_" + counter).innerHTML = '<span id="rate" href="" onclick="createRatePopup(logged_in_username,\'' + rating.film.id + '\');">RATE</span><br>';
                 document.getElementById("new_rating_title_" + counter).innerHTML = title + '<span style="font-size:small"> (' + releaseYear + ')</span>';
-                if (average != null) document.getElementById("new_rating_average_" + counter).innerHTML = getRatingString(average) + ' <br>(avg.rating)'
+                if (average != null) document.getElementById("new_rating_average_" + counter).innerHTML = '<ul class="rating_average">' + getRatingString(average) + ' <br>(avg.rating)</ul>'
             }
         })
         })}
@@ -407,7 +411,7 @@ function fillInWantToSees() {
                 document.getElementById("wts_director_" + counter).innerHTML = 'Directed by ' + directors;
                 document.getElementById("wts_genres_" + counter).innerHTML = '<i>' + genres + '</i>';
                 document.getElementById("wts_poster_" + counter).setAttribute("src",posterUrl);
-                document.getElementById("seenbutton_" + counter).innerHTML = '<a id="rate" href="">RATE</a><br>';
+                document.getElementById("seenbutton_" + counter).innerHTML = '<span id="rate" href="" onclick="createRatePopup(logged_in_username,\'' + wts.film.id + '\');">RATE</span><br>';
                 document.getElementById("delete_wts_" + counter).innerHTML = createDeleteButton(wts.id);
             }
             if (counter > 3) {
@@ -447,14 +451,16 @@ function createDeleteButton(filmId) {
 }
 
 function createRatePopup(username, filmId) {
+
     var pop_up_empty_html =
         '<div id="pop_up_window">' +
         '   <div class="rate_heading">' +
-        '          <button class="delete_rate_button" type="button" title="Close" onclick="closeRatePopup();"><p>X</p></button>' +
+        '          <button class="delete_rate_button" type="button" title="Close" onclick="closeRatePopup();"><p>&nbsp;X&nbsp;</p></button>' +
         '          <p>RATE</p>' +
         '   </div>' +
         '<p><br><br><br><br>Loading Rating...</p>' +
         '</div>'
+
 
     document.getElementById("pop_up_wrapper").innerHTML = pop_up_empty_html;
 
@@ -473,9 +479,10 @@ function createRatePopup(username, filmId) {
 
 function createFilmRatingInfo(rating) {
     var film = rating.film;
+    console.log(film);
 
     html = '<div class="rate_heading">' +
-        '          <button class="delete_rate_button" type="button" title="Close" onclick="closeRatePopup();"><p>X</p></button>' +
+        '          <button class="delete_rate_button" type="button" title="Close" onclick="closeRatePopup();"><p>&nbsp;X&nbsp;</p></button>' +
         '          <p>RATE</p>' +
         '</div>' +
        ' <div class="rating_wrapper">' +
@@ -487,17 +494,30 @@ function createFilmRatingInfo(rating) {
         '                        <ul style="margin-top:-25px">' + film.runTime + 'min  <i style="color:var(--pink-purple)">' + getNamesString(film.genres) + '. </i></ul>';
 
     // RATING
-
     // Your rating
-    if (rating.ratingValue != null) html = html +          '<p class="your_rating">YOUR RATING: ' + getRatingString(rating.ratingValue) +'</p>';
+    if (rating.ratingValue != null) html = html +          '<ul class="your_current_rating">YOUR RATING: <span id="dynamic_rating_value">' + getRatingString(rating.ratingValue) + '</span>'
     else {
-        html = html + '<p> OPPORTUNITY TO RATE HERE</p>'
+        html = html + '<ul class="your_future_rating"> RATE: <span id="dynamic_rating_value">' + getRatingString(0) + '</span>'
     }
+    html = html +  '<select id="future_rating" onchange="updateRatingBasedOnSelect()"> ' +
+        '<option value="100">10</option> ' +
+        '<option value="90">9</option> ' +
+        '<option value="80">8</option> ' +
+        '<option value="70">7</option> ' +
+        '<option value="60">6</option> ' +
+        '<option value="50">5</option> ' +
+        '<option value="40">4</option> ' +
+        '<option value="30">3</option> ' +
+        '<option value="20">2</option> ' +
+        '<option value="10">1</option> ' +
+        '<option value="0">0</option> ' +
+        '</select>  <input id="submit_rating_button" type="submit" value="RATE" onclick="submitRating(\'' + film.id + '\',\'' + rating.user.username +'\')"></ul>'
+
 
     html = html + '<div class="rating_box"><ul style="font-size:12px;">'
     // Average Rating
     if (film.averageRating !== null) html = html + '| Avg: ' + getRatingString(film.averageRating) + ' '
-    if (film.averageRatingImdb !== null) html = html + '| Avg (IMDB): ' + film.averageRatingImdb + '/100 '
+    if (film.averageRatingImdb !== null) html = html + '| Avg (IMDB): ' + (film.averageRatingImdb / 10) + '/10 '
 
     html = html + '|</ul></div>'
 
@@ -505,8 +525,17 @@ function createFilmRatingInfo(rating) {
     html = html +
         '                        <ul> Directed by <i>' + getNamesString(film.director) + '.</i></ul>' +
         '                        <ul> Written by <i>' + getNamesString(film.writer) +
-        '        </div>' +
-        '</div>'
+        '        </div>';
+
+
+    // ADD Tags
+    if (film.tags.length > 0) {
+        html = html +
+            '<ul style="color:var(--lightpurple)"> TAGS:' + getNamesString(film.tags); + '</ul>';
+
+    }
+
+     html = html +  '</div>'
 
     return html;
 }
@@ -516,8 +545,6 @@ function closeRatePopup() {
 }
 
 function deleteFromWts(username, wtsId) {
-    console.log(username + ' no longer wants to see ' + wtsId);
-
     var data = {
         "id": wtsId
     }
@@ -538,6 +565,41 @@ function deleteFromWts(username, wtsId) {
 
 
 
+function updateRatingBasedOnSelect() {
+    var item = document.getElementById("future_rating");
+    var itemvalue= item.options[item.selectedIndex].value;
+
+    document.getElementById("dynamic_rating_value").innerHTML = getRatingString(itemvalue);
+}
+
+function submitRating(filmId, username) {
+    console.log('updating rating for ' + username + ' of ' + filmId);
+    var item = document.getElementById("future_rating");
+    var rating_value= item.options[item.selectedIndex].value;
+
+    var rating = {
+        "ratingValue": rating_value,
+        "film": {
+            "id":filmId
+        },
+        "user": {
+            "username":username
+        }
+    };
+
+    fetch("http://localhost:8080/rating/create", {
+        method: 'POST',
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(rating)
+    }).then(resp => {
+        console.log(resp);
+        createRatePopup(username,filmId);
+    })
+
+}
 
 
 
