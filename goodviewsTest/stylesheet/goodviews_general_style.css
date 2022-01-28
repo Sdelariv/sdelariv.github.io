@@ -232,7 +232,7 @@ body {
     color:white;
     overflow:hidden;
     min-width:1000px;
-    z-index:99;
+    z-index:1;
 }
 
 .content-left {
@@ -346,7 +346,7 @@ body {
     margin-top:10px;
 }
 
-h3, h2, h1, h4, p, a {
+h3, h2, h1, h4, p, a, ul {
     color:white;
     font-family:'Pathway Gothic One', Arial, sans-serif;
     text-shadow: 1px 1px 5px black;
@@ -505,11 +505,19 @@ h3, h2, h1, h4, p, a {
     height:20px;
 }
 
-.delete_wts_button  {
+.delete_wts_button {
     padding:3px;
     width:20px;
     height:20px;
 
+}
+
+.delete_rate_button {
+    float:right;
+    height:10px;
+    margin-top:-20px;
+    z-index: 100;
+    margin-right:10px;
 }
 
 .delete_wts_button p {
@@ -522,6 +530,59 @@ h3, h2, h1, h4, p, a {
 .delete_wts_button:hover {
     background-color:var(--filmwrapper-purple);
 }
+
+#pop_up_window {
+    position: fixed;
+    top: 40%;
+    left: 50%;
+    transform: translate(-51%, -50%);
+    width: 510px;
+    height:350px;
+    background: var(--rating);
+    border: solid 5px var(--lightpurple);
+    z-index: 99;
+    overflow:hidden;
+    box-shadow: 0 0px 50px black;
+
+}
+
+#pop_up_window p {
+    text-align:center;
+
+}
+
+.rating_wrapper {
+    margin:20px;
+}
+
+.rate_heading {
+    background-color: var(--lightpurple);
+    color:black;
+    top:0;
+    position:relative;
+    width:104%;
+    margin:0;
+    margin-top:-20px;
+    margin-left:-2px;
+}
+
+
+.rate_info {
+    text-align:left;
+    width:54%;
+    float:left;
+    overflow:hidden;
+}
+
+.rate_info ul {
+    margin-left:0;
+    padding-left:0;
+}
+
+.rating_box ul {
+    color:var(--lightpurple);
+}
+
 
 
 

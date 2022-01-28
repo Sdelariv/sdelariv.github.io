@@ -1,7 +1,7 @@
 // GENERAL VARIABLES
 
 var wall_html ='';
-var logged_in_username = "sdelariv";
+var logged_in_username = "waddles";
 var friendlist_html = '';
 var ratingid_list = []
 
@@ -23,6 +23,7 @@ function fetch_updates() {
     fetch("http://localhost:8080/timeline/" + logged_in_username)
         .then( resp => resp.json() )
         .then( logUpdates => {
+
             logUpdates.forEach( logUpdate => {
 
                 if (logUpdate.type === 'FRIENDS') {
@@ -233,7 +234,7 @@ function createRateAndWtsButtons(userWantsToSee, userHasRated, film) {
 
     if (userHasRated === -1){
         button_html = button_html +
-            '<button>RATE</button>';
+            '<button type="button" onclick="createRatePopup(logged_in_username,\'' + filmId + '\');">RATE</button>';
     } else {
         button_html = button_html +
             '<p class="your_rating">YOUR RATING: ' + getRatingString(userHasRated) +'</p>'
@@ -246,6 +247,7 @@ function createRateAndWtsButtons(userWantsToSee, userHasRated, film) {
 
     return button_html;
 }
+
 
 
 
@@ -442,6 +444,75 @@ function createDeleteButton(filmId) {
         '<button id="wts_button_' + filmId + '" class="delete_wts_button" type="button" title="Remove from Want-To-See\'s" onclick="deleteFromWts(logged_in_username,\'' + filmId + '\');"><p>X</p></button>';
 
     return delete_button_html;
+}
+
+function createRatePopup(username, filmId) {
+    var pop_up_empty_html =
+        '<div id="pop_up_window">' +
+        '   <div class="rate_heading">' +
+        '          <button class="delete_rate_button" type="button" title="Close" onclick="closeRatePopup();"><p>X</p></button>' +
+        '          <p>RATE</p>' +
+        '   </div>' +
+        '<p><br><br><br><br>Loading Rating...</p>' +
+        '</div>'
+
+    document.getElementById("pop_up_wrapper").innerHTML = pop_up_empty_html;
+
+    fetch("http://localhost:8080/rating/currentRatingStatus?username=" + username + "&filmId=" + filmId)
+        .then( resp => resp.json() )
+        .then( rating => {
+            pop_up_html = '<div id="pop_up_window">';
+
+            pop_up_html = pop_up_html + createFilmRatingInfo(rating);
+
+            pop_up_html = pop_up_html + '</div>';
+
+            document.getElementById("pop_up_wrapper").innerHTML = pop_up_html;
+        });
+}
+
+function createFilmRatingInfo(rating) {
+    var film = rating.film;
+
+    html = '<div class="rate_heading">' +
+        '          <button class="delete_rate_button" type="button" title="Close" onclick="closeRatePopup();"><p>X</p></button>' +
+        '          <p>RATE</p>' +
+        '</div>' +
+       ' <div class="rating_wrapper">' +
+        '        <div class="poster">\n' +
+        '                        <img src="' + film.posterUrl + '">\n' +
+        '        </div>' +
+        '        <div class="rate_info"">\n' +
+        '                        <h4 style="font-size:25px">' + film.title + ' <span style="font-size:small">(' + film.releaseYear + ')</span></h4>\n' +
+        '                        <ul style="margin-top:-25px">' + film.runTime + 'min  <i style="color:var(--pink-purple)">' + getNamesString(film.genres) + '. </i></ul>';
+
+    // RATING
+
+    // Your rating
+    if (rating.ratingValue != null) html = html +          '<p class="your_rating">YOUR RATING: ' + getRatingString(rating.ratingValue) +'</p>';
+    else {
+        html = html + '<p> OPPORTUNITY TO RATE HERE</p>'
+    }
+
+    html = html + '<div class="rating_box"><ul style="font-size:12px;">'
+    // Average Rating
+    if (film.averageRating !== null) html = html + '| Avg: ' + getRatingString(film.averageRating) + ' '
+    if (film.averageRatingImdb !== null) html = html + '| Avg (IMDB): ' + film.averageRatingImdb + '/100 '
+
+    html = html + '|</ul></div>'
+
+
+    html = html +
+        '                        <ul> Directed by <i>' + getNamesString(film.director) + '.</i></ul>' +
+        '                        <ul> Written by <i>' + getNamesString(film.writer) +
+        '        </div>' +
+        '</div>'
+
+    return html;
+}
+
+function closeRatePopup() {
+    document.getElementById("pop_up_wrapper").innerHTML = '';
 }
 
 function deleteFromWts(username, wtsId) {
