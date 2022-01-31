@@ -66,7 +66,6 @@ html, body {
     float:right;
     height: 45px;
     padding-top:15px;
-    padding-left:5px;
 }
 
 .notifications {
@@ -192,6 +191,7 @@ input {
     color:lightgrey;
     font-family:'Pathway Gothic One', Arial, sans-serif;
     font-size:18px;
+    padding-left:5px;
     width:80%;
 }
 
@@ -310,7 +310,7 @@ body {
     margin:-3%;
     margin-bottom:0;
     padding-right:5%;
-    padding-bottom:9%;
+    padding-bottom:12%;
     float:left;
     width:100%;
     padding-left:30px;
@@ -395,6 +395,40 @@ h3, h2, h1, h4, p, a, ul {
     text-align:center;
     position:relative;
     bottom:10px;
+}
+
+#general_rating_button, #general_wts_button {
+    margin:auto;
+    text-align:center;
+    width:35%;
+    background-color: var(--filmwrapper-purple);
+    font-family:'Pathway Gothic One', Arial, sans-serif;
+    font-size:11px;
+    color:white;
+    text-shadow: 1px 1px 5px black;
+    letter-spacing:2px;
+    padding: 5px 0;
+}
+
+#general_rating_button:hover , #general_wts_button:hover {
+    background-color: var(--pink-purple);
+    cursor:pointer;
+}
+
+.buttons_wrapper_top, .buttons_wrapper_bottom {
+    width:100%;
+    text-align:center;
+}
+
+.buttons_wrapper_bottom {
+    margin-top:-10px;
+    margin-bottom:5px;
+}
+
+.buttons_wrapper_top {
+    position:relative;
+    margin-bottom:-30px;
+    z-index:999;
 }
 
 #see_more_button a {
@@ -627,20 +661,24 @@ h3, h2, h1, h4, p, a, ul {
     width:70%;
     margin-left: auto;
     margin-right: auto;
-    margin-bottom:5px;
+    margin-top:20px;
     display:block;
+    z-index: 8;
 }
 
 .film_result p {
     margin:auto;
     font-size:13px;
+    text-shadow: 1px 1px 5px black;
+    letter-spacing:2px;
+    margin-bottom:2px;
+
 }
 
 .rating_wrapper, .search_wrapper {
     margin:20px;
     margin-right:10px;
     margin-top:10px;
-    margin-bottom:20px;
     height:90%;
     overflow-y:scroll;
     overflow-x:hidden;
@@ -675,7 +713,6 @@ h3, h2, h1, h4, p, a, ul {
 }
 
 
-
 #submit_rating_button {
     width:30px;
     font-size:12px;
@@ -693,6 +730,20 @@ h3, h2, h1, h4, p, a, ul {
     color:var(--pink-purple);
 }
 
+.like_and_comment_buttons {
+    width:100%;
+    position:absolute;
+    bottom:17px;
+    margin-left:1%;
+    font-size:13px;
+    color:var(--lightpurple);
+}
+
+.like_button, .comment_button {
+    cursor:pointer;
+}
 
 
-
+::-webkit-scrollbar {
+    color:black;
+}

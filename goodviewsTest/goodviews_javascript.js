@@ -1,7 +1,7 @@
 // GENERAL VARIABLES
 
 var wall_html ='';
-var logged_in_username = "waddles";
+var logged_in_username = "sdelariv";
 var friendlist_html = '';
 var ratingid_list = []
 
@@ -13,7 +13,7 @@ fillInWantToSees();
 fillInUsername();
 fillInLatestRatings();
 fillInNotificationCount();
-fillInNotifications(); // Needs to be on click
+fillInNotifications();
 fillInFriendRequests();
 
 
@@ -193,6 +193,7 @@ function createRatingUpdateHTML(logUpdate) {
         // Film info
         html = html + createFilmInfo(rating.film, logUpdate.userWantsToSee, logUpdate.userHasRated) + addLikes(rating) + '</div>'
 
+
         // Adding comments
         html = html + createCommentHTML(commentList);
     } else {
@@ -302,6 +303,7 @@ function getNamesString(object) {
 
 function addLikes(rating) {
     var likes = ''
+
     if (rating.userLikes.length > 0) {
         likes = '<div class="likes"> ' +
             '<p> <span class="color_pink-purple">' + rating.userLikes[0].username + ' likes this</span></p>' +
@@ -312,6 +314,9 @@ function addLikes(rating) {
             ' <p><span class="color_pink-purple">' + getUsernames(rating.userLikes) + ' like this' + '</span></p>' +
             '</div>'
     }
+
+    likes = likes + '<div class="like_and_comment_buttons"><p><span class="like_button"> Like</span> | <span class="comment_button">Comment</span></p></div>'
+
     return likes
 }
 
@@ -444,9 +449,9 @@ function addToWantToSee(username,filmId) {
         },
         body: JSON.stringify(data)
     }).then(resp => {
-        document.getElementById("wts_button_" + filmId).innerHTML = '';
         console.log(resp);
         fillInWantToSees();
+        document.getElementById("wts_button_" + filmId).innerHTML = '';
     })
 }
 
@@ -672,8 +677,19 @@ function createSearchResults(films) {
     films.forEach(film => {
         html = html +
             '<div class="film_result">' +
+
+                '<div class="buttons_wrapper_top">' +
+                    '<button id="general_wts_button" type="button" onclick="addToWantToSee(logged_in_username,\'' + film.id + '\');">TO SEE</button>' +
+                 '</div>' +
+
             '<img src="' + film.posterUrl + '">' +
-            '<p>' + film.title.replace("u0026apos;","'") + ' (' + film.releaseYear + ')</p>' +
+
+                '<div class="buttons_wrapper_bottom">' +
+                    '<button id="general_rating_button" type="button" onclick="createRatePopup(logged_in_username,\'' + film.id + '\');">RATE</button> ' +
+                '</div>' +
+
+            '<p>' + film.title + '<span style="color:var(--lightpurple);font-size:11px"> <br> (' + film.releaseYear + ')</span></p>' +
+
             '</div>'
     })
 
