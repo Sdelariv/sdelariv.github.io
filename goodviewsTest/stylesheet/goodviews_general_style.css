@@ -735,12 +735,12 @@ h3, h2, h1, h4, p, a, ul {
     position:absolute;
     bottom:17px;
     margin-left:1%;
-    font-size:13px;
-    color:var(--lightpurple);
+    font-size:14px;
 }
 
 .like_button, .comment_button {
     cursor:pointer;
+    color:var(--pink-purple);
 }
 
 
