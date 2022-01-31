@@ -37,8 +37,8 @@
         </div>
 
         <div class="searchbar">
-            <input type="text" placeholder="Search.." >
-            <button type="submit" ><i class="gg-search"></i></button>
+            <input id="search_inputter" type="text" placeholder="Search.." >
+            <button type="submit" onclick="createSearchPopup()"><i class="gg-search"></i></button>
         </div>
 
         <div class="logo" autofocus>
@@ -49,7 +49,7 @@
             <a href=""> HOME </a>
             <a href=""> MY FILMS </a>
             <a href=""> FRIENDS </a>
-            <a href=""> SUGGEST </a>
+            <a href=""> FIND </a>
         </div>
 
 
@@ -111,7 +111,7 @@
 
         <div class="new_rating_1">
             <div class="poster_new_rating">
-                <img id="new_rating_poster_1" src=""><br><br>
+                <img id="new_rating_poster_1" src="">
                 <p id="new_rating_button_1"></p>
             </div>
             <h4 id="new_rating_title_1"></h4>
@@ -119,12 +119,13 @@
             <p class="genres" id="new_rating_genres_1"></p>
             <p id="new_rating_director_1"></p>
             <p id="new_rating_average_1"></p>
+
         </div>
 
         <div class="new_rating_2">
             <div class="poster_new_rating">
-                <img id="new_rating_poster_2" src=""><br><br>
-                <p id="new_rating_button_2"></p>
+                <img id="new_rating_poster_2" src="">
+                <p id="new_rating_button_2"></p><br><br>
             </div>
             <h4 id="new_rating_title_2"></h4>
             <p id="new_rating_releaseYear_2"></p>
@@ -135,8 +136,8 @@
 
         <div class="new_rating_3">
             <div class="poster_new_rating">
-                <img id="new_rating_poster_3" src=""><br><br>
-                <p id="new_rating_button_3"></p>
+                <img id="new_rating_poster_3" src="">
+                <p id="new_rating_button_3"></p><br><br>
             </div>
             <h4 id="new_rating_title_3"></h4>
             <p id="new_rating_releaseYear_3"></p>

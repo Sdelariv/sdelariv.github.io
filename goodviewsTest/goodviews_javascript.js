@@ -1,7 +1,7 @@
 // GENERAL VARIABLES
 
 var wall_html ='';
-var logged_in_username = "bibi";
+var logged_in_username = "waddles";
 var friendlist_html = '';
 var ratingid_list = []
 
@@ -33,7 +33,7 @@ function fetch_updates() {
                 }
 
                 if (logUpdate.type === 'RATING') {
-                    wall_html = wall_html + createRatingHTML(logUpdate);
+                    wall_html = wall_html + createRatingUpdateHTML(logUpdate);
                     ratingid_list.push(logUpdate.rating.id);
                 }
 
@@ -102,18 +102,18 @@ function fillInFriendRequests() {
 }
 
 function createFriendHTML(logUpdate) {
+    console.log(logUpdate);
     friendA = 'unknownUser';
     friendB = 'unknownUser';
     if (logUpdate.user != null && logUpdate.user.username != null) friendA = logUpdate.user.username;
     if (logUpdate.otherUser != null && logUpdate.otherUser.username != null)  friendB = logUpdate.otherUser.username;
-
 
     if (friendA === logged_in_username) friendA = 'you';
     if (friendB === logged_in_username) friendB = 'you';
 
     html =  '<div class="update" style="background:var(--friend)">' +
         '<p class="update_date">' + createTimeStamp(logUpdate.dateTime) + '</p>' +
-        '<p><span class="color_pink-purple">'+ friendA + '</span> has become friends with <span class="color_pink-purple">'+ friendB + '</span> </p>' +
+        '<p><span class="color_pink-purple">'+ friendA + '</span> and <span class="color_pink-purple">'+ friendB + '</span> have become friends </p>' +
         '</div>'
     return html;
 }
@@ -146,7 +146,11 @@ function createNewCommentHTML(logUpdate) {
     var rating = logUpdate.rating;
     var commentList = logUpdate.commentList;
 
-    if (ratingid_list.includes(rating.id)) return '';
+    if (ratingid_list.includes(rating.id)) {
+        console.log('found duplicate: ')
+        console.log(logUpdate);
+        return '';
+    }
 
     var ratingUser = logUpdate.rating.user.username + '\'s'
 
@@ -177,26 +181,29 @@ function createWtsHTML(logUpdate) {
 }
 
 
-function createRatingHTML(logUpdate) {
+function createRatingUpdateHTML(logUpdate) {
     var rating = logUpdate.rating;
     var commentList = logUpdate.commentList;
     var html = '';
 
     if (!ratingid_list.includes(logUpdate.rating.id)) {
         // Rating or Review
-        html = html + createRatingHeading(rating);
+        html = html + createRatingUpdateHeading(rating);
 
         // Film info
         html = html + createFilmInfo(rating.film, logUpdate.userWantsToSee, logUpdate.userHasRated) + addLikes(rating) + '</div>'
 
         // Adding comments
         html = html + createCommentHTML(commentList);
+    } else {
+        console.log('found duplicate: ')
+        console.log(logUpdate);
     }
 
     return html;
 }
 
-function createRatingHeading(rating) {
+function createRatingUpdateHeading(rating) {
     var html = '';
 
     if (rating.review == null) {
@@ -381,7 +388,7 @@ function fillInLatestRatings() {
                 document.getElementById("new_rating_poster_" + counter).setAttribute("src",posterUrl);
                 document.getElementById("new_rating_director_" + counter).innerHTML = 'Directed by ' + directors;
                 document.getElementById("new_rating_genres_" + counter).innerHTML = '<i>' + genres + '</i>';
-                document.getElementById("new_rating_button_" + counter).innerHTML = '<span id="rate" href="" onclick="createRatePopup(logged_in_username,\'' + rating.film.id + '\');">RATE</span><br>';
+                document.getElementById("new_rating_button_" + counter).innerHTML = '<span id="rate" onclick="createRatePopup(logged_in_username,\'' + rating.film.id + '\');">RATE</span><br>';
                 document.getElementById("new_rating_title_" + counter).innerHTML = title + '<span style="font-size:small"> (' + releaseYear + ')</span>';
                 if (average != null) document.getElementById("new_rating_average_" + counter).innerHTML = '<ul class="rating_average">' + getRatingString(average) + ' <br>(avg.rating)</ul>'
             }
@@ -412,7 +419,7 @@ function fillInWantToSees() {
                 document.getElementById("wts_genres_" + counter).innerHTML = '<i>' + genres + '</i>';
                 document.getElementById("wts_poster_" + counter).setAttribute("src",posterUrl);
                 document.getElementById("seenbutton_" + counter).innerHTML = '<span id="rate" href="" onclick="createRatePopup(logged_in_username,\'' + wts.film.id + '\');">RATE</span><br>';
-                document.getElementById("delete_wts_" + counter).innerHTML = createDeleteButton(wts.id);
+                document.getElementById("delete_wts_" + counter).innerHTML = createDeleteWTSButton(wts.id);
             }
             if (counter > 3) {
                 document.getElementById("see_more_button").innerHTML = '<b><a href="">SEE MORE</a></b>' // TODO: Fill in link to see more of wts's
@@ -443,7 +450,7 @@ function addToWantToSee(username,filmId) {
     })
 }
 
-function createDeleteButton(filmId) {
+function createDeleteWTSButton(filmId) {
     var delete_button_html = '' +
         '<button id="wts_button_' + filmId + '" class="delete_wts_button" type="button" title="Remove from Want-To-See\'s" onclick="deleteFromWts(logged_in_username,\'' + filmId + '\');"><p>X</p></button>';
 
@@ -453,9 +460,9 @@ function createDeleteButton(filmId) {
 function createRatePopup(username, filmId) {
 
     var pop_up_empty_html =
-        '<div id="pop_up_window">' +
+        '<div id="pop_up_rating_window">' +
         '   <div class="rate_heading">' +
-        '          <button class="delete_rate_button" type="button" title="Close" onclick="closeRatePopup();"><p>&nbsp;X&nbsp;</p></button>' +
+        '          <button class="delete_popup_button" type="button" title="Close" onclick="closePopup();"><p>&nbsp;X&nbsp;</p></button>' +
         '          <p>RATE</p>' +
         '   </div>' +
         '<p><br><br><br><br>Loading Rating...</p>' +
@@ -467,9 +474,11 @@ function createRatePopup(username, filmId) {
     fetch("http://localhost:8080/rating/currentRatingStatus?username=" + username + "&filmId=" + filmId)
         .then( resp => resp.json() )
         .then( rating => {
-            pop_up_html = '<div id="pop_up_window">';
+            pop_up_html = '<div id="pop_up_rating_window">';
 
             pop_up_html = pop_up_html + createFilmRatingInfo(rating);
+
+            if (rating.ratingValue !== null) pop_up_html = pop_up_html + createDeleteRatingButton(rating);
 
             pop_up_html = pop_up_html + '</div>';
 
@@ -477,12 +486,32 @@ function createRatePopup(username, filmId) {
         });
 }
 
+function createDeleteRatingButton(rating) {
+    html = '<button id="delete_rating" lass="delete_rating_button" type="button" title="Delete this rating" onclick="deleteRating(\'' + rating.id + '\')">DELETE RATING</button>';
+
+    return html;
+}
+
+function deleteRating(ratingId) {
+    fetch("http://localhost:8080/rating/delete/" + ratingId, {
+        method: 'DELETE',
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    }).then(resp => {
+        console.log(resp);
+        fillInWantToSees();
+        closePopup();
+
+    })
+}
+
 function createFilmRatingInfo(rating) {
     var film = rating.film;
     console.log(film);
 
     html = '<div class="rate_heading">' +
-        '          <button class="delete_rate_button" type="button" title="Close" onclick="closeRatePopup();"><p>&nbsp;X&nbsp;</p></button>' +
+        '          <button class="delete_popup_button" type="button" title="Close" onclick="closePopup();"><p>&nbsp;X&nbsp;</p></button>' +
         '          <p>RATE</p>' +
         '</div>' +
        ' <div class="rating_wrapper">' +
@@ -540,7 +569,7 @@ function createFilmRatingInfo(rating) {
     return html;
 }
 
-function closeRatePopup() {
+function closePopup() {
     document.getElementById("pop_up_wrapper").innerHTML = '';
 }
 
@@ -599,6 +628,56 @@ function submitRating(filmId, username) {
         createRatePopup(username,filmId);
     })
 
+}
+
+function createSearchPopup() {
+    var item = document.getElementById("search_inputter");
+    var query = item.value;
+
+    console.log('looking for ' + query)
+
+    var pop_up_empty_html =
+        '<div id="pop_up_search_window">' +
+        '   <div class="search_heading">' +
+        '          <button class="delete_popup_button" type="button" title="Close" onclick="closePopup();"><p>&nbsp;X&nbsp;</p></button>' +
+        '          <p>SEARCH RESULTS</p>' +
+        '   </div>' +
+        '<p><br><br><br><br>Loading Results...</p>' +
+        '</div>'
+
+    document.getElementById("pop_up_wrapper").innerHTML = pop_up_empty_html;
+
+    fetch("http://localhost:8080/film/findByPartialTitle?partialTitle=" + query)
+        .then( resp => resp.json() )
+        .then( films => {
+            pop_up_html =  '<div id="pop_up_search_window">' +
+                '   <div class="search_heading">' +
+                '          <button class="delete_popup_button" type="button" title="Close" onclick="closePopup();"><p>&nbsp;X&nbsp;</p></button>' +
+                '          <p>SEARCH RESULTS</p>' +
+                '   </div>' +
+                ' <div class="search_wrapper">';
+
+            pop_up_html = pop_up_html + createSearchResults(films);
+
+            pop_up_html = pop_up_html + '</div></div>';
+
+
+            document.getElementById("pop_up_wrapper").innerHTML = pop_up_html;
+        });
+}
+
+function createSearchResults(films) {
+    html = ''
+
+    films.forEach(film => {
+        html = html +
+            '<div class="film_result">' +
+            '<img src="' + film.posterUrl + '">' +
+            '<p>' + film.title.replace("u0026apos;","'") + ' (' + film.releaseYear + ')</p>' +
+            '</div>'
+    })
+
+    return html;
 }
 
 
