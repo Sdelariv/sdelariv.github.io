@@ -744,6 +744,20 @@ h3, h2, h1, h4, p, a, ul {
 }
 
 
-::-webkit-scrollbar {
+body ::-webkit-scrollbar {
     color:black;
+}
+
+.submit_comment {
+    width:60px;
+    height:30px;
+    background-color: var(--filmwrapper-purple);
+    font-family:'Pathway Gothic One', Arial, sans-serif;
+    font-size:14px;
+}
+
+.submit_comment:hover {
+    cursor:pointer;
+    background-color: var(--pink-purple);
+    color:var(--filmwrapper-purple);
 }

@@ -1,7 +1,7 @@
 // GENERAL VARIABLES
 
 var wall_html ='';
-var logged_in_username = "sdelariv";
+var logged_in_username = "waddles";
 var friendlist_html = '';
 var ratingid_list = [];
 const queryString = window.location.search;
@@ -163,15 +163,16 @@ function createNewCommentHTML(logUpdate) {
 
     if (logUpdate.user.username !== null) username = logUpdate.user.username;
     else username = 'UnknownUser';
+    if ((username + '\'s') === ratingUser) ratingUser = 'their'
 
     // New Comment heading
-    html = '<div class="update"  style="background:var(--comment)"><p><span class="color_pink-purple">' + username + '</span> has commented on <br><br>' + ratingUser + ' rating: ' + getRatingString(logUpdate.rating.ratingValue) + '</p>'
+    html = '<div class="update"  style="background:var(--comment)"><p><span class="color_pink-purple">' + username + '</span> commented on ' + ratingUser + ' rating: <span style="font-size:11px;">' + getRatingString(logUpdate.rating.ratingValue) + '</span></p>'
 
     // Film info
     html = html + createFilmInfo(rating.film, logUpdate.userWantsToSee, logUpdate.userHasRated) + createLikesHTML(rating) + '</div>'
 
     // Adding comments
-    html = html + createCommentHTML(commentList);
+    html = html + createCommentHTML(commentList, rating.id);
 
     return html;
 }
@@ -203,7 +204,7 @@ function createRatingUpdateHTML(logUpdate) {
 
 
         // Adding comments
-        html = html + createCommentHTML(commentList);
+        html = html + createCommentHTML(commentList, rating.id);
     }
 
     return html;
@@ -314,9 +315,30 @@ function getNamesString(object) {
 }
 
 
-function createCommentHTML(commentList) {
-    if (commentList.length === 0) return '';
+function createCommentHTML(commentList, ratingId) {
+    var commentString = ''
 
+    if (commentList.length === 0) {
+        commentString = '<div class="comments" id="comments_' + ratingId + '"  style="background:var(--comments)" hidden>'
+    }
+    else {
+        commentString = '<div class="comments" id="comments_' + ratingId + '"  style="background:var(--comments)">'
+    }
+
+    commentString = commentString + createCommentBody(commentList,ratingId) + '</div>'
+
+    return commentString;
+}
+
+function createCommentBody(commentList, ratingId) {
+    html = '<p style="font-size:smaller;text-align:center"> COMMENTS </p>' +
+        createCommentsString(commentList) +
+        createCommentBoxHTML(ratingId);
+
+    return html;
+}
+
+function createCommentsString(commentList) {
     var commentString = '';
     commentList.forEach(c => {
         if (c != null && c.user != null && c.user.username != null) {
@@ -326,9 +348,7 @@ function createCommentHTML(commentList) {
                 '<span style="font-size:x-small; color:#756581; float:right;"> ' + dateOfComment.toLocaleString() + '</span></p>'
         }
     });
-    commentString = '<div class="comments"  style="background:var(--comments)"><p style="font-size:smaller;text-align:center">COMMENTS </p> ' + commentString + '</div>'
-
-    return commentString;
+    return commentString
 }
 
 
@@ -729,7 +749,7 @@ function createLikesHTML(rating) {
         likes = likes + '<div class="like_and_comment_buttons"><p><span class="like_button" id="like_' + rating.id + '" onclick="addLikeToRating(logged_in_username,\'' + rating.id + '\')"> Like</span>';
     }
 
-    likes = likes + ' | <span class="comment_button">Comment</span></p></div>'
+    likes = likes + ' | <span class="comment_button" onclick="toggleComments(\'' + rating.id + '\')">Comments</span></p></div>'
 
     return likes
 }
@@ -764,5 +784,54 @@ function removeLikeFromRating(username, ratingId) {
     document.getElementById("like_" + ratingId).setAttribute("onClick","addLikeToRating('" + username + "','" + ratingId + "')");
 }
 
+function toggleComments(ratingId) {
+    console.log('toggling comments');
+    var comments =  document.getElementById("comments_" + ratingId);
 
+    if (comments.hidden === true) comments.hidden = false;
+    else comments.hidden = true;
+}
+
+function createCommentBoxHTML(ratingId) {
+    html = '    <div class="comment_box">\n' +
+        '            <input id="comment_box_' + ratingId + '" type="text" placeholder="Write comment..." >\n' +
+        '            <button class="submit_comment" type="submit" onclick="addCommentToRating(\'' + ratingId + '\')">COMMENT</button>\n' +
+        '        </div>'
+    return html;
+}
+
+function addCommentToRating(ratingId) {
+    var comment = document.getElementById("comment_box_" + ratingId).value;
+
+    var comment = {
+        "comment":comment,
+        "user":{
+            "username":logged_in_username
+        },
+        "rating":{
+            "id":ratingId
+        }
+    }
+
+    fetch("http://localhost:8080/comment/create", {
+        method: 'POST',
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(comment)
+    }).then(resp => {
+        updateComments(ratingId);
+    })
+}
+
+function updateComments(ratingId) {
+    fetch("http://localhost:8080/comment/findByRatingId?ratingId=" + ratingId)
+        .then(resp => resp.json())
+        .then(commentList => {
+            console.log("updating comments with: ");
+            console.log(commentList);
+            document.getElementById("comments_" + ratingId).innerHTML = createCommentBody(commentList, ratingId);
+        })
+}
 
