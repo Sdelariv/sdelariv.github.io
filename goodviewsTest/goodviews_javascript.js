@@ -1,9 +1,11 @@
 // GENERAL VARIABLES
 
 var wall_html ='';
-var logged_in_username = "sdelariv";
+var logged_in_username = "waddles";
 var friendlist_html = '';
-var ratingid_list = []
+var ratingid_list = [];
+const queryString = window.location.search;
+console.log(queryString);
 
 // ALL THE METHODS
 
@@ -102,7 +104,6 @@ function fillInFriendRequests() {
 }
 
 function createFriendHTML(logUpdate) {
-    console.log(logUpdate);
     friendA = 'unknownUser';
     friendB = 'unknownUser';
     if (logUpdate.user != null && logUpdate.user.username != null) friendA = logUpdate.user.username;
@@ -348,8 +349,6 @@ function fillInFriendList() {
 
 
 function createFriendListHTML(friend, numberOfRatings) {
-
-    console.log('create HTML called for ' + friend.username)
     friendlist_html = friendlist_html +
         '<p> &#9642; ' + friend.username + ' <span style="color:grey">(' + numberOfRatings + ' ratings) </span></p>'
 
@@ -438,7 +437,6 @@ function addToWantToSee(username,filmId) {
         },
         body: JSON.stringify(data)
     }).then(resp => {
-        console.log(resp);
         fillInWantToSees();
         document.getElementById("wts_button_" + filmId).innerHTML = '';
     })
@@ -493,7 +491,6 @@ function deleteRating(ratingId) {
             'Content-Type': 'application/json'
         }
     }).then(resp => {
-        console.log(resp);
         fillInWantToSees();
         closePopup();
 
@@ -502,7 +499,6 @@ function deleteRating(ratingId) {
 
 function createFilmRatingInfo(rating) {
     var film = rating.film;
-    console.log(film);
 
     html = '<div class="rate_heading">' +
         '          <button class="delete_popup_button" type="button" title="Close" onclick="closePopup();"><p>&nbsp;X&nbsp;</p></button>' +
@@ -579,12 +575,10 @@ function deleteFromWts(username, wtsId, filmId) {
         },
         body: JSON.stringify(data)
     }).then(resp => {
-        console.log(resp);
         fillInWantToSees();
         var update = document.getElementById("wts_button_" + filmId);
         if (update !== null) {
             update.innerHTML = 'WANT TO SEE';
-            console.log(update)
         }
     })
 
@@ -624,7 +618,6 @@ function submitRating(filmId, username) {
         },
         body: JSON.stringify(rating)
     }).then(resp => {
-        console.log(resp);
         createRatePopup(username,filmId);
     })
 
@@ -726,12 +719,10 @@ function createLikesHTML(rating) {
 }
 
 function updateLikeListHTML(ratingId) {
-    console.log('updating likelist');
 
     fetch("http://localhost:8080/rating/" + ratingId)
         .then(resp => resp.json())
         .then(rating => {
-            console.log(rating);
             if (rating !== null) document.getElementById("likes_" + ratingId).innerHTML = createLikeListHTML(rating);
         })
 }
