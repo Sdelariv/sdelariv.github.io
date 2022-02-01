@@ -413,7 +413,7 @@ function fillInWantToSees() {
                 document.getElementById("wts_genres_" + counter).innerHTML = '<i>' + genres + '</i>';
                 document.getElementById("wts_poster_" + counter).setAttribute("src",posterUrl);
                 document.getElementById("seenbutton_" + counter).innerHTML = '<span id="rate" href="" onclick="createRatePopup(logged_in_username,\'' + wts.film.id + '\');">RATE</span><br>';
-                document.getElementById("delete_wts_" + counter).innerHTML = createDeleteWTSButton(wts.id);
+                document.getElementById("delete_wts_" + counter).innerHTML = createDeleteWTSButton(wts.id, wts.film.id);
             }
             if (counter > 3) {
                 document.getElementById("see_more_button").innerHTML = '<b><a href="">SEE MORE</a></b>' // TODO: Fill in link to see more of wts's
@@ -444,9 +444,9 @@ function addToWantToSee(username,filmId) {
     })
 }
 
-function createDeleteWTSButton(filmId) {
+function createDeleteWTSButton(wtsId, filmId) {
     var delete_button_html = '' +
-        '<button id="wts_button_' + filmId + '" class="delete_wts_button" type="button" title="Remove from Want-To-See\'s" onclick="deleteFromWts(logged_in_username,\'' + filmId + '\');"><p>X</p></button>';
+        '<button id="wts_button_' + wtsId + '" class="delete_wts_button" type="button" title="Remove from Want-To-See\'s" onclick="deleteFromWts(logged_in_username,\'' + wtsId + '\',\'' + filmId + '\');"><p>X</p></button>';
 
     return delete_button_html;
 }
@@ -567,7 +567,7 @@ function closePopup() {
     document.getElementById("pop_up_wrapper").innerHTML = '';
 }
 
-function deleteFromWts(username, wtsId) {
+function deleteFromWts(username, wtsId, filmId) {
     var data = {
         "id": wtsId
     }
@@ -581,7 +581,13 @@ function deleteFromWts(username, wtsId) {
     }).then(resp => {
         console.log(resp);
         fillInWantToSees();
+        var update = document.getElementById("wts_button_" + filmId);
+        if (update !== null) {
+            update.innerHTML = 'WANT TO SEE';
+            console.log(update)
+        }
     })
+
 }
 
 
