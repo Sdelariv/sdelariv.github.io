@@ -1,7 +1,7 @@
 // GENERAL VARIABLES
 
 var wall_html ='';
-var logged_in_username = "waddles";
+var logged_in_username = "sdelariv";
 var friendlist_html = '';
 var ratingid_list = [];
 const queryString = window.location.search;
@@ -645,7 +645,10 @@ function createSearchPopup() {
     document.getElementById("pop_up_wrapper").innerHTML = pop_up_empty_html;
 
     fetch("http://localhost:8080/film/findByPartialTitle?partialTitle=" + query)
-        .then( resp => resp.json())
+        .then( resp => {
+            if (resp.status === 404) throw new Error("Not found");
+            else return resp.json()
+        } )
         .then( films => {
             pop_up_html =  '<div id="pop_up_search_window">' +
                 '   <div class="search_heading">' +
