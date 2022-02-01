@@ -645,7 +645,7 @@ function createSearchPopup() {
     document.getElementById("pop_up_wrapper").innerHTML = pop_up_empty_html;
 
     fetch("http://localhost:8080/film/findByPartialTitle?partialTitle=" + query)
-        .then( resp => resp.json() )
+        .then( resp => resp.json())
         .then( films => {
             pop_up_html =  '<div id="pop_up_search_window">' +
                 '   <div class="search_heading">' +
@@ -660,6 +660,15 @@ function createSearchPopup() {
 
 
             document.getElementById("pop_up_wrapper").innerHTML = pop_up_html;
+        })
+        .catch( ( ) => {
+        document.getElementById("pop_up_wrapper").innerHTML =         '<div id="pop_up_search_window">' +
+            '   <div class="search_heading">' +
+            '          <button class="delete_popup_button" type="button" title="Close" onclick="closePopup();"><p>&nbsp;X&nbsp;</p></button>' +
+            '          <p>SEARCH RESULTS</p>' +
+            '   </div>' +
+            '<p><br><br><br><br>No results.</p>' +
+            '</div>'
         });
 }
 
