@@ -14,8 +14,7 @@ fillInFriendList();
 fillInWantToSees();
 fillInUsername();
 fillInLatestRatings();
-fillInNotificationCount();
-fillInNotifications();
+updateNotifications();
 fillInFriendRequests();
 
 
@@ -56,6 +55,13 @@ function fetch_updates() {
 
 
 // CREATE HTML
+
+function updateNotifications() {
+    console.log('updating notifications');
+    fillInNotificationCount();
+    fillInNotifications();
+    setTimeout(updateNotifications,30000);
+}
 
 function fillInNotificationCount() {
     fetch("http://localhost:8080/notifications/findNumberByUsername?username=" + logged_in_username)
@@ -148,8 +154,6 @@ function createNewCommentHTML(logUpdate) {
     var commentList = logUpdate.commentList;
 
     if (ratingid_list.includes(rating.id)) {
-        console.log('found duplicate: ')
-        console.log(logUpdate);
         return '';
     }
 
@@ -157,8 +161,11 @@ function createNewCommentHTML(logUpdate) {
 
     if (ratingUser === logged_in_username  + '\'s') ratingUser = 'your'
 
+    if (logUpdate.user.username !== null) username = logUpdate.user.username;
+    else username = 'UnknownUser';
+
     // New Comment heading
-    html = '<div class="update"  style="background:var(--comment)"><p><span class="color_pink-purple">' + logUpdate.user.username + '</span> has commented on <br><br>' + ratingUser + ' rating: ' + getRatingString(logUpdate.rating.ratingValue) + '</p>'
+    html = '<div class="update"  style="background:var(--comment)"><p><span class="color_pink-purple">' + username + '</span> has commented on <br><br>' + ratingUser + ' rating: ' + getRatingString(logUpdate.rating.ratingValue) + '</p>'
 
     // Film info
     html = html + createFilmInfo(rating.film, logUpdate.userWantsToSee, logUpdate.userHasRated) + createLikesHTML(rating) + '</div>'
@@ -197,9 +204,6 @@ function createRatingUpdateHTML(logUpdate) {
 
         // Adding comments
         html = html + createCommentHTML(commentList);
-    } else {
-        console.log('found duplicate: ')
-        console.log(logUpdate);
     }
 
     return html;
