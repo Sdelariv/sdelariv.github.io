@@ -160,7 +160,7 @@ function createNewCommentHTML(logUpdate) {
     html = '<div class="update"  style="background:var(--comment)"><p><span class="color_pink-purple">' + logUpdate.user.username + '</span> has commented on <br><br>' + ratingUser + ' rating: ' + getRatingString(logUpdate.rating.ratingValue) + '</p>'
 
     // Film info
-    html = html + createFilmInfo(rating.film, logUpdate.userWantsToSee, logUpdate.userHasRated) + addLikes(rating) + '</div>'
+    html = html + createFilmInfo(rating.film, logUpdate.userWantsToSee, logUpdate.userHasRated) + createLikesHTML(rating) + '</div>'
 
     // Adding comments
     html = html + createCommentHTML(commentList);
@@ -191,7 +191,7 @@ function createRatingUpdateHTML(logUpdate) {
         html = html + createRatingUpdateHeading(rating);
 
         // Film info
-        html = html + createFilmInfo(rating.film, logUpdate.userWantsToSee, logUpdate.userHasRated) + addLikes(rating) + '</div>'
+        html = html + createFilmInfo(rating.film, logUpdate.userWantsToSee, logUpdate.userHasRated) + createLikesHTML(rating) + '</div>'
 
 
         // Adding comments
@@ -284,8 +284,15 @@ function getRatingString(ratingValue) {
 }
 
 function getUsernames(users) {
+    var counter = 0;
     var usernames = ''
-    users.forEach(u => usernames = usernames + u.username + ', ')
+    users.forEach(u => {
+        if (counter < 3) {
+            if (u.username === logged_in_username) usernames = usernames + 'you, ';
+            else usernames = usernames + u.username + ', ';
+        }
+        if (counter === 3) usernames = usernames + "etc..."
+    })
     return usernames.slice(0, -2) ;
 }
 
@@ -301,24 +308,6 @@ function getNamesString(object) {
     return string.slice(0,-2);
 }
 
-function addLikes(rating) {
-    var likes = ''
-
-    if (rating.userLikes.length > 0) {
-        likes = '<div class="likes"> ' +
-            '<p> <span class="color_pink-purple">' + rating.userLikes[0].username + ' likes this</span></p>' +
-            '</div>'
-    }
-    if (rating.userLikes.length > 1) {
-        likes = '<div class="likes"> ' +
-            ' <p><span class="color_pink-purple">' + getUsernames(rating.userLikes) + ' like this' + '</span></p>' +
-            '</div>'
-    }
-
-    likes = likes + '<div class="like_and_comment_buttons"><p><span class="like_button"> Like</span> | <span class="comment_button">Comment</span></p></div>'
-
-    return likes
-}
 
 function createCommentHTML(commentList) {
     if (commentList.length === 0) return '';
@@ -694,6 +683,72 @@ function createSearchResults(films) {
     })
 
     return html;
+}
+
+
+function createLikeListHTML(rating) {
+    likes = ''
+
+    if (rating.userLikes.length > 0) {
+        likes = '<p> <span class="color_pink-purple">' + rating.userLikes[0].username + ' likes this</span></p>'
+        if (rating.userLikes[0].username === logged_in_username) likes = '<p> <span class="color_pink-purple"> you like this</span></p>'
+    }
+    if (rating.userLikes.length > 1) {
+        likes = ' <p><span class="color_pink-purple">' + getUsernames(rating.userLikes) + ' like this' + '</span></p>'
+    }
+
+    return likes;
+}
+
+
+function createLikesHTML(rating) {
+    var likes = '<div class="likes" id="likes_' + rating.id + '"> ' + createLikeListHTML(rating) +  '</div>';
+
+    userLikesUsernames = []
+    rating.userLikes.forEach(u => userLikesUsernames.push(u.username));
+
+
+    if (userLikesUsernames.includes(logged_in_username)) {
+        likes = likes + '<div class="like_and_comment_buttons"><p><span class="like_button" id="like_' + rating.id + '" onclick="removeLikeFromRating(logged_in_username,\'' + rating.id + '\')"> Unlike</span>';
+    } else {
+        likes = likes + '<div class="like_and_comment_buttons"><p><span class="like_button" id="like_' + rating.id + '" onclick="addLikeToRating(logged_in_username,\'' + rating.id + '\')"> Like</span>';
+    }
+
+    likes = likes + ' | <span class="comment_button">Comment</span></p></div>'
+
+    return likes
+}
+
+function updateLikeListHTML(ratingId) {
+    console.log('updating likelist');
+
+    fetch("http://localhost:8080/rating/" + ratingId)
+        .then(resp => resp.json())
+        .then(rating => {
+            console.log(rating);
+            if (rating !== null) document.getElementById("likes_" + ratingId).innerHTML = createLikeListHTML(rating);
+        })
+}
+
+function addLikeToRating(username, ratingId) {
+    fetch("http://localhost:8080/rating/addLike?username=" + username + "&ratingId=" + ratingId)
+        .then( resp => {
+            updateLikeListHTML(ratingId);
+        })
+
+    document.getElementById("like_" + ratingId).innerHTML = 'Unlike';
+    document.getElementById("like_" + ratingId).setAttribute("onClick","removeLikeFromRating('" + username + "','" + ratingId + "')");
+
+}
+
+function removeLikeFromRating(username, ratingId) {
+    fetch("http://localhost:8080/rating/removeLike?username=" + username + "&ratingId=" + ratingId)
+        .then( resp => {
+            updateLikeListHTML(ratingId);
+        })
+
+    document.getElementById("like_" + ratingId).innerHTML = 'Like';
+    document.getElementById("like_" + ratingId).setAttribute("onClick","addLikeToRating('" + username + "','" + ratingId + "')");
 }
 
 
