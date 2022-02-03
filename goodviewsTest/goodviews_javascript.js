@@ -1,17 +1,18 @@
 // GENERAL VARIABLES
 
 var wall_html ='';
-var logged_in_username = '';
+var logged_in_username = 'sdelariv';
 var friendlist_html = '';
 var ratingid_list = [];
 const queryString = window.location.search;
 console.log(queryString);
 
 const server_url = "http://localhost:8080";
-const rating_url = "rating.html";
-const film_url = "film.html";
-const user_url = "user.html";
+const film_url = "film.html?filmId=";
+const user_url = "user.html?username=";
 const search_url = "search.html";
+const search_by_crew_url = "search.html?crewId="
+const notifications_url = "";
 
 
 // ALL THE METHODS
@@ -26,8 +27,13 @@ function check_login() {
         loadPage();
         hideLoginPopup();
     } else {
-        document.getElementsByClassName("login_wrapper")[0].hidden = false;
+        // TODO: check if ip is already logged in, and if not:
+        showLoginPopup();
     }
+}
+
+function showLoginPopup() {
+    document.getElementsByClassName("login_wrapper")[0].hidden = false;
 }
 
 function hideLoginPopup() {
@@ -151,7 +157,7 @@ function fillInNotifications() {
                 if (notification.seen) notification_html = notification_html + '<p style="color:grey">' + notification.message + '</p>';
             })
 
-            notification_html = notification_html + '<a href="" style="color:black;font-size:small;text-shadow: none;text-decoration:none"> SEE MORE NOTIFICATIONS </a><br> <br>'
+            notification_html = notification_html + '<a href="' + notifications_url + '" style="color:black;font-size:small;text-shadow: none;text-decoration:none"> SEE MORE NOTIFICATIONS </a><br> <br>'
 
             document.getElementById("notification_wrapper").innerHTML =  notification_html
         })
@@ -176,15 +182,17 @@ function fillInFriendRequests() {
 function createFriendHTML(logUpdate) {
     friendA = 'unknownUser';
     friendB = 'unknownUser';
-    if (logUpdate.user != null && logUpdate.user.username != null) friendA = logUpdate.user.username;
-    if (logUpdate.otherUser != null && logUpdate.otherUser.username != null)  friendB = logUpdate.otherUser.username;
+    you = '<a class="color_pink-purple" href="' + user_url + logged_in_username + '">' + logged_in_username + '</a>'
 
-    if (friendA === logged_in_username) friendA = 'you';
-    if (friendB === logged_in_username) friendB = 'you';
+    if (logUpdate.user != null && logUpdate.user.username != null) friendA = '<a class="color_pink-purple" href="' + user_url + logUpdate.user.username+ '">' + logUpdate.user.username + '</a>'
+    if (logUpdate.otherUser != null && logUpdate.otherUser.username != null)  friendB = '<a class="color_pink-purple" href="' + user_url + logUpdate.otherUser.username + '">' + logUpdate.otherUser.username + '</a>';
+
+    if (friendA === you) friendA = '<span class="color_pink-purple"> you </span>';
+    if (friendB === you) friendB = '<span class="color_pink-purple"> you </span>';
 
     html =  '<div class="update" style="background:var(--friend)">' +
         '<p class="update_date">' + createTimeStamp(logUpdate.dateTime) + '</p>' +
-        '<p><span class="color_pink-purple">'+ friendA + '</span> and <span class="color_pink-purple">'+ friendB + '</span> have become friends </p>' +
+        '<p>'+ friendA + ' and '+ friendB + ' have become friends </p>' +
         '</div>'
     return html;
 }
@@ -230,7 +238,7 @@ function createNewCommentHTML(logUpdate) {
     if ((username + '\'s') === ratingUser) ratingUser = 'their'
 
     // New Comment heading
-    html = '<div class="update"  style="background:var(--comment)"><p><span class="color_pink-purple">' + username + '</span> commented on ' + ratingUser + ' rating: <span style="font-size:11px;">' + getRatingString(logUpdate.rating.ratingValue) + '</span></p>'
+    html = '<div class="update"  style="background:var(--comment)"><p><a class="color_pink-purple"  href="' + user_url + username + '">' + username + '</a> commented on ' + ratingUser + ' rating: <span style="font-size:11px;">' + getRatingString(logUpdate.rating.ratingValue) + '</span></p>'
 
     // Film info
     html = html + createFilmInfo(rating.film, logUpdate.userWantsToSee, logUpdate.userHasRated) + createLikesHTML(rating) + '</div>'
@@ -244,7 +252,7 @@ function createNewCommentHTML(logUpdate) {
 function createWtsHTML(logUpdate) {
     var html = '<div class="update" style="background:var(--wts)">'
         + '<p class="update_date">' + createTimeStamp(logUpdate.dateTime)  + '</p>'
-        + '<p><span class="color_pink-purple">' + logUpdate.user.username + '</span> wants to see ' + logUpdate.film.title + '</p>';
+        + '<p><a class="color_pink-purple" href="' + user_url + logUpdate.user.username + '"> ' + logUpdate.user.username + '</a> wants to see ' + logUpdate.film.title + '</p>';
 
 
     // Add filminfo
@@ -280,13 +288,13 @@ function createRatingUpdateHeading(rating) {
         html = html +
             '<div class="update" style="background:var(--rating)">\n' +
             '                        <p class="update_date">' + createTimeStamp(rating.dateOfRating)+ '</p>' +
-            '                        <p><span class="color_pink-purple">' + rating.user.username + '</span> has rated a film <span class="color_pink-purple">' + getRatingString(rating.ratingValue) + '</span></p>\n'
+            '                        <p><a class="color_pink-purple" href="' + user_url + rating.user.username + '">' + rating.user.username + '</a> has rated a film <span class="color_pink-purple">' + getRatingString(rating.ratingValue) + '</span></p>\n'
 
     } else {
         html = html +
             '<div class="update" style="background:var(--rating)">\n' +
             '                        <p class="update_date">' + createTimeStamp(rating.dateOfReview) + '</p>' +
-            '                        <p><span class="color_pink-purple">' + rating.user.username + '</span> has reviewed a film </p>\n' +
+            '                        <p><a class="color_pink-purple" href="' + user_url + rating.user.username + '">' + rating.user.username + '</a> has reviewed a film </p>\n' +
             '<p><span class="color_pink-purple">' + getRatingString(rating.ratingValue) + '</span></p>' +
             '                        <p>"' + rating.review + '"</p>'
     }
@@ -407,7 +415,7 @@ function createCommentsString(commentList) {
         if (c != null && c.user != null && c.user.username != null) {
             var dateOfComment = new Date(c.dateTime);
             commentString = commentString +
-                '<p><strong>' + c.user.username + '</strong>: ' + c.comment +
+                '<p><strong><a class="color_pink-purple" href="' + user_url + c.user.username + '">' + c.user.username + '</strong>:</a>  ' + c.comment +
                 '<span style="font-size:x-small; color:#756581; float:right;"> ' + dateOfComment.toLocaleString() + '</span></p>'
         }
     });
@@ -437,7 +445,7 @@ function fillInFriendList() {
 
 function createFriendListHTML(friend, numberOfRatings) {
     friendlist_html = friendlist_html +
-        '<p> &#9642; ' + friend.username + ' <span style="color:grey">(' + numberOfRatings + ' ratings) </span></p>'
+        '<p> &#9642; <a href="' + user_url + friend.username + '">' + friend.username + '</a> <span style="color:grey">(' + numberOfRatings + ' ratings) </span></p>'
 
     return friendlist_html
 }

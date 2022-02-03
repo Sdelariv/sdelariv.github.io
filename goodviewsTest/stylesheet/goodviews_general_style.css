@@ -15,6 +15,11 @@ html, body {
     --background:#0a080e;
 }
 
+a {
+    cursor:pointer;
+    text-decoration:none;
+}
+
 /* TOP NAV */
 
 .topnavwrapper {
