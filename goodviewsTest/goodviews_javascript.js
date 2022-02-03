@@ -1,7 +1,7 @@
 // GENERAL VARIABLES
 
 var wall_html ='';
-var logged_in_username = 'sdelariv';
+var logged_in_username = '';
 var friendlist_html = '';
 var ratingid_list = [];
 const queryString = window.location.search;
@@ -22,8 +22,9 @@ check_login();
 
 function check_login() {
     if (logged_in_username !== '') {
-        hideLoginPopup();
+        document.getElementById("login_response").innerText = "Success!";
         loadPage();
+        hideLoginPopup();
     } else {
         document.getElementsByClassName("login_wrapper")[0].hidden = false;
     }
@@ -80,17 +81,41 @@ function tryLogin() {
     console.log('trying to log in ' + username + ' with password ' + password);
     var success = false;
 
-
-    if (success) {
-        loadPage()
-        hideLoginPopup();
+    var user = {
+        "username":username,
+        "passwordHash":password
     }
+
+    fetch(server_url + "/user/checkPassword", {
+        method: 'POST',
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(user)
+    }).then(resp => {
+        if (resp.status == 200) success = true;
+        if (success) {
+            logged_in_username = username;
+            loadPage()
+            hideLoginPopup();
+        } else {
+            document.getElementById("login_response").innerHTML = "YOU SHALL NOT PASS! <br> <span style=\"font-size:smaller\">Wrong username/password</span>";
+        }
+    })
 }
 
 function logout() {
     logged_in_username = '';
+    document.getElementById("friend_list_bar").innerHTML = 'Friendlist comes here.';
+    emptyWTS();
+    hideNewlyRated()
+    document.getElementsByClassName("content-center")[0].innerHTML = "<p style=\"text-align:center\">Loading timeline...</p>"
+    console.log(                document.getElementsByClassName("content-center")[0].innerHTML )
     check_login();
 }
+
+
 
 
 // CREATE HTML
@@ -450,8 +475,20 @@ function fillInLatestRatings() {
         })
         })}
 
+function hideNewlyRated() {
+    for (counter = 1; counter <= 3; counter++) {
+        document.getElementById("new_rating_poster_" + counter).setAttribute("src",'');
+        document.getElementById("new_rating_director_" + counter).innerHTML = '';
+        document.getElementById("new_rating_genres_" + counter).innerHTML = '';
+        document.getElementById("new_rating_button_" + counter).innerHTML = '';
+        document.getElementById("new_rating_title_" + counter).innerHTML =  '';
+        document.getElementById("new_rating_average_" + counter).innerHTML = ''
+    }
+}
+
 function fillInWantToSees() {
     var counter = 0;
+    emptyWTS();
 
     fetch(server_url + "/wantToSee/" + logged_in_username)
         .then( resp => resp.json() )
@@ -482,7 +519,17 @@ function fillInWantToSees() {
         })
         })}
 
-
+function emptyWTS() {
+    for (counter = 1; counter <= 3; counter++) {
+        document.getElementById("wts_title_" + counter).innerHTML = ''
+        document.getElementById("wts_director_" + counter).innerHTML = ''
+        document.getElementById("wts_genres_" + counter).innerHTML = ''
+        document.getElementById("wts_poster_" + counter).setAttribute("src",'');
+        document.getElementById("seenbutton_" + counter).innerHTML =  ''
+        document.getElementById("delete_wts_" + counter).innerHTML =''
+        document.getElementById("see_more_button").innerHTML = ''
+    }
+}
 
 function addToWantToSee(username,filmId) {
     console.log(username + ' wants to see ' + filmId);

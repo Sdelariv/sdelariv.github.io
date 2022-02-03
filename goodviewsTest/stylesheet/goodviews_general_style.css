@@ -284,13 +284,14 @@ body {
 /*FOOTER*/
 
 .footer {
-    position:absolute;
+    position:relative;
     background-color: var(--filmwrapper-purple);
     padding:10px;
     width:98.9%;
     overflow:hidden;
-    bottom:0;
     border-top: solid 3px var(--lightpurple);
+    z-index:999;
+    height:100px;
 }
 
 .footer > p {
@@ -769,10 +770,12 @@ body ::-webkit-scrollbar {
     bottom:0;
     background-color: var(--background);
     padding:10%;
+    max-height:86%;
     text-align:center;
     background-image: url("/img/gvbackground.jpg");
     background-repeat: no-repeat;
     background-size:cover;
+    z-index: 998;
 }
 
 .login_box {
@@ -818,4 +821,9 @@ body ::-webkit-scrollbar {
 
 #logout {
     cursor:pointer;
+}
+
+#login_response {
+    margin-top:30px;
+    color:grey;
 }
