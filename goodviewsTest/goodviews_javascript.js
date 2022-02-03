@@ -1,29 +1,51 @@
 // GENERAL VARIABLES
 
 var wall_html ='';
-var logged_in_username = "waddles";
+var logged_in_username = 'sdelariv';
 var friendlist_html = '';
 var ratingid_list = [];
 const queryString = window.location.search;
 console.log(queryString);
 
+const server_url = "http://localhost:8080";
+const rating_url = "rating.html";
+const film_url = "film.html";
+const user_url = "user.html";
+const search_url = "search.html";
+
+
 // ALL THE METHODS
 
-fetch_updates();
-fillInFriendList();
-fillInWantToSees();
-fillInUsername();
-fillInLatestRatings();
-updateNotifications();
-fillInFriendRequests();
-
-
+check_login();
 
 // METHODS
 
+function check_login() {
+    if (logged_in_username !== '') {
+        hideLoginPopup();
+        loadPage();
+    } else {
+        document.getElementsByClassName("login_wrapper")[0].hidden = false;
+    }
+}
+
+function hideLoginPopup() {
+    document.getElementsByClassName("login_wrapper")[0].hidden = true;
+}
+
+function loadPage() {
+    fetch_updates();
+    fillInFriendList();
+    fillInWantToSees();
+    fillInUsername();
+    fillInLatestRatings();
+    updateNotifications();
+    fillInFriendRequests();
+}
+
 function fetch_updates() {
 
-    fetch("http://localhost:8080/timeline/" + logged_in_username)
+    fetch(server_url + "/timeline/" + logged_in_username)
         .then( resp => resp.json() )
         .then( logUpdates => {
 
@@ -52,6 +74,23 @@ function fetch_updates() {
         })
 }
 
+function tryLogin() {
+    var username = document.getElementById("username_input").value;
+    var password = document.getElementById("password_input").value;
+    console.log('trying to log in ' + username + ' with password ' + password);
+    var success = false;
+
+
+    if (success) {
+        loadPage()
+        hideLoginPopup();
+    }
+}
+
+function logout() {
+    logged_in_username = '';
+    check_login();
+}
 
 
 // CREATE HTML
@@ -64,13 +103,13 @@ function updateNotifications() {
 }
 
 function fillInNotificationCount() {
-    fetch("http://localhost:8080/notifications/findNumberByUsername?username=" + logged_in_username)
+    fetch(server_url + "/notifications/findNumberByUsername?username=" + logged_in_username)
         .then( resp => resp.json() )
         .then( count => {
             if (count > 0) document.getElementById("notifications_icon").innerHTML = '<p>' + count + '</p>'
         })
 
-    fetch("http://localhost:8080/notifications/findNumberOfFriendRequestsByUsername?username=" + logged_in_username)
+    fetch(server_url + "/notifications/findNumberOfFriendRequestsByUsername?username=" + logged_in_username)
         .then( resp => resp.json() )
         .then( count => {
             if (count > 0) document.getElementById("friendrequest_icon").innerHTML = '<p>' + count + '</p>'
@@ -78,7 +117,7 @@ function fillInNotificationCount() {
 }
 
 function fillInNotifications() {
-    fetch("http://localhost:8080/notifications/findTenNotifications?username=" + logged_in_username)
+    fetch(server_url + "/notifications/findTenNotifications?username=" + logged_in_username)
         .then( resp => resp.json() )
         .then( notifications => {
             var notification_html = '';
@@ -94,7 +133,7 @@ function fillInNotifications() {
 }
 
 function fillInFriendRequests() {
-    fetch("http://localhost:8080/notifications/findFriendRequests?username=" + logged_in_username)
+    fetch(server_url + "/notifications/findFriendRequests?username=" + logged_in_username)
         .then( resp => resp.json() )
         .then( notifications => {
             var notification_html = '';
@@ -201,7 +240,6 @@ function createRatingUpdateHTML(logUpdate) {
 
         // Film info
         html = html + createFilmInfo(rating.film, logUpdate.userWantsToSee, logUpdate.userHasRated) + createLikesHTML(rating) + '</div>'
-
 
         // Adding comments
         html = html + createCommentHTML(commentList, rating.id);
@@ -353,13 +391,13 @@ function createCommentsString(commentList) {
 
 
 function fillInFriendList() {
-    fetch("http://localhost:8080/friendship/" + logged_in_username + "/friendlist")
+    fetch(server_url + "/friendship/" + logged_in_username + "/friendlist")
         .then(resp => resp.json())
         .then(friends => {
 
             friends.forEach(friend => {
 
-                fetch("http://localhost:8080/rating/findNumberByUsername?username=" + friend.username)
+                fetch(server_url + "/rating/findNumberByUsername?username=" + friend.username)
                     .then(resp => resp.json())
                     .then(rating => {
                         friendlist_html = createFriendListHTML(friend, rating);
@@ -387,7 +425,7 @@ function fillInUsername() {
 function fillInLatestRatings() {
     var counter = 0;
 
-    fetch("http://localhost:8080/rating/latestRatings")
+    fetch(server_url + "/rating/latestRatings")
         .then( resp => resp.json() )
         .then( ratings => { ratings.forEach( rating => {
             console.log("FETCHING LATEST RATINGS")
@@ -415,7 +453,7 @@ function fillInLatestRatings() {
 function fillInWantToSees() {
     var counter = 0;
 
-    fetch("http://localhost:8080/wantToSee/" + logged_in_username)
+    fetch(server_url + "/wantToSee/" + logged_in_username)
         .then( resp => resp.json() )
         .then( wantToSees => { wantToSees.forEach( wts => {
 
@@ -453,7 +491,7 @@ function addToWantToSee(username,filmId) {
         "filmId": filmId
     }
 
-    fetch("http://localhost:8080/wantToSee/createWTS", {
+    fetch(server_url + "/wantToSee/createWTS", {
         method: 'POST',
         headers: {
             'Accept': 'application/json',
@@ -487,7 +525,7 @@ function createRatePopup(username, filmId) {
 
     document.getElementById("pop_up_wrapper").innerHTML = pop_up_empty_html;
 
-    fetch("http://localhost:8080/rating/currentRatingStatus?username=" + username + "&filmId=" + filmId)
+    fetch(server_url + "/rating/currentRatingStatus?username=" + username + "&filmId=" + filmId)
         .then( resp => resp.json() )
         .then( rating => {
             pop_up_html = '<div id="pop_up_rating_window">';
@@ -509,7 +547,7 @@ function createDeleteRatingButton(rating) {
 }
 
 function deleteRating(ratingId) {
-    fetch("http://localhost:8080/rating/delete/" + ratingId, {
+    fetch(server_url + "/rating/delete/" + ratingId, {
         method: 'DELETE',
         headers: {
             'Content-Type': 'application/json'
@@ -592,7 +630,7 @@ function deleteFromWts(username, wtsId, filmId) {
         "id": wtsId
     }
 
-    fetch("http://localhost:8080/wantToSee/deleteWTS", {
+    fetch(server_url + "/wantToSee/deleteWTS", {
         method: 'DELETE',
         headers: {
             'Content-Type': 'application/json'
@@ -634,7 +672,7 @@ function submitRating(filmId, username) {
         }
     };
 
-    fetch("http://localhost:8080/rating/create", {
+    fetch(server_url + "/rating/create", {
         method: 'POST',
         headers: {
             'Accept': 'application/json',
@@ -664,7 +702,7 @@ function createSearchPopup() {
 
     document.getElementById("pop_up_wrapper").innerHTML = pop_up_empty_html;
 
-    fetch("http://localhost:8080/film/findByPartialTitle?partialTitle=" + query)
+    fetch(server_url + "/film/findByPartialTitle?partialTitle=" + query)
         .then( resp => {
             if (resp.status === 404) throw new Error("Not found");
             else return resp.json()
@@ -756,7 +794,7 @@ function createLikesHTML(rating) {
 
 function updateLikeListHTML(ratingId) {
 
-    fetch("http://localhost:8080/rating/" + ratingId)
+    fetch(server_url + "/rating/" + ratingId)
         .then(resp => resp.json())
         .then(rating => {
             if (rating !== null) document.getElementById("likes_" + ratingId).innerHTML = createLikeListHTML(rating);
@@ -764,7 +802,7 @@ function updateLikeListHTML(ratingId) {
 }
 
 function addLikeToRating(username, ratingId) {
-    fetch("http://localhost:8080/rating/addLike?username=" + username + "&ratingId=" + ratingId)
+    fetch(server_url + "/rating/addLike?username=" + username + "&ratingId=" + ratingId)
         .then( resp => {
             updateLikeListHTML(ratingId);
         })
@@ -775,7 +813,7 @@ function addLikeToRating(username, ratingId) {
 }
 
 function removeLikeFromRating(username, ratingId) {
-    fetch("http://localhost:8080/rating/removeLike?username=" + username + "&ratingId=" + ratingId)
+    fetch(server_url + "/rating/removeLike?username=" + username + "&ratingId=" + ratingId)
         .then( resp => {
             updateLikeListHTML(ratingId);
         })
@@ -813,7 +851,7 @@ function addCommentToRating(ratingId) {
         }
     }
 
-    fetch("http://localhost:8080/comment/create", {
+    fetch(server_url + "/comment/create", {
         method: 'POST',
         headers: {
             'Accept': 'application/json',
@@ -826,7 +864,7 @@ function addCommentToRating(ratingId) {
 }
 
 function updateComments(ratingId) {
-    fetch("http://localhost:8080/comment/findByRatingId?ratingId=" + ratingId)
+    fetch(server_url + "/comment/findByRatingId?ratingId=" + ratingId)
         .then(resp => resp.json())
         .then(commentList => {
             console.log("updating comments with: ");
