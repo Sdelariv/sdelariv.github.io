@@ -44,6 +44,8 @@ function hideLoginPopup() {
 
 function loadPage() {
     document.getElementsByClassName("footer")[0].style.bottom = '0px';
+    friendlist_html = '';
+
     fetch_updates();
     fillInFriendList();
     fillInWantToSees();
@@ -54,6 +56,7 @@ function loadPage() {
 }
 
 function fetch_updates() {
+    wall_html = '';
 
     fetch(server_url + "/timeline/" + logged_in_username)
         .then( resp => resp.json() )
@@ -116,6 +119,9 @@ function tryLogin() {
 
 function logout() {
     logged_in_username = '';
+    hideNotifications();
+
+    document.getElementById("login_response").innerText = '';
     document.getElementById("friend_list_bar").innerHTML = 'Friendlist comes here.';
     emptyWTS();
     hideNewlyRated()
@@ -125,6 +131,11 @@ function logout() {
     document.getElementsByClassName("footer")[0].style.bottom = '-40px';
 }
 
+function hideNotifications() {
+    document.getElementById("notification_wrapper").style.display = 'none';
+    document.getElementById("friendrequests_wrapper").style.display = 'none';
+    document.getElementById("messages_wrapper").style.display = 'none';
+}
 
 
 
@@ -142,12 +153,14 @@ function fillInNotificationCount() {
         .then( resp => resp.json() )
         .then( count => {
             if (count > 0) document.getElementById("notifications_icon").innerHTML = '<p>' + count + '</p>'
+            if (count === 0) document.getElementById("notifications_icon").innerHTML = '';
         })
 
     fetch(server_url + "/notifications/findNumberOfFriendRequestsByUsername?username=" + logged_in_username)
         .then( resp => resp.json() )
         .then( count => {
             if (count > 0) document.getElementById("friendrequest_icon").innerHTML = '<p>' + count + '</p>'
+            if (count === 0) document.getElementById("friendrequest_icon").innerHTML = '';
         })
 }
 
@@ -210,19 +223,99 @@ function updateNotificationsAsSeen() {
     fillInNotifications()
 }
 
+function displayNotifications() {
+    var notification_display = document.getElementById("notification_wrapper").style.display
+
+    if (notification_display === 'block') {
+        document.getElementById("notification_wrapper").style.display= 'none';
+    } else {
+        document.getElementById("notification_wrapper").style.display = 'block';
+        document.getElementById("friendrequests_wrapper").style.display= 'none';
+        document.getElementById("messages_wrapper").style.display='none';
+        updateNotificationsAsSeen();
+    }
+}
+
+function displayFriendrequests() {
+    var friendrequest_display = document.getElementById("friendrequests_wrapper").style.display;
+
+    if (friendrequest_display ==='block') {
+        document.getElementById("friendrequests_wrapper").style.display='none';
+    } else {
+        document.getElementById("notification_wrapper").style.display = 'none';
+        document.getElementById("friendrequests_wrapper").style.display= 'block';
+        document.getElementById("messages_wrapper").style.display='none';
+    }
+}
+
+function displayMessages() {
+    var messages_display = document.getElementById("messages_wrapper").style.display;
+
+    if (messages_display ==='block') {
+        document.getElementById("messages_wrapper").style.display='none';
+    } else {
+        document.getElementById("notification_wrapper").style.display = 'none';
+        document.getElementById("friendrequests_wrapper").style.display= 'none';
+        document.getElementById("messages_wrapper").style.display='block';
+    }
+}
+
 function fillInFriendRequests() {
     fetch(server_url + "/notifications/findFriendRequests?username=" + logged_in_username)
         .then( resp => resp.json() )
         .then( notifications => {
             var notification_html = '';
             notifications.forEach(notification => {
-
-                if (!notification.seen) notification_html = notification_html + '<p>' + notification.message + '</p>';
-                if (notification.seen) notification_html = notification_html + '<p style="color:grey">' + notification.message + '</p>';
-                notification_html = notification_html + '<p><a href="">ACCEPT</a> | <a href="""> DECLINE </u></p>'
+                console.log(notification);
+                notification_html = notification_html + createFriendRequestString(notification);
             })
 
             document.getElementById("friendrequests_wrapper").innerHTML =  notification_html
+        })
+}
+
+function createFriendRequestString(notification) {
+    html = '';
+
+    // Start
+    if (!notification.seen) html = html + '<p>'
+    if (notification.seen) _html = html + '<p style="color:grey">'
+
+    html = html + '<a href="' + user_url + notification.friendA.username + '">' + notification.friendA.username + '</a> wants to be friends with you </p>';
+
+    html = html + '<p><a onclick="acceptFriendship(\'' + notification.id + '\')">ACCEPT</a> | <a onclick="denyFriendship(\'' + notification.id + '\')"> DECLINE </u></p>'
+
+    return html
+}
+
+function acceptFriendship(friendId) {
+    console.log('accepting ' + friendId);
+
+    fetch(server_url + "/friendship/acceptRequest?friendshipRequestId=" + friendId,  {
+        method: 'POST',
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        }})
+        .then(resp => {
+            if (resp.status === 200) console.log('Friend accepted');
+            updateNotifications();
+            fillInFriendList();
+        })
+}
+
+function denyFriendship(friendId) {
+    console.log('denying ' + friendId);
+
+    fetch(server_url + "/friendship/denyFriendRequest?friendshipRequestId=" + friendId,  {
+        method: 'POST',
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        }})
+        .then(resp => {
+            if (resp.status === 200) console.log('Friend accepted');
+            updateNotifications();
         })
 }
 
@@ -469,6 +562,8 @@ function createCommentsString(commentList) {
 
 
 function fillInFriendList() {
+    document.getElementById("friend_list_bar").innerHTML = '';
+
     fetch(server_url + "/friendship/" + logged_in_username + "/friendlist")
         .then(resp => resp.json())
         .then(friends => {

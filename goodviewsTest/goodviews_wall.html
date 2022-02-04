@@ -19,17 +19,17 @@
         </div>
 
         <div class="notifications">
-            <div tabindex="0" id="notifications_icon" onclick="updateNotificationsAsSeen()"></div>
+            <div tabindex="0" id="notifications_icon" onclick="displayNotifications()"></div>
             <div id="notification_wrapper">
                 <p>No new notifications</p>
             </div>
 
-            <div tabindex="0" id="friendrequest_icon"></div>
+            <div tabindex="0" id="friendrequest_icon" onclick="displayFriendrequests()"></div>
             <div id="friendrequests_wrapper">
                 <p>No new friendrequests</p>
             </div>
 
-            <div tabindex="0" id="messages_icon"></div>
+            <div tabindex="0" id="messages_icon" onclick="displayMessages()"></div>
             <div id="messages_wrapper">
                 <p>No new messages</p>
             </div>
@@ -37,7 +37,7 @@
         </div>
 
         <div class="searchbar">
-            <input id="search_inputter" type="text" placeholder="Search by title.." >
+            <input id="search_inputter" type="search" name="quicksearch" autocomplete="off" aria-autocomplete="none" placeholder="Search by title.." >
             <button type="submit" onclick="createSearchPopup()"><i class="gg-search"></i></button>
         </div>
 
@@ -70,9 +70,9 @@
     </div>
     <div class="login_box"><p>
         <label for="username_input">Username: </label>
-        <input id="username_input" type="text" placeholder="Type username..." >
+        <input id="username_input" type="text" name="username" placeholder="Type username..." >
         <label for="password_input">Password: </label>
-        <input id="password_input" type="password" placeholder="Type password..." >
+        <input id="password_input" type="password" name="password" placeholder="Type password..." >
     </p>
         <button onclick="tryLogin()">LOG IN</button>
         <button onclick="location.href='/createAccount.html'">CREATE ACCOUNT</button>

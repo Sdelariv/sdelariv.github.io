@@ -96,6 +96,7 @@ a {
     margin-top:12px;
 }
 
+
 .seen {
     color:var(--filmwrapper-purple);
     text-shadow: none;
@@ -513,21 +514,25 @@ h3, h2, h1, h4, p, a, ul {
     padding-left:15px;
     padding-right:15px;
     font-size:14px;
-    z-index:999;
+    z-index:299;
     margin-right:20px;
     margin-left:0;
+}
+
+#notification_wrapper p:hover {
+    background-color: #7d7186;
 }
 
 #notifications_icon:hover, #messages_icon:hover, #friendrequest_icon:hover{
     background-color:black;
     cursor:pointer;
 }
-#notifications_icon:focus + #notification_wrapper{
-    display:block;
+ #notification_wrapper{
+    display:none;
 }
 
-#friendrequest_icon:focus + #friendrequests_wrapper{
-    display:block;
+#friendrequests_wrapper{
+    display:none;
 }
 
 #messages_icon:focus + #messages_wrapper{
