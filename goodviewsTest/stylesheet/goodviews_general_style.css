@@ -296,7 +296,8 @@ body {
     overflow:hidden;
     border-top: solid 3px var(--lightpurple);
     z-index:999;
-    height:100px;
+    height:80px;
+    bottom:-40px;
 }
 
 .footer > p {
@@ -781,6 +782,7 @@ body ::-webkit-scrollbar {
     background-repeat: no-repeat;
     background-size:cover;
     z-index: 998;
+    overflow-y:hidden;
 }
 
 .login_box {

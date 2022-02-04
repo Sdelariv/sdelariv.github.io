@@ -1,7 +1,7 @@
 // GENERAL VARIABLES
 
 var wall_html ='';
-var logged_in_username = 'sdelariv';
+var logged_in_username = '';
 var friendlist_html = '';
 var ratingid_list = [];
 const queryString = window.location.search;
@@ -29,6 +29,7 @@ function check_login() {
     } else {
         // TODO: check if ip is already logged in, and if not:
         showLoginPopup();
+        document.getElementsByClassName("content-center")[0].innerHTML = "<p style=\"text-align:center\">Loading timeline...</p>"
     }
 }
 
@@ -41,6 +42,7 @@ function hideLoginPopup() {
 }
 
 function loadPage() {
+    document.getElementsByClassName("footer")[0].style.bottom = '0px';
     fetch_updates();
     fillInFriendList();
     fillInWantToSees();
@@ -76,7 +78,7 @@ function fetch_updates() {
                     wall_html = wall_html + createWtsHTML(logUpdate);
                 }
 
-                document.getElementsByClassName("content-center")[0].innerHTML = wall_html;
+                if (logged_in_username !== '') document.getElementsByClassName("content-center")[0].innerHTML = wall_html;
             })
         })
 }
@@ -117,8 +119,9 @@ function logout() {
     emptyWTS();
     hideNewlyRated()
     document.getElementsByClassName("content-center")[0].innerHTML = "<p style=\"text-align:center\">Loading timeline...</p>"
-    console.log(                document.getElementsByClassName("content-center")[0].innerHTML )
+
     check_login();
+    document.getElementsByClassName("footer")[0].style.bottom = '-40px';
 }
 
 
