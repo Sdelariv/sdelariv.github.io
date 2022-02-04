@@ -30,7 +30,6 @@ function check_login() {
     } else {
         // TODO: check if ip is already logged in, and if not:
         showLoginPopup();
-        document.getElementsByClassName("content-center")[0].innerHTML = "<p style=\"text-align:center\">Loading timeline...</p>"
     }
 }
 
@@ -119,12 +118,13 @@ function tryLogin() {
 
 function logout() {
     logged_in_username = '';
-    hideNotifications();
+    ratingid_list = [];
 
-    document.getElementById("login_response").innerText = '';
-    document.getElementById("friend_list_bar").innerHTML = 'Friendlist comes here.';
+    hideNotifications();
     emptyWTS();
     hideNewlyRated()
+    document.getElementById("login_response").innerText = '';
+    document.getElementById("friend_list_bar").innerHTML = 'Friendlist comes here.';
     document.getElementsByClassName("content-center")[0].innerHTML = "<p style=\"text-align:center\">Loading timeline...</p>"
 
     check_login();
@@ -766,7 +766,7 @@ function createFilmRatingInfo(rating) {
         '                        <img src="' + film.posterUrl + '">\n' +
         '        </div>' +
         '        <div class="rate_info"">\n' +
-        '                        <h4 style="font-size:25px"> <a href="' + film_url + film.id + '">' + film.title + ' <span style="font-size:small">(' + film.releaseYear + ')</span></h4>\n' +
+        '                        <h4 style="font-size:25px"> <a href="' + film_url + film.id + '">' + film.title + ' <span style="font-size:small">(' + film.releaseYear + ')</a></span></h4>\n' +
         '                        <ul style="margin-top:-25px">' + film.runTime + 'min  <i style="color:var(--pink-purple)">' + getNamesString(film.genres) + '. </i></ul>';
 
     // RATING
