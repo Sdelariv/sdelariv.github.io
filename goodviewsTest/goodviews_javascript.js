@@ -391,7 +391,7 @@ function createNewCommentHTML(logUpdate) {
 function createWtsHTML(logUpdate) {
     var html = '<div class="update" style="background:var(--wts)">'
         + '<p class="update_date">' + createTimeStamp(logUpdate.dateTime)  + '</p>'
-        + '<p><a class="color_pink-purple" href="' + user_url + logUpdate.user.username + '"> ' + logUpdate.user.username + '</a> wants to see ' + logUpdate.film.title + '</p>';
+        + '<p><a class="color_pink-purple" href="' + user_url + logUpdate.user.username + '"> ' + logUpdate.user.username + '</a> wants to see <a href="' + film_url + logUpdate.film.id + '">' + logUpdate.film.title + '</a></p>';
 
 
     // Add filminfo
@@ -445,7 +445,7 @@ function createFilmInfo(film, userWantsToSee, userHasRated) {
         '                        <div class="poster">\n' +
         '                            <img src="' + film.posterUrl + '">\n' +
         '                        </div>\n' +
-        '                        <h4 style="font-size:25px">' + film.title + ' <span style="font-size:small">(' + film.releaseYear + ')</span></h4>\n' +
+        '                        <h4 style="font-size:25px"><a href="' + film_url + film.id + '">' + film.title + ' <span style="font-size:small">(' + film.releaseYear + ')</a></span></h4>\n' +
         '                        <p style="margin-top:-25px; color:var(--pink-purple)"> <i>' + getNamesString(film.genres) + '.</i></p>' +
         createRateAndWtsButtons(userWantsToSee, userHasRated, film) +
         '                        <p> Directed by <i>' + getNamesString(film.director) + '.</i></p>' +
@@ -617,7 +617,7 @@ function fillInLatestRatings() {
                 document.getElementById("new_rating_director_" + counter).innerHTML = 'Directed by ' + directors;
                 document.getElementById("new_rating_genres_" + counter).innerHTML = '<i>' + genres + '</i>';
                 document.getElementById("new_rating_button_" + counter).innerHTML = '<span id="rate" onclick="createRatePopup(logged_in_username,\'' + rating.film.id + '\');">RATE</span><br>';
-                document.getElementById("new_rating_title_" + counter).innerHTML = title + '<span style="font-size:small"> (' + releaseYear + ')</span>';
+                document.getElementById("new_rating_title_" + counter).innerHTML = '<a href="' + film_url + rating.film.id + '">' + title + '<span style="font-size:small"> (' + releaseYear + ')</a></span>';
                 if (average != null) document.getElementById("new_rating_average_" + counter).innerHTML = '<ul class="rating_average">' + getRatingString(average) + ' <br>(avg.rating)</ul>'
             }
         })
@@ -654,7 +654,7 @@ function fillInWantToSees() {
                 genres = getNamesString(wts.film.genres);
 
 
-                document.getElementById("wts_title_" + counter).innerHTML = title + '<span style="font-size:small"> (' + releaseYear + ')</span>'
+                document.getElementById("wts_title_" + counter).innerHTML = '<a href="' + film_url + wts.film.id + '">' + title + '<span style="font-size:small"> (' + releaseYear + ')</a></span>'
                 document.getElementById("wts_director_" + counter).innerHTML = 'Directed by ' + directors;
                 document.getElementById("wts_genres_" + counter).innerHTML = '<i>' + genres + '</i>';
                 document.getElementById("wts_poster_" + counter).setAttribute("src",posterUrl);
@@ -766,7 +766,7 @@ function createFilmRatingInfo(rating) {
         '                        <img src="' + film.posterUrl + '">\n' +
         '        </div>' +
         '        <div class="rate_info"">\n' +
-        '                        <h4 style="font-size:25px">' + film.title + ' <span style="font-size:small">(' + film.releaseYear + ')</span></h4>\n' +
+        '                        <h4 style="font-size:25px"> <a href="' + film_url + film.id + '">' + film.title + ' <span style="font-size:small">(' + film.releaseYear + ')</span></h4>\n' +
         '                        <ul style="margin-top:-25px">' + film.runTime + 'min  <i style="color:var(--pink-purple)">' + getNamesString(film.genres) + '. </i></ul>';
 
     // RATING
@@ -945,7 +945,7 @@ function createSearchResults(films) {
                     '<button id="general_rating_button" type="button" onclick="createRatePopup(logged_in_username,\'' + film.id + '\');">RATE</button> ' +
                 '</div>' +
 
-            '<p>' + film.title + '<span style="color:var(--lightpurple);font-size:11px"> <br> (' + film.releaseYear + ')</span></p>' +
+            '<p><a href="' + film_url + film.id + '">' + film.title + '<span style="color:var(--lightpurple);font-size:11px"> <br> (' + film.releaseYear + ')</a></span></p>' +
 
             '</div>'
     })
