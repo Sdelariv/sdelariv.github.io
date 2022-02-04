@@ -1,7 +1,7 @@
 // GENERAL VARIABLES
 
 var wall_html ='';
-var logged_in_username = '';
+var logged_in_username = 'sdelariv';
 var friendlist_html = '';
 var ratingid_list = [];
 const queryString = window.location.search;
@@ -13,6 +13,7 @@ const user_url = "user.html?username=";
 const search_url = "search.html";
 const search_by_crew_url = "search.html?crewId="
 const notifications_url = "";
+const rating_url = "rating.html?ratingId=";
 
 
 // ALL THE METHODS
@@ -155,15 +156,58 @@ function fillInNotifications() {
         .then( resp => resp.json() )
         .then( notifications => {
             var notification_html = '';
+            previous_comment_notification = [];
             notifications.forEach(notification => {
-                if (!notification.seen) notification_html = notification_html + '<p>' + notification.message + '</p>';
-                if (notification.seen) notification_html = notification_html + '<p style="color:grey">' + notification.message + '</p>';
+                notification_html = notification_html + createNotificationString(notification, previous_comment_notification)
             })
 
             notification_html = notification_html + '<a href="' + notifications_url + '" style="color:black;font-size:small;text-shadow: none;text-decoration:none"> SEE MORE NOTIFICATIONS </a><br> <br>'
 
             document.getElementById("notification_wrapper").innerHTML =  notification_html
         })
+}
+
+function createNotificationString(notification, comment_notification) {
+    html = ''
+
+    // Differentiate between seen and not seen
+    if (!notification.seen) html = html + '<p>'
+    if (notification.seen) html = html + '<p class="seen">'
+
+    // Middle
+    if (notification.message.includes("has liked your rating")) {
+        html = html + '<a href="' + user_url + notification.originUser.username + '">' + notification.originUser.username + '</a> liked <a href="' + rating_url + notification.rating.id + '"> your rating of ' + notification.rating.film.title + ' (' + notification.rating.film.releaseYear + ')</a>'
+    } else if (notification.message.includes("commented on your")) {
+        html = html + '<a href="' + user_url + notification.originUser.username + '">' + notification.originUser.username + '</a> commented on <a href="' + rating_url + notification.rating.id + '"> your rating of ' + notification.rating.film.title + ' (' + notification.rating.film.releaseYear + ')</a>'
+    } else if (notification.message.includes("has replied to a")) {
+        html = html + '<a href="' + user_url + notification.originUser.username + '">' + notification.originUser.username + '</a> commented on <a href="' + rating_url + notification.rating.id + '"> a conversation you are in </a>'
+    } else if (notification.message.includes("has accepted your friendrequest")) {
+        html = html + '<a href="' + user_url + notification.originUser.username + '">' + notification.originUser.username + '</a> has accepted your friendrequest'
+    } else {
+        html = html + notification.message
+    }
+
+    // Ending
+    html = html + '</p>';
+
+    return html;
+}
+
+function updateNotificationsAsSeen() {
+    console.log('checking notifications');
+
+    fetch(server_url + "/notifications/markAllAsSeen?username=" + logged_in_username,  {
+        method: 'POST',
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        }})
+        .then(resp => {
+            if (resp.status === 200) console.log('Notifications seen');
+        })
+
+    fillInNotificationCount();
+    fillInNotifications()
 }
 
 function fillInFriendRequests() {
@@ -218,7 +262,6 @@ function datesAreOnSameDay(first, second) {
         first.getDate() === second.getDate()) {
         return true;
     }
-
     return false;
 }
 
@@ -334,7 +377,6 @@ function createRateAndWtsButtons(userWantsToSee, userHasRated, film) {
         button_html = button_html +
             '<button id="wts_button_' + filmId + '" type="button" onclick="addToWantToSee(logged_in_username,\'' + filmId+ '\');">WANT TO SEE</button>';
     }
-
 
     return button_html;
 }

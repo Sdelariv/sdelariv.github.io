@@ -96,6 +96,16 @@ a {
     margin-top:12px;
 }
 
+.seen {
+    color:var(--filmwrapper-purple);
+    text-shadow: none;
+}
+
+.seen a {
+    color:var(--filmwrapper-purple);
+    text-shadow: none;
+}
+
 #friendrequest_icon {
     float:right;
     background-image:url("/img/friendrequests.png");
@@ -818,7 +828,7 @@ body ::-webkit-scrollbar {
     width:200px;
     display:block;
     margin: 15px auto;
-    background-color: var(--pink-purple);
+    background-color: #cbb9d2;
     color:black;
 }
 
