@@ -73,26 +73,29 @@
 
         <div class="user_heading">
             <h2 id="user_username" class="color_pink-purple">USERNAME</h2>
-            <button>ADD AS FRIEND</button>
+            <button id="add_friend_button" onclick="requestFriendship()">ADD AS FRIEND</button>
+            <p id="is_friend"> (your friend)</p>
+            <p id="friend_request_sent"> REQUEST SENT</p>
         </div>
 
         <p style="text-align:center"></p>
         <p id="user_name">Name</p>
-        <p>Number of ratings: </p>
+        <p style="font-size:small; color:var(--lightpurple)">Number of ratings: <span id="number_of_ratings">(loading...)</span></p>
 
-        <div class="users_ratings">
+        <div id="users_ratings">
             <h3>Ratings: </h3>
+            <p style="font-size:small; color:var(--lightpurple)">Loading ratings...</p>
         </div>
 
     </div>
 
     <div class="content-right">
 
-        <h2> ABOUT US </h2>
-        <p>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-            <br><br>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-            <br><br>
+        <h2> THEIR FRIENDLIST </h2>
+        <div id="their_friend_list_bar">
+            <p> List of their friends comes here.</p>
+        </div>
+        <br><br>
 
         <h2> YOUR FRIENDLIST </h2>
         <div id="friend_list_bar">

@@ -267,6 +267,7 @@ body {
     width:21%;
     padding-left:3%;
     float:left;
+    min-height:750px;
 }
 
 .content-center {
@@ -421,7 +422,7 @@ h3, h2, h1, h4, p, a, ul {
     bottom:10px;
 }
 
-#general_rating_button, #general_wts_button {
+#general_rating_button, #general_wts_button, #wts_button {
     margin:auto;
     text-align:center;
     width:35%;
@@ -434,7 +435,7 @@ h3, h2, h1, h4, p, a, ul {
     padding: 5px 0;
 }
 
-#general_rating_button:hover , #general_wts_button:hover {
+#general_rating_button:hover, #general_wts_button:hover, #wts_button:hover {
     background-color: var(--pink-purple);
     cursor:pointer;
 }
@@ -883,18 +884,71 @@ body ::-webkit-scrollbar {
 
 .user_heading h2, .user_heading button {
     display:inline-block;
-    margin-bottom: 0;
 }
 
-.user_heading button {
-    width:100Px;
-}
 
-.users_ratings {
+
+#users_ratings {
     border-top: solid 3px var(--filmwrapper-purple);
     border-bottom: solid 3px var(--filmwrapper-purple);
+    margin-bottom:30px;
 }
 
 #loading_text {
     text-align:center;
+}
+
+
+.rating_result {
+    text-align:center;
+    width:130px;
+    display:inline-block;
+    margin:0;
+    padding:19px;
+    height:240px;
+    overflow:hidden;
+}
+
+.rating_result img {
+    width:70%;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top:20px;
+    display:block;
+    z-index: 8;
+}
+
+.rating_result p {
+    margin:auto;
+    font-size:13px;
+    text-shadow: 1px 1px 5px black;
+    letter-spacing:2px;
+    margin-bottom:2px;
+}
+
+#add_friend_button, #is_friend {
+    display:none;
+}
+
+#add_friend_button, #friend_request_sent {
+    font-size:13px;
+    width:100px;
+    background-color: var(--filmwrapper-purple);
+    margin-bottom: 8px;
+    margin-left:20px;
+    padding: 5px;
+    display:none;
+    color: var(--lightpurple);
+    text-align:center;
+}
+
+#add_friend_button:hover {
+    background-color: var(--pink-purple);
+    color:var(--filmwrapper-purple);
+}
+
+.buttons_wrapper_semitop {
+    position:relative;
+    margin-bottom:-30px;
+    z-index:9;
 }

@@ -1,7 +1,7 @@
 // GENERAL VARIABLES
 
 var wall_html ='';
-var logged_in_username = 'sdelariv';
+var logged_in_username = '';
 var friendlist_html = '';
 var ratingid_list = [];
 const queryString = window.location.search;
@@ -21,15 +21,28 @@ const home_url = "/home.html"
 // METHODS
 
 
-function check_login() {
-    if (queryString.includes("username=")) {
-        console.log('found querystring');
-        var link_username = getParameterByName("username");
-        console.log(link_username);
-        logged_in_username = link_username;
-    }
+function check_login(loadPage) {
+    console.log('check_login called');
 
-    return logged_in_username;
+    if (logged_in_username !== '') {
+        console.log('hardcoded login');
+        return logged_in_username
+    }
+    fetch(server_url + "/login/findIpsLogin")
+        .then(resp => {
+            if (resp.status === 404) {
+                console.log('this user hasn\'t logged in yet');
+                return '';
+            } else {
+                return resp.json();
+            }
+        } )
+        .then(Login => {
+            console.log(Login.user.username + ' was still logged in');
+            logged_in_username = Login.user.username;
+            if (logged_in_username !== null) loadPage();
+
+        }).catch()
 }
 
 function getParameterByName(name, url = window.location.href) {
@@ -86,7 +99,7 @@ function tryLogin() {
         "passwordHash":password
     }
 
-    fetch(server_url + "/user/checkPassword", {
+    fetch(server_url + "/login/login", {
         method: 'POST',
         headers: {
             'Accept': 'application/json',
@@ -96,8 +109,7 @@ function tryLogin() {
     }).then(resp => {
         if (resp.status == 200) success = true;
         if (success) {
-            logged_in_username = username;
-            window.location.href="home.html?username=" + username
+            window.location.href="home.html"
         } else {
             document.getElementById("login_response").innerHTML = "YOU SHALL NOT PASS! <br> <span style=\"font-size:smaller\">Wrong username/password</span>";
         }
@@ -257,11 +269,13 @@ function fillInFriendRequests() {
 function createFriendRequestString(notification) {
     html = '';
 
+
+
     // Start
     if (!notification.seen) html = html + '<p>'
     if (notification.seen) _html = html + '<p style="color:grey">'
 
-    html = html + '<a href="' + user_url + notification.friendA.username + '">' + notification.friendA.username + '</a> wants to be friends with you </p>';
+    html = html + '<a href="' + user_url + notification.friendRequest.friendA.username + '">' + notification.friendRequest.friendA.username + '</a> wants to be friends with you </p>';
 
     html = html + '<p><a onclick="acceptFriendship(\'' + notification.id + '\')">ACCEPT</a> | <a onclick="denyFriendship(\'' + notification.id + '\')"> DECLINE </u></p>'
 
@@ -542,6 +556,7 @@ function createCommentsString(commentList) {
 
 
 function fillInFriendList() {
+    friendlist_html = '';
     document.getElementById("friend_list_bar").innerHTML = '';
 
     fetch(server_url + "/friendship/" + logged_in_username + "/friendlist")
