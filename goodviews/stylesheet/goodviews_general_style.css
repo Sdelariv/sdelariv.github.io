@@ -904,7 +904,7 @@ body ::-webkit-scrollbar {
     width:130px;
     display:inline-block;
     margin:0;
-    padding:19px;
+    padding:10px;
     height:240px;
     overflow:hidden;
 }
