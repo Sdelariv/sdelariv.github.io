@@ -32,8 +32,12 @@ function check_login(loadPage) {
         .then(resp => {
             if (resp.status === 404) {
                 console.log('this user hasn\'t logged in yet');
-                return '';
-            } else {
+                window.location.href="login.html";
+            } else if (!resp.ok) {
+                console.log('no worky');
+                window.location.href="login.html";
+            }
+            else {
                 return resp.json();
             }
         } )
@@ -42,7 +46,9 @@ function check_login(loadPage) {
             logged_in_username = Login.user.username;
             if (logged_in_username !== null) loadPage();
 
-        }).catch()
+        }).catch((error) => {
+            window.location.href="login.html";
+    })
 }
 
 function getParameterByName(name, url = window.location.href) {
