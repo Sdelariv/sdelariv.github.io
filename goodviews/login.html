@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Goodviews wall</title>
+
+    <link rel="stylesheet" href="stylesheet/goodviews_general_style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Pathway+Gothic+One&display=swap" rel="stylesheet">
+    <link href='https://css.gg/search.css' rel='stylesheet'>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+<body>
+
+<div class="login_wrapper">
+    <div class="logo">
+        <p style="font-size:small; margin-bottom:0;">Welcome to </p>
+        <span style="color:#c09dd5">GOOD</span><span style="font-weight:bold">VIEWS</span>
+    </div>
+    <div class="login_box"><p>
+        <label for="username_input">Username: </label>
+        <input id="username_input" type="text" name="username" placeholder="Type username..." >
+        <label for="password_input">Password: </label>
+        <input id="password_input" type="password" name="password" placeholder="Type password..." >
+    </p>
+        <button onclick="tryLogin()">LOG IN</button>
+        <button onclick="location.href='/createAccount.html'">CREATE ACCOUNT</button>
+        <p id="login_response"></p>
+    </div>
+</div>
+
+<footer class="footer" id="login_footer">
+    <p>@2022 by Sven Delarivi&egrave;re</p>
+</footer>
+
+</body>
+
+
+
+<script src="javascript/goodviews_javascript.js">
+</script>
+
+</html>

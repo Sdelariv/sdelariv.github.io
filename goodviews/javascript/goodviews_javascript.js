@@ -1,58 +1,47 @@
 // GENERAL VARIABLES
 
 var wall_html ='';
-var logged_in_username = '';
+var logged_in_username = 'sdelariv';
 var friendlist_html = '';
 var ratingid_list = [];
 const queryString = window.location.search;
 console.log(queryString);
 
 const server_url = "http://localhost:8080";
+const website_path = "/goodviews/";
 const film_url = "film.html?filmId=";
 const user_url = "user.html?username=";
 const search_url = "search.html";
 const search_by_crew_url = "search.html?crewId="
 const notifications_url = "";
 const rating_url = "rating.html?ratingId=";
+const home_url = "/home.html"
 
-
-// ALL THE METHODS
-
-check_login();
 
 // METHODS
 
+
 function check_login() {
-    if (logged_in_username !== '') {
-        document.getElementById("login_response").innerText = "Success!";
-        loadPage();
-        hideLoginPopup();
-    } else {
-        // TODO: check if ip is already logged in, and if not:
-        showLoginPopup();
+    if (queryString.includes("username=")) {
+        console.log('found querystring');
+        var link_username = getParameterByName("username");
+        console.log(link_username);
+        logged_in_username = link_username;
     }
+
+    return logged_in_username;
 }
 
-function showLoginPopup() {
-    document.getElementsByClassName("login_wrapper")[0].hidden = false;
+function getParameterByName(name, url = window.location.href) {
+    name = name.replace(/[\[\]]/g, '\\$&');
+    var regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)'),
+        results = regex.exec(url);
+    if (!results) return null;
+    if (!results[2]) return '';
+    return decodeURIComponent(results[2].replace(/\+/g, ' '));
 }
 
-function hideLoginPopup() {
-    document.getElementsByClassName("login_wrapper")[0].hidden = true;
-}
 
-function loadPage() {
-    document.getElementsByClassName("footer")[0].style.bottom = '0px';
-    friendlist_html = '';
-
-    fetch_updates();
-    fillInFriendList();
-    fillInWantToSees();
-    fillInUsername();
-    fillInLatestRatings();
-    updateNotifications();
-    fillInFriendRequests();
-}
 
 function fetch_updates() {
     wall_html = '';
@@ -108,8 +97,7 @@ function tryLogin() {
         if (resp.status == 200) success = true;
         if (success) {
             logged_in_username = username;
-            loadPage()
-            hideLoginPopup();
+            window.location.href="home.html?username=" + username
         } else {
             document.getElementById("login_response").innerHTML = "YOU SHALL NOT PASS! <br> <span style=\"font-size:smaller\">Wrong username/password</span>";
         }
@@ -120,15 +108,7 @@ function logout() {
     logged_in_username = '';
     ratingid_list = [];
 
-    hideNotifications();
-    emptyWTS();
-    hideNewlyRated()
-    document.getElementById("login_response").innerText = '';
-    document.getElementById("friend_list_bar").innerHTML = 'Friendlist comes here.';
-    document.getElementsByClassName("content-center")[0].innerHTML = "<p style=\"text-align:center\">Loading timeline...</p>"
-
-    check_login();
-    document.getElementsByClassName("footer")[0].style.bottom = '-40px';
+    window.location.href = "login.html"
 }
 
 function hideNotifications() {
