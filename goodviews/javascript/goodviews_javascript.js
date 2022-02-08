@@ -47,7 +47,6 @@ function check_login(loadPage) {
             if (logged_in_username !== null) loadPage();
 
         }).catch((error) => {
-            window.location.href="login.html";
     })
 }
 
@@ -68,6 +67,8 @@ function fetch_updates() {
     fetch(server_url + "/timeline/" + logged_in_username)
         .then( resp => resp.json() )
         .then( logUpdates => {
+
+            if (logUpdates.length === 0) document.getElementsByClassName("content-center")[0].innerHTML = '<p style="text-align:center">No updates yet.</p>'
 
             logUpdates.forEach( logUpdate => {
 
@@ -113,8 +114,7 @@ function tryLogin() {
         },
         body: JSON.stringify(user)
     }).then(resp => {
-        if (resp.status == 200) success = true;
-        if (success) {
+        if (resp.status === 200) {
             window.location.href="home.html"
         } else {
             document.getElementById("login_response").innerHTML = "YOU SHALL NOT PASS! <br> <span style=\"font-size:smaller\">Wrong username/password</span>";
@@ -563,12 +563,11 @@ function createCommentsString(commentList) {
 
 function fillInFriendList() {
     friendlist_html = '';
-    document.getElementById("friend_list_bar").innerHTML = '/';
+    document.getElementById("friend_list_bar").innerHTML = '<p>No friends yet</p>';
 
     fetch(server_url + "/friendship/" + logged_in_username + "/friendlist")
         .then(resp => resp.json())
         .then(friends => {
-            console.log("hello");
 
             friends.forEach(friend => {
 
@@ -637,6 +636,12 @@ function hideNewlyRated() {
 }
 
 function fillInWantToSees() {
+    var wts_1 = document.getElementsByClassName("wts_1");
+    if (wts_1 === null || wts_1.length === 0) {
+        return;
+    }
+
+
     var counter = 0;
     emptyWTS();
 
@@ -697,7 +702,9 @@ function addToWantToSee(username,filmId) {
         body: JSON.stringify(data)
     }).then(resp => {
         fillInWantToSees();
-        document.getElementById("wts_button_" + filmId).innerHTML = '';
+        document.getElementById("wts_button_" + filmId).style.opacity = "0";
+        document.getElementById("wts_button_" + filmId).style.cursor = "default";
+        document.getElementById("wts_button_" + filmId).onclick = '';
     })
 }
 
@@ -938,7 +945,7 @@ function createSearchResults(films) {
             '<div class="film_result">' +
 
                 '<div class="buttons_wrapper_top">' +
-                    '<button id="general_wts_button" type="button" onclick="addToWantToSee(logged_in_username,\'' + film.id + '\');">TO SEE</button>' +
+                    '<button class="general_wts_button" id="wts_button_' + film.id + '" type="button" onclick="addToWantToSee(logged_in_username,\'' + film.id + '\');">TO SEE</button>' +
                  '</div>' +
 
             '<img src="' + film.posterUrl + '">' +

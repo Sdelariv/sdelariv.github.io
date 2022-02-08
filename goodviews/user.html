@@ -48,7 +48,6 @@
         <div class="topnav">
             <a href="home.html"> HOME </a>
             <a id="myfilms" href="user.html"> MY FILMS </a>
-            <a href="/friends.html"> FRIENDS </a>
             <a href="/search.html"> FIND </a>
         </div>
 
@@ -80,8 +79,13 @@
 
         <p style="text-align:center"></p>
         <p id="user_name">Name</p>
+        <p style="font-size:small; color:var(--lightpurple)">Number of want-to-sees: <span id="number_of_wts">(loading...)</span></p>
         <p style="font-size:small; color:var(--lightpurple)">Number of ratings: <span id="number_of_ratings">(loading...)</span></p>
 
+        <div id="users_wts">
+            <h3>Want-to-sees: </h3>
+            <p style="font-size:small; color:var(--lightpurple)">Loading want-to-sees...</p>
+        </div>
         <div id="users_ratings">
             <h3>Ratings: </h3>
             <p style="font-size:small; color:var(--lightpurple)">Loading ratings...</p>

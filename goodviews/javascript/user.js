@@ -25,6 +25,7 @@ function fillInUserPage(username_page) {
             document.getElementById("user_name").innerHTML = user.firstName + ' ' + user.lastName;
 
             fillInUserRatings(username_page);
+            fillInUserWantToSees(username_page);
             fillInTheirFriends(username_page);
 
 
@@ -118,13 +119,37 @@ function fillInTheirFriends(username) {
 
 }
 
+function fillInUserWantToSees(username) {
+    wts_html = '/';
+    counter = 0;
+
+    fetch(server_url + "/wantToSee/" + username)
+        .then(resp => resp.json())
+        .then(wantToSees => {
+            if (wantToSees.length === 0)    {
+                document.getElementById("users_wts").innerHTML = '<h3>Want-to-sees:</h3> <p style="font-size:small; color:var(--lightpurple)">No want-to-sees yet.</p>'
+                document.getElementById("number_of_wts").innerHTML = counter;
+            }
+
+            wts_html ='<h3>Want-to-sees:</h3>';
+
+            wantToSees.forEach(wts => {
+                wts_html = wts_html + createUserWtsBox(wts.film);
+                counter++
+                document.getElementById("users_wts").innerHTML = wts_html;
+                document.getElementById("number_of_wts").innerHTML = counter;
+            })
+        })
+}
+
 function fillInUserRatings(username) {
     user_html = '<h3>Ratings: </h3>'
     counter = 0;
     fetch(server_url + "/rating/findByUsername?username=" + username)
         .then(resp => {
             if (resp.status === 404) {
-                throw new Error();
+                document.getElementById("users_ratings").innerHTML = '<h3>Ratings:</h3> <p style="font-size:small; color:var(--lightpurple)">No ratings yet.</p>'
+                return [];
             } else {
                 return resp.json();
             }
@@ -146,6 +171,21 @@ function fillInUserRatings(username) {
     })
 }
 
+function createUserWtsBox(film) {
+        user_wts_html =  '<div class="rating_result">'
+
+        if (username_page !== logged_in_username) {
+            user_wts_html = user_wts_html +
+                '<div class="buttons_wrapper_semitop">' +
+                '<button class= "wts_button" id="wts_button_'+ film.id + '" type="button" onclick="addToWantToSee(logged_in_username,\'' + film.id + '\');">TO SEE</button>' +
+                '</div>';
+        }
+
+        user_wts_html = user_wts_html + createFilmAndRatingBox(film);
+
+        return user_wts_html;
+}
+
 function createUserRatingBox(rating) {
     film = rating.film;
 
@@ -157,12 +197,17 @@ function createUserRatingBox(rating) {
     if (rating.user.username !== logged_in_username) {
         user_rating_html = user_rating_html +
             '<div class="buttons_wrapper_semitop">' +
-            '<button id="wts_button" type="button" onclick="addToWantToSee(logged_in_username,\'' + film.id + '\');">TO SEE</button>' +
+            '<button class= "wts_button" id="wts_button_'+ rating.film.id + '" type="button" onclick="addToWantToSee(logged_in_username,\'' + film.id + '\');">TO SEE</button>' +
             '</div>';
     }
 
-    user_rating_html = user_rating_html +
-        '<img src="' + film.posterUrl + '">' +
+    user_rating_html = user_rating_html + createFilmAndRatingBox(film);
+
+    return user_rating_html;
+}
+
+function createFilmAndRatingBox(film) {
+    html = '<img src="' + film.posterUrl + '">' +
 
         '<div class="buttons_wrapper_bottom">' +
         '<button id="general_rating_button" type="button" onclick="createRatePopup(logged_in_username,\'' + film.id + '\');">RATE</button> ' +
@@ -171,7 +216,7 @@ function createUserRatingBox(rating) {
         '<p><a href="' + film_url + film.id + '">' + film.title + '<span style="color:var(--lightpurple);font-size:11px"> <br> (' + film.releaseYear + ')</a></span></p>' +
         '</div>'
 
-    return user_rating_html;
+    return html;
 }
 
 function check_page_user() {

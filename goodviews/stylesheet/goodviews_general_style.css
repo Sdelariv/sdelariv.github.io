@@ -422,7 +422,7 @@ h3, h2, h1, h4, p, a, ul {
     bottom:10px;
 }
 
-#general_rating_button, #general_wts_button, #wts_button {
+#general_rating_button, .general_wts_button, .wts_button {
     margin:auto;
     text-align:center;
     width:35%;
@@ -433,10 +433,22 @@ h3, h2, h1, h4, p, a, ul {
     text-shadow: 1px 1px 5px black;
     letter-spacing:2px;
     padding: 5px 0;
+    border: solid var(--filmwrapper-purple);
 }
 
-#general_rating_button:hover, #general_wts_button:hover, #wts_button:hover {
+#general_rating_button:hover, .general_wts_button:hover, .wts_button:hover {
     background-color: var(--pink-purple);
+    border: solid var(--pink-purple);
+    border-left:groove var(--filmwrapper-purple);
+    border-right:groove var(--filmwrapper-purple);
+    cursor:pointer;
+}
+
+#general_rating_button:focus, .general_wts_button:focus, .wts_button:focus {
+    background-color: var(--pink-purple);
+    border: solid var(--pink-purple);
+    border-top:solid var(--filmwrapper-purple);
+    border-left:solid var(--filmwrapper-purple);
     cursor:pointer;
 }
 
@@ -887,7 +899,9 @@ body ::-webkit-scrollbar {
     display:inline-block;
 }
 
-
+#users_wts {
+    border-top: solid 3px var(--filmwrapper-purple);
+}
 
 #users_ratings {
     border-top: solid 3px var(--filmwrapper-purple);
@@ -906,7 +920,7 @@ body ::-webkit-scrollbar {
     display:inline-block;
     margin:0;
     padding:10px;
-    height:240px;
+    height:260px;
     overflow:hidden;
 }
 
