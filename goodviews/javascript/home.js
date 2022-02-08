@@ -8,5 +8,5 @@ function loadHomePage() {
         fillInLatestRatings();
         updateNotifications();
         fillInFriendRequests();
-
 }
+

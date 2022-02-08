@@ -563,11 +563,12 @@ function createCommentsString(commentList) {
 
 function fillInFriendList() {
     friendlist_html = '';
-    document.getElementById("friend_list_bar").innerHTML = '';
+    document.getElementById("friend_list_bar").innerHTML = '/';
 
     fetch(server_url + "/friendship/" + logged_in_username + "/friendlist")
         .then(resp => resp.json())
         .then(friends => {
+            console.log("hello");
 
             friends.forEach(friend => {
 

@@ -94,11 +94,19 @@ function requestFriendship() {
 }
 
 function fillInTheirFriends(username) {
+    if (logged_in_username === username) {
+        document.getElementById("their_friendlist").innerHTML = '';
+        return;
+    }
+
     their_friendlist_html = '';
-    document.getElementById("friend_list_bar").innerHTML = '';
+
 
     fetch(server_url + "/friendship/" + username + "/friendlist")
-        .then(resp => resp.json())
+        .then(resp => {
+            if (resp.status === 200) return resp.json()
+            else    document.getElementById("their_friend_list_bar").innerHTML = '/';
+        })
         .then(friends => {
             friends.forEach(friend => {
                         their_friendlist_html = their_friendlist_html + '<p> &#9642; <a href="' + user_url + friend.username + '">' + friend.username + '</a></p>'
@@ -106,6 +114,8 @@ function fillInTheirFriends(username) {
             })
         }).catch((error) =>{
     })
+
+
 }
 
 function fillInUserRatings(username) {
