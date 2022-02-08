@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Goodviews - Create Account </title>
+
+  <link rel="stylesheet" href="stylesheet/goodviews_general_style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Pathway+Gothic+One&display=swap" rel="stylesheet">
+  <link href='https://css.gg/search.css' rel='stylesheet'>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+<body>
+
+
+
+
+<div class="login_wrapper">
+
+  <div class="logo">
+    <p style="font-size:small; margin-bottom:0;">Welcome to </p>
+    <span style="color:#c09dd5">GOOD</span><span style="font-weight:bold">VIEWS</span>
+  </div>
+
+  <div class="login_box"><p>
+    <p>CREATE ACCOUNT</p>
+    <div class="login_box">
+      <div class="create_account_box">
+        <p>
+          <label   for="new_username_input" >&nbsp;Username: </label>
+          <input id="new_username_input" type="text" name="username" placeholder="Type a username..." required>
+          <br>
+          <label   for="new_last_name_input">First name: </label>
+          <input id="new_first_name_input" type="text" name="username" placeholder="Type a first name..." >
+          <br>
+          <label   for="new_last_name_input">Last name: </label>
+          <input id="new_last_name_input" type="text" name="username" placeholder="Type a last name..." >
+          <br>
+          <label for="new_password_input_1" >&nbsp;Password: </label>
+          <input id="new_password_input_1" type="password" name="password" placeholder="Type a password..." required>
+          <br>
+          <label for="new_password_input_2">&nbsp;&nbsp;&nbsp;&nbsp;Confirm:</label>
+          <input id="new_password_input_2" type="password" name="password" placeholder="Type that password again..." required>
+        </p>
+        <button onclick="tryAccountCreation()">CREATE ACCOUNT</button>
+        <button onclick="location.href='login.html'">GO TO LOGIN</button>
+        <p id="create_account_response"></p>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<footer class="footer" id="login_footer">
+  <p>@2022 by Sven Delarivi&egrave;re</p>
+</footer>
+
+</body>
+
+
+
+<script src="javascript/goodviews_javascript.js">
+</script>
+<script src="javascript/accountcreation.js">
+</script>
+
+</html>

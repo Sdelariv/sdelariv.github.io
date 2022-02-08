@@ -798,7 +798,7 @@ body ::-webkit-scrollbar {
     right:0;
     bottom:0;
     background-color: var(--background);
-    padding:10%;
+    padding:8%;
     max-height:86%;
     text-align:center;
     background-image: url("/img/gvbackground.jpg");
@@ -810,8 +810,9 @@ body ::-webkit-scrollbar {
 
 .login_box {
     display:block;
-    width:100%;
+    width:50%;
     overflow:hidden;
+    margin:auto;
 }
 
 .login_wrapper .logo {
@@ -853,7 +854,7 @@ body ::-webkit-scrollbar {
     cursor:pointer;
 }
 
-#login_response {
+#login_response, #create_account_response {
     margin-top:30px;
     color:grey;
 }
@@ -951,4 +952,20 @@ body ::-webkit-scrollbar {
     position:relative;
     margin-bottom:-30px;
     z-index:9;
+}
+
+/** LOGIN **/
+
+#new_password_input_1, #new_password_input_2, #new_username_input,
+#new_first_name_input, #new_last_name_input {
+    width:140px;
+    margin-left:15px;
+    margin-bottom:15px;
+    background-color: #cbb9d2;
+    color:black;
+    font-size:16px;
+}
+
+.create_account_box {
+    text-align:center;
 }
