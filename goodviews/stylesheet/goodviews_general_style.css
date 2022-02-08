@@ -956,8 +956,7 @@ body ::-webkit-scrollbar {
 
 /** LOGIN **/
 
-#new_password_input_1, #new_password_input_2, #new_username_input,
-#new_first_name_input, #new_last_name_input {
+#new_password_input_1, #new_password_input_2, #new_username_input, #new_first_name_input, #new_last_name_input {
     width:140px;
     margin-left:15px;
     margin-bottom:15px;
