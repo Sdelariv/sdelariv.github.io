@@ -127,11 +127,11 @@ function fillInUserWantToSees(username) {
         .then(resp => resp.json())
         .then(wantToSees => {
             if (wantToSees.length === 0)    {
-                document.getElementById("users_wts").innerHTML = '<h3>Want-to-sees:</h3> <p style="font-size:small; color:var(--lightpurple)">No want-to-sees yet.</p>'
+                document.getElementById("users_wts").innerHTML = '<h3>Wants to see:</h3> <p style="font-size:small; color:var(--lightpurple)">No want-to-sees yet.</p>'
                 document.getElementById("number_of_wts").innerHTML = counter;
             }
 
-            wts_html ='<h3>Want-to-sees:</h3>';
+            wts_html ='<h3>Wants to see:</h3>';
 
             wantToSees.forEach(wts => {
                 wts_html = wts_html + createUserWtsBox(wts.film);
