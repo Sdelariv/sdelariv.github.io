@@ -177,6 +177,7 @@ function fillInNotifications() {
         })
 }
 
+
 function createNotificationString(notification, comment_notification) {
     html = ''
 
@@ -231,6 +232,20 @@ function displayNotifications() {
         document.getElementById("messages_wrapper").style.display='none';
         updateNotificationsAsSeen();
     }
+}
+
+//TODO: use
+function fillInAllNotifications() {
+    fetch(server_url + "/notifications/findNotifications?username=" + logged_in_username)
+        .then( resp => resp.json() )
+        .then( notifications => {
+            var notification_html = '';
+            notifications.forEach(notification => {
+                notification_html = notification_html + createNotificationString(notification, previous_comment_notification)
+            })
+
+            document.getElementById("notification_wrapper").innerHTML =  notification_html
+        })
 }
 
 function displayFriendrequests() {

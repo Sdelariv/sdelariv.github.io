@@ -123,7 +123,7 @@ function fillInUserResults(users) {
     html ='';
 
     users.forEach(user => {
-        html = html + '<p> &#9642; <a class=" href="' + user_url + user.username + '">' + user.username + '</a> </p>'
+        html = html + '<p> &#9642; <a class="color_pink-purple" href="' + user_url + user.username + '">' + user.username + '</a> </p>'
         document.getElementsByClassName("search_results")[0].innerHTML = html;
     })
 

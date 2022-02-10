@@ -11,7 +11,6 @@ function loadUserPage() {
 
     fillInUserPage(check_page_user())
 
-
 }
 
 function fillInUserPage(username_page) {
@@ -93,6 +92,8 @@ function requestFriendship() {
     }).catch((error) =>{
     })
 }
+
+
 
 function fillInTheirFriends(username) {
     if (logged_in_username === username) {
