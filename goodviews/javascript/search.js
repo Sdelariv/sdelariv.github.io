@@ -1,6 +1,8 @@
 check_login(loadSearchPage);
 
+
 function loadSearchPage() {
+    checkGivenSearch();
     fillInUsername();
     updateNotifications();
     fillInFriendRequests();
@@ -29,6 +31,8 @@ function performSearch() {
 }
 
 function searchFilmsByPartialTitle(partialTitle) {
+    document.getElementsByClassName("search_results")[0].innerHTML = '<p>Loading results...</p>'
+
     fetch(server_url + "/film/findByPartialTitle?partialTitle=" + partialTitle)
         .then( resp => {
             if (resp.status === 404) {
@@ -42,6 +46,8 @@ function searchFilmsByPartialTitle(partialTitle) {
 }
 
 function searchFilmsByCrew(partialCrewName) {
+    document.getElementsByClassName("search_results")[0].innerHTML = '<p>Loading results...</p>'
+
     fetch(server_url + "/film/findByPersonName?name=" + partialCrewName)
         .then( resp => {
             if (resp.status === 404) {
@@ -55,6 +61,8 @@ function searchFilmsByCrew(partialCrewName) {
 }
 
 function searchFilmsByTag(tag) {
+    document.getElementsByClassName("search_results")[0].innerHTML = '<p>Loading results...</p>'
+
     fetch(server_url + "/film/findByTag?tagName=" + tag)
         .then( resp => {
             if (resp.status === 404) {
@@ -68,6 +76,8 @@ function searchFilmsByTag(tag) {
 }
 
 function searchFilmsByGenre(genre) {
+    document.getElementsByClassName("search_results")[0].innerHTML = '<p>Loading results...</p>'
+
     fetch(server_url + "/film/findByGenre?genreName=" + genre)
         .then( resp => {
             if (resp.status === 404) {
@@ -81,6 +91,8 @@ function searchFilmsByGenre(genre) {
 }
 
 function searchUsersByPartialName(partialName) {
+    document.getElementsByClassName("search_results")[0].innerHTML = '<p>Loading results...</p>'
+
     fetch(server_url + "/user/findByPartialUsername?username=" + partialName)
         .then( resp => {
             if (resp.status === 404) {
@@ -133,4 +145,21 @@ function createFilmResultBox(film) {
         '</div>'
 
     return html;
+}
+
+function checkGivenSearch() {
+
+    if (queryString.includes("crewname=")) {
+        var crew_name = getParameterByName("crewname");
+        searchFilmsByCrew(crew_name);
+    }
+    if (queryString.includes("tag=")) {
+        var tag = getParameterByName("tag");
+        searchFilmsByTag(tag);
+    }
+    if (queryString.includes("genre=")) {
+        var genre = getParameterByName("genre");
+        searchFilmsByGenre(genre);
+    }
+
 }

@@ -5,7 +5,6 @@ var logged_in_username = '';
 var friendlist_html = '';
 var ratingid_list = [];
 const queryString = window.location.search;
-console.log(queryString);
 
 const server_url = "http://localhost:8080";
 const website_path = "/goodviews/";
@@ -446,10 +445,10 @@ function createFilmInfo(film, userWantsToSee, userHasRated) {
         '                            <img src="' + film.posterUrl + '">\n' +
         '                        </div>\n' +
         '                        <h4 style="font-size:25px"><a href="' + film_url + film.id + '">' + film.title + ' <span style="font-size:small">(' + film.releaseYear + ')</a></span></h4>\n' +
-        '                        <p style="margin-top:-25px; color:var(--pink-purple)"> <i>' + getNamesString(film.genres) + '.</i></p>' +
+        '                        <p style="margin-top:-25px; color:var(--pink-purple)"> <i>' + getNamesString(film.genres, 'genre') + '.</i></p>' +
         createRateAndWtsButtons(userWantsToSee, userHasRated, film) +
-        '                        <p> Directed by <i>' + getNamesString(film.director) + '.</i></p>' +
-        '                        <p> Written by <i>' + getNamesString(film.writer) + '.</i></p>'
+        '                        <p> Directed by <i>' + getNamesString(film.director, 'crewname') + '.</i></p>' +
+        '                        <p> Written by <i>' + getNamesString(film.writer, 'crewname') + '.</i></p>'
 
     return html;
 }
@@ -468,7 +467,7 @@ function createRateAndWtsButtons(userWantsToSee, userHasRated, film) {
 
     if (!userWantsToSee && userHasRated === -1) {
         button_html = button_html +
-            '<button id="wts_button_' + filmId + '" type="button" onclick="addToWantToSee(logged_in_username,\'' + filmId+ '\');">WANT TO SEE</button>';
+            '<button id="wts_button_' + filmId + '" type="button" onclick="addToWantToSee(logged_in_username,\'' + filmId+ '\');">TO SEE</button>';
     }
 
     return button_html;
@@ -511,17 +510,19 @@ function getUsernames(users) {
     return usernames.slice(0, -2) ;
 }
 
-function getNamesString(object) {
+function getNamesString(object, type) {
     var counter = 0;
     var string = '';
+
     object.forEach(o => {
-        if (counter < 3) string = string + o.name + ", "
+        if (counter < 3) string = string + '<a href="search.html?' + type + '=' + o.name + '">' + o.name + "</a>, "
         if (counter === 3) string = string + "etc..."
         counter = counter + 1;
     })
 
     return string.slice(0,-2);
 }
+
 
 
 function createCommentHTML(commentList, ratingId) {
@@ -609,9 +610,9 @@ function fillInLatestRatings() {
 
                 var title = rating.film.title;
                 var releaseYear = rating.film.releaseYear;
-                var directors = getNamesString(rating.film.director);
+                var directors = getNamesString(rating.film.director, 'crewname');
                 var posterUrl = rating.film.posterUrl;
-                var genres = getNamesString(rating.film.genres);
+                var genres = getNamesString(rating.film.genres, 'genre');
                 var average = rating.film.averageRating;
 
                 document.getElementById("new_rating_poster_" + counter).setAttribute("src",posterUrl);
@@ -656,9 +657,9 @@ function fillInWantToSees() {
 
                 title = wts.film.title;
                 releaseYear = wts.film.releaseYear;
-                directors = getNamesString(wts.film.director);
+                directors = getNamesString(wts.film.director, 'crewname');
                 posterUrl = wts.film.posterUrl;
-                genres = getNamesString(wts.film.genres);
+                genres = getNamesString(wts.film.genres, 'genre');
 
 
                 document.getElementById("wts_title_" + counter).innerHTML = '<a href="' + film_url + wts.film.id + '">' + title + '<span style="font-size:small"> (' + releaseYear + ')</a></span>'
@@ -701,10 +702,12 @@ function addToWantToSee(username,filmId) {
         },
         body: JSON.stringify(data)
     }).then(resp => {
+        if (resp.status === 200) return resp.json()
+    }).then(wts => {
+        console.log(wts);
         fillInWantToSees();
-        document.getElementById("wts_button_" + filmId).style.opacity = "0";
-        document.getElementById("wts_button_" + filmId).style.cursor = "default";
-        document.getElementById("wts_button_" + filmId).onclick = '';
+        document.getElementById("wts_button_" + filmId).innerHTML = 'Remove'
+        document.getElementById("wts_button_" + filmId).onclick = 'deleteFromWts(' + logged_in_username + ',\'' + wtsId + '\',\'' + filmId + '\')';
     })
 }
 
@@ -776,7 +779,7 @@ function createFilmRatingInfo(rating) {
         '        </div>' +
         '        <div class="rate_info"">\n' +
         '                        <h4 style="font-size:25px"> <a href="' + film_url + film.id + '">' + film.title + ' <span style="font-size:small">(' + film.releaseYear + ')</a></span></h4>\n' +
-        '                        <ul style="margin-top:-25px">' + film.runTime + 'min  <i style="color:var(--pink-purple)">' + getNamesString(film.genres) + '. </i></ul>';
+        '                        <ul style="margin-top:-25px">' + film.runTime + 'min  <i style="color:var(--pink-purple)">' + getNamesString(film.genres, 'genre') + '. </i></ul>';
 
     // RATING
     // Your rating
@@ -808,15 +811,15 @@ function createFilmRatingInfo(rating) {
 
 
     html = html +
-        '                        <ul> Directed by <i>' + getNamesString(film.director) + '.</i></ul>' +
-        '                        <ul> Written by <i>' + getNamesString(film.writer) +
+        '                        <ul> Directed by <i>' + getNamesString(film.director, 'crewname') + '.</i></ul>' +
+        '                        <ul> Written by <i>' + getNamesString(film.writer, 'crewname') +
         '        </div>';
 
 
     // ADD Tags
     if (film.tags.length > 0) {
         html = html +
-            '<ul style="color:var(--lightpurple)"> TAGS:' + getNamesString(film.tags); + '</ul>';
+            '<ul style="color:var(--lightpurple)"> TAGS:' + getNamesString(film.tags, 'tag'); + '</ul>';
 
     }
 
@@ -844,7 +847,7 @@ function deleteFromWts(username, wtsId, filmId) {
         fillInWantToSees();
         var update = document.getElementById("wts_button_" + filmId);
         if (update !== null) {
-            update.innerHTML = 'WANT TO SEE';
+            update.innerHTML = 'TO SEE';
         }
     })
 
