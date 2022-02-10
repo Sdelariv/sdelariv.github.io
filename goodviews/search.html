@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Goodviews - Search</title>
+
+    <link rel="stylesheet" href="stylesheet/goodviews_general_style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Pathway+Gothic+One&display=swap" rel="stylesheet">
+    <link href='https://css.gg/search.css' rel='stylesheet'>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+
+<body>
+
+<div class="topnavwrapper">
+    <div class="topnavzone">
+        <div class="logged_in">
+            <p><span  id="username_top">Username</br></span><span id="logout" style="color:#c09dd5" onclick="logout()">LOG OUT</span></p>
+        </div>
+
+        <div class="notifications">
+            <div tabindex="0" id="notifications_icon" onclick="displayNotifications()"></div>
+            <div id="notification_wrapper">
+                <p>No new notifications</p>
+            </div>
+
+            <div tabindex="0" id="friendrequest_icon" onclick="displayFriendrequests()"></div>
+            <div id="friendrequests_wrapper">
+                <p>No new friendrequests</p>
+            </div>
+
+            <div tabindex="0" id="messages_icon" onclick="displayMessages()"></div>
+            <div id="messages_wrapper">
+                <p>No new messages</p>
+            </div>
+
+        </div>
+
+        <div class="searchbar">
+            <input id="search_inputter" type="text" name="month" autocomplete="false" aria-autocomplete="none" placeholder="Quick search by title.." >
+            <button type="submit" onclick="createSearchPopup()"><i class="gg-search"></i></button>
+        </div>
+
+        <div class="logo" autofocus>
+            <span style="color:#c09dd5">GOOD</span><span style="font-weight:bold">VIEWS</span>
+        </div>
+
+        <div class="topnav">
+            <a href="home.html"> HOME </a>
+            <a id="myfilms" href="user.html"> MY FILMS </a>
+            <a href="search.html"> FIND </a>
+        </div>
+
+    </div>
+</div>
+
+
+
+<div id="pop_up_wrapper">
+
+</div>
+
+
+<div class="centerwrapper">
+
+    <div class="small-content-left">
+
+    </div>
+
+    <div class="broad-content-center">
+        <h2>SEARCH:</h2>
+        <div class="search_options">
+
+        <input id="adv_search_inputter" type="text" name="month" autocomplete="false" aria-autocomplete="none" placeholder="Search query here..." >
+        <button type="submit" onclick="performSearch()"><i class="gg-search"></i></button>
+
+            <br>
+
+            <input type="radio" name="search_type" id="title_choice" value="title" checked>
+            <label for="title_choice">Film Title</label>
+
+            <input type="radio" name="search_type" id="crew_choice" value="crew">
+            <label for="crew_choice">Writer/Director</label>
+
+            <input type="radio" name="search_type" id="tag_choice" value="tag">
+            <label for="tag_choice">Tag</label>
+
+            <input type="radio" name="search_type" id="genre_choice" value="genre">
+            <label for="genre_choice">Genre</label>
+
+            <input type="radio" name="search_type" id="user_choice" value="user">
+            <label for="user_choice">User</label>
+        </div>
+
+        <div class="search_results">
+
+        </div>
+
+    </div>
+
+    <div class="content-right">
+
+        <h2> WANT TO SEE </h2>
+
+        <div class="wts_1">
+            <p id="wts_present">Nothing in Want-To-See list yet.</p>
+            <div id="delete_wts_1"></div>
+            <div class="poster_wts">
+                <img id="wts_poster_1" src="">
+                <p id="seenbutton_1"></p>
+            </div>
+            <h4 id="wts_title_1"></h4>
+            <p id="wts_releaseYear_1"></p>
+            <p class="genres" id="wts_genres_1"></p>
+            <p id="wts_director_1"></p>
+        </div>
+
+        <div class="wts_2">
+            <div id="delete_wts_2"></div>
+            <div class="poster_wts">
+                <img id="wts_poster_2" src="">
+                <p id="seenbutton_2"></p>
+            </div>
+            <h4 id="wts_title_2"></h4>
+            <p id="wts_releaseYear_2"></p>
+            <p class="genres" id="wts_genres_2"></p>
+            <p id="wts_director_2"></p>
+        </div>
+
+        <div class="wts_3">
+            <div id="delete_wts_3"></div>
+            <div class="poster_wts">
+                <img id="wts_poster_3" src="">
+                <p id="seenbutton_3"></p>
+            </div>
+            <h4 id="wts_title_3"></h4>
+            <p id="wts_releaseYear_3"></p>
+            <p class="genres" id="wts_genres_3"></p>
+            <p id="wts_director_3"></p>
+        </div>
+
+        <p id="see_more_button"></p>
+        <br>
+
+    </div>
+</div>
+
+
+</body>
+
+<footer class="footer">
+    <p>@2022 by Sven Delarivi&egrave;re</p>
+</footer>
+
+<script src="javascript/goodviews_javascript.js"></script>
+<script src="javascript/search.js"></script>
+
+</html>

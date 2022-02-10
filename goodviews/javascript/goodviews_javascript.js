@@ -669,7 +669,7 @@ function fillInWantToSees() {
                 document.getElementById("delete_wts_" + counter).innerHTML = createDeleteWTSButton(wts.id, wts.film.id);
             }
             if (counter > 3) {
-                document.getElementById("see_more_button").innerHTML = '<b><a href="">SEE MORE</a></b>' // TODO: Fill in link to see more of wts's
+                document.getElementById("see_more_button").innerHTML = '<b><a href="user.html">SEE MORE</a></b>' // TODO: Fill in link to see more of wts's
             }
         })
         })}
