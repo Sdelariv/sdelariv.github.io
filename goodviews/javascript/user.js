@@ -88,7 +88,6 @@ function requestFriendship() {
             'Accept': 'application/json',
         }
     }).then(resp => {
-        console.log(resp)
         updateFriendRequestedButton();
     }).catch((error) =>{
     })

@@ -13,7 +13,6 @@ function loadFilmPage() {
 
 
 function fillInFilm(filmId) {
-    console.log('going to fill in for ' + filmId);
 
     fetch(server_url + "/film/findFilmAndRatingsByIdAndForUser?filmId=" + filmId)
         .then( resp => {
@@ -23,7 +22,6 @@ function fillInFilm(filmId) {
             else return resp.json();
         })
         .then( filmInfoDTO => {
-            console.log(filmInfoDTO);
             film_poster_box_html = createFilmPosterBoxHtml(filmInfoDTO);
             film_info_box_html = createFilmInfoBoxHtml(filmInfoDTO);
             document.getElementsByClassName("content-left")[0].innerHTML = film_poster_box_html;
@@ -94,7 +92,6 @@ function createFilmInfoBoxHtml(filmInfoDTO) {
 
 function createUserRatingsList(ratings) {
     html = '';
-    console.log(ratings);
 
     ratings.forEach(rating => {
         html = html + '<ul style="color:var(--lightpurple)">' + getRatingString(rating.ratingValue) + ' <a class="color_pink-purple" href="' + user_url + rating.user.username+ '">' + rating.user.username + '</a> <span style="font-size:x-small">' + createTimeStamp(rating.dateOfRating) + '</span></ul>'

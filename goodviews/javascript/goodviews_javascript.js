@@ -94,8 +94,6 @@ function fetch_updates() {
 function tryLogin() {
     var username = document.getElementById("username_input").value;
     var password = document.getElementById("password_input").value;
-    console.log('trying to log in ' + username + ' with password ' + password);
-    var success = false;
 
     var user = {
         "username":username,
@@ -759,7 +757,6 @@ function createRatePopup(username, filmId) {
     fetch(server_url + "/rating/currentRatingStatus?username=" + username + "&filmId=" + filmId)
         .then( resp => resp.json() )
         .then( rating => {
-            console.log(rating);
             pop_up_html = '<div id="pop_up_rating_window">';
 
             pop_up_html = pop_up_html + createFilmRatingInfo(rating);
@@ -1014,13 +1011,11 @@ function updateWTSButton(film) {
 
     fetch(server_url + "/wantToSee/findByUsernameAndFilmId?username=" + logged_in_username + "&filmId=" + film.id)
         .then(resp => {
-            console.log(resp);
             if (resp.status === 200) return resp.json()
             if (resp.status === 404) return null;
         })
         .then(wtsId => {
             if (wtsId !== null) {
-                console.log('wtsId = ' + wtsId);
                 var wts_button = document.getElementById("wts_button_" + film.id);
                 if (wts_button !== null) {
                     document.getElementById("wts_button_" + film.id).innerHTML = "Remove";
