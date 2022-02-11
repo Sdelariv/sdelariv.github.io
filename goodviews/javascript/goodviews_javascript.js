@@ -7,11 +7,8 @@ var ratingid_list = [];
 const queryString = window.location.search;
 
 const server_url = "http://localhost:8080";
-const website_path = "/goodviews/";
 const film_url = "film.html?filmId=";
 const user_url = "user.html?username=";
-const search_url = "search.html";
-const search_by_crew_url = "search.html?crewId="
 const notifications_url = "";
 const rating_url = "rating.html?ratingId=";
 const home_url = "/home.html"
@@ -33,7 +30,6 @@ function check_login(loadPage) {
                 console.log('this user hasn\'t logged in yet');
                 window.location.href="login.html";
             } else if (!resp.ok) {
-                console.log('no worky');
                 window.location.href="login.html";
             }
             else {
