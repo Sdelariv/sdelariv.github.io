@@ -54,9 +54,11 @@ function createFilmInfoBoxHtml(filmInfoDTO) {
 
 
     html = html + '<div class="film_info">'
+    html = html + '<h2>' + film.title + ' <span style="font-size:small">'
+    if (film.translatedTitle !== null) html = html + '<span style="color:var(--lightpurple)">' + film.translatedTitle + '</span>'
+    html = html + ' (' + film.releaseYear + ')</a></span></h2>'
+    html = html + ' <ul style="margin-top:-15px"><span class="color_pink-purple">' + film.runTime + 'min </span> <i style="color:var(--pink-purple)">' + getNamesString(film.genres, 'genre') + '. </i></ul>'
 
-    html = html + '<h2>' + film.title + ' <span style="font-size:small">(' + film.releaseYear + ')</a></span></h2>' +
-        '                        <ul style="margin-top:-15px"><span class="color_pink-purple">' + film.runTime + 'min </span> <i style="color:var(--pink-purple)">' + getNamesString(film.genres, 'genre') + '. </i></ul>'
 
     if (wtsId === null && user_rating === null) {
         html = html + createWTSButtonHTML(film.id);
