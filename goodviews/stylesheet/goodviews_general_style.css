@@ -567,7 +567,7 @@ h3, h2, h1, h4, p, a, ul {
     color:var(--pink-purple);
 }
 
-.update button {
+.update button, .film_info button {
     font-family:'Pathway Gothic One', Arial, sans-serif;
     color:white;
     background-color:var(--filmwrapper-purple);
@@ -576,11 +576,11 @@ h3, h2, h1, h4, p, a, ul {
     padding:0;
 }
 
-.update button:hover {
+.update button:hover, .film_info button:hover {
     background-color:var(--pink-purple);
 }
 
-.update button:active {
+.update button:active, .film_info button:active {
     border-top: solid 1px var(--lightpurple);
     border-left: solid 1px var(--lightpurple);
 }
@@ -1009,4 +1009,43 @@ input[type="radio"] {
 input[type="radio"] {
     accent-color: purple;
 
+}
+
+/** FILM  */
+
+.content-center-and-right {
+    margin-top:15px;
+    width: 68%;
+    min-height:600px;
+    float:left;
+}
+
+.content-center-and-right ul {
+    margin-left:0;
+    padding-left:0;
+}
+
+.user_ratings ul{
+    margin-bottom:0;
+    margin-top:6px;
+}
+
+
+#big_poster_box {
+    margin-right:0px;
+    padding-right:0px;
+    margin-top:25px;
+    overflow:hidden;
+}
+
+#big_poster_box img {
+    margin-right:0px;
+    padding:0;
+    width:200px;
+    float:right;
+}
+
+.film_info {
+    min-height: 290px;
+    border-bottom: solid var(--filmwrapper-purple)
 }

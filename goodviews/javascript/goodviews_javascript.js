@@ -19,6 +19,7 @@ const home_url = "/home.html"
 
 function check_login(loadPage) {
     console.log('check_login called');
+    document.getElementsByClassName("footer")[0].style.position = "absolute";
 
     if (logged_in_username !== '') {
         console.log('hardcoded login');
@@ -477,8 +478,7 @@ function createRateAndWtsButtons(userWantsToSee, userHasRated, film) {
     }
 
     if (!userWantsToSee && userHasRated === -1) {
-        button_html = button_html +
-            '<button id="wts_button_' + filmId + '" type="button" onclick="addToWantToSee(logged_in_username,\'' + filmId+ '\');">TO SEE</button>';
+        button_html = button_html + createWTSButtonHTML(film.id);
     }
 
     return button_html;
@@ -718,13 +718,26 @@ function addToWantToSee(username,filmId) {
         console.log(wts);
         fillInWantToSees();
         document.getElementById("wts_button_" + filmId).innerHTML = 'Remove'
-        document.getElementById("wts_button_" + filmId).onclick = 'deleteFromWts(' + logged_in_username + ',\'' + wtsId + '\',\'' + filmId + '\')';
+        console.log('deleteFromWts("' + logged_in_username + '",\'' + wts.id + '\',\'' + filmId + '\')')
+        document.getElementById("wts_button_" + filmId).setAttribute("onclick", 'deleteFromWts(\'' + logged_in_username + '\',\'' + wts.id + '\',\'' + filmId + '\')');
     })
 }
+
+function createWTSButtonHTML(filmId) {
+    return '<button id="wts_button_' + filmId + '" type="button" onclick="addToWantToSee(logged_in_username,\'' + filmId + '\');">TO SEE</button>';
+}
+
 
 function createDeleteWTSButton(wtsId, filmId) {
     var delete_button_html = '' +
         '<button id="wts_button_' + wtsId + '" class="delete_wts_button" type="button" title="Remove from Want-To-See\'s" onclick="deleteFromWts(logged_in_username,\'' + wtsId + '\',\'' + filmId + '\');"><p>X</p></button>';
+
+    return delete_button_html;
+}
+
+function createRemoveWTSButton(wtsId, filmId, message) {
+    var delete_button_html = '' +
+        '<button id="wts_button_' + wtsId + '" class="delete_wts_button" type="button" title="Remove from Want-To-See\'s" onclick="deleteFromWts(logged_in_username,\'' + wtsId + '\',\'' + filmId + '\');"><p>'+ message + '</p></button>';
 
     return delete_button_html;
 }
@@ -746,6 +759,7 @@ function createRatePopup(username, filmId) {
     fetch(server_url + "/rating/currentRatingStatus?username=" + username + "&filmId=" + filmId)
         .then( resp => resp.json() )
         .then( rating => {
+            console.log(rating);
             pop_up_html = '<div id="pop_up_rating_window">';
 
             pop_up_html = pop_up_html + createFilmRatingInfo(rating);
@@ -794,31 +808,7 @@ function createFilmRatingInfo(rating) {
 
     // RATING
     // Your rating
-    if (rating.ratingValue != null) html = html +          '<ul class="your_current_rating">YOUR RATING: <span id="dynamic_rating_value">' + getRatingString(rating.ratingValue) + '</span>'
-    else {
-        html = html + '<ul class="your_future_rating"> RATE: <span id="dynamic_rating_value">' + getRatingString(0) + '</span>'
-    }
-    html = html +  '<select id="future_rating" onchange="updateRatingBasedOnSelect()"> ' +
-        '<option value="100">10</option> ' +
-        '<option value="90">9</option> ' +
-        '<option value="80">8</option> ' +
-        '<option value="70">7</option> ' +
-        '<option value="60">6</option> ' +
-        '<option value="50">5</option> ' +
-        '<option value="40">4</option> ' +
-        '<option value="30">3</option> ' +
-        '<option value="20">2</option> ' +
-        '<option value="10">1</option> ' +
-        '<option value="0">0</option> ' +
-        '</select>  <input id="submit_rating_button" type="submit" value="RATE" onclick="submitRating(\'' + film.id + '\',\'' + rating.user.username +'\')"></ul>'
-
-
-    html = html + '<div class="rating_box"><ul style="font-size:12px;">'
-    // Average Rating
-    if (film.averageRating !== null) html = html + '| Avg: ' + getRatingString(film.averageRating) + ' '
-    if (film.averageRatingImdb !== null) html = html + '| Avg (IMDB): ' + (film.averageRatingImdb / 10) + '/10 '
-
-    html = html + '|</ul></div>'
+    html = html + createYourRating(rating, rating.film);
 
 
     html = html +
@@ -839,11 +829,45 @@ function createFilmRatingInfo(rating) {
     return html;
 }
 
+function createYourRating(rating, film) {
+    html = '';
+
+    if (rating !== null && rating.ratingValue !== null) html = html +          '<ul class="your_current_rating">YOUR RATING: <span id="dynamic_rating_value">' + getRatingString(rating.ratingValue) + '</span>'
+    else {
+        html = html + '<ul class="your_future_rating"> RATE: <span id="dynamic_rating_value">' + getRatingString(0) + '</span>'
+    }
+    html = html +  '<select id="future_rating" onchange="updateRatingBasedOnSelect()"> ' +
+        '<option value="100">10</option> ' +
+        '<option value="90">9</option> ' +
+        '<option value="80">8</option> ' +
+        '<option value="70">7</option> ' +
+        '<option value="60">6</option> ' +
+        '<option value="50">5</option> ' +
+        '<option value="40">4</option> ' +
+        '<option value="30">3</option> ' +
+        '<option value="20">2</option> ' +
+        '<option value="10">1</option> ' +
+        '<option value="0">0</option> ' +
+        '</select>  <input id="submit_rating_button" type="submit" value="RATE" onclick="submitRating(\'' + film.id + '\',\'' + logged_in_username +'\')"></ul>'
+
+
+    html = html + '<div class="rating_box"><ul style="font-size:12px;">'
+    // Average Rating
+    if (film.averageRating !== null) html = html + '| Avg: ' + getRatingString(film.averageRating) + ' '
+    if (film.averageRatingImdb !== null) html = html + '| Avg (IMDB): ' + (film.averageRatingImdb / 10) + '/10 '
+
+    html = html + '|</ul></div>'
+
+    return html;
+}
+
 function closePopup() {
     document.getElementById("pop_up_wrapper").innerHTML = '';
 }
 
 function deleteFromWts(username, wtsId, filmId) {
+    console.log('deleting wts with id ' + wtsId);
+
     var data = {
         "id": wtsId
     }
@@ -859,6 +883,12 @@ function deleteFromWts(username, wtsId, filmId) {
         var update = document.getElementById("wts_button_" + filmId);
         if (update !== null) {
             update.innerHTML = 'TO SEE';
+            update.setAttribute("onclick",'addToWantToSee(\'' + logged_in_username + '\',\'' + filmId + '\')')
+        }
+        update = document.getElementById("wts_button_" + wtsId);
+        if (update !== null) {
+            update.innerHTML = 'TO SEE';
+            update.setAttribute("onclick",'addToWantToSee(\'' + logged_in_username + '\',\'' + filmId + '\')')
         }
     })
 
@@ -960,8 +990,11 @@ function createSearchResults(films) {
 
                 '<div class="buttons_wrapper_top">' +
                     '<button class="general_wts_button" id="wts_button_' + film.id + '" type="button" onclick="addToWantToSee(logged_in_username,\'' + film.id + '\');">TO SEE</button>' +
-                 '</div>' +
+                 '</div>'
 
+        updateWTSButton(film);
+
+        html = html +
             '<img src="' + film.posterUrl + '">' +
 
                 '<div class="buttons_wrapper_bottom">' +
@@ -974,6 +1007,28 @@ function createSearchResults(films) {
     })
 
     return html;
+}
+
+function updateWTSButton(film) {
+    filmId = film.id
+
+    fetch(server_url + "/wantToSee/findByUsernameAndFilmId?username=" + logged_in_username + "&filmId=" + film.id)
+        .then(resp => {
+            console.log(resp);
+            if (resp.status === 200) return resp.json()
+            if (resp.status === 404) return null;
+        })
+        .then(wtsId => {
+            if (wtsId !== null) {
+                console.log('wtsId = ' + wtsId);
+                var wts_button = document.getElementById("wts_button_" + film.id);
+                if (wts_button !== null) {
+                    document.getElementById("wts_button_" + film.id).innerHTML = "Remove";
+                    document.getElementById("wts_button_" + film.id).setAttribute("onclick","deleteFromWts('" + logged_in_username + "','" + wtsId + "','" + filmId + "');");
+
+                }
+             }
+        })
 }
 
 

@@ -10,6 +10,7 @@ function loadUserPage() {
     updateNotifications();
 
     fillInUserPage(check_page_user())
+    document.getElementsByClassName("footer")[0].style.position = "relative";
 
 }
 

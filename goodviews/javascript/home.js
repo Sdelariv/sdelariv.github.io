@@ -8,5 +8,6 @@ function loadHomePage() {
         fillInLatestRatings();
         updateNotifications();
         fillInFriendRequests();
+        document.getElementsByClassName("footer")[0].style.position = "relative";
 }
 

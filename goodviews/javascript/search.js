@@ -7,6 +7,7 @@ function loadSearchPage() {
     updateNotifications();
     fillInFriendRequests();
     fillInWantToSees();
+    document.getElementsByClassName("footer")[0].style.position = "relative";
 }
 
 function performSearch() {
@@ -134,6 +135,8 @@ function createFilmResultBox(film) {
     html =                 '<div class="buttons_wrapper_semitop">' +
         '<button class= "wts_button" id="wts_button_'+ film.id + '" type="button" onclick="addToWantToSee(logged_in_username,\'' + film.id + '\');">TO SEE</button>' +
         '</div>';
+
+    updateWTSButton(film);
 
     html = html + '<img src="' + film.posterUrl + '">' +
 
