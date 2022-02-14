@@ -657,7 +657,7 @@ h3, h2, h1, h4, p, a, ul {
     left: 50%;
     transform: translate(-51%, -50%);
     width: 530px;
-    height:370px;
+    height:420px;
     background: var(--rating);
     border: solid 5px var(--lightpurple);
     z-index: 99;

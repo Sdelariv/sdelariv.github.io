@@ -113,6 +113,7 @@ function fillInFilmResults(films) {
         html = html + '<div class=rating_result>'
         html = html + createFilmResultBox(film);
         html = html + '</div>'
+        updateWTSButton(film);
 
         document.getElementsByClassName("search_results")[0].innerHTML = html;
     })

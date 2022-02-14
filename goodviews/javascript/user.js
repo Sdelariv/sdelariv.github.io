@@ -139,6 +139,7 @@ function fillInUserWantToSees(username) {
                 counter++
                 document.getElementById("users_wts").innerHTML = wts_html;
                 document.getElementById("number_of_wts").innerHTML = counter;
+                updateWTSButton(wts.film);
             })
         })
 }
@@ -167,6 +168,7 @@ function fillInUserRatings(username) {
                 document.getElementById("users_ratings").innerHTML = user_html;
                 counter++
                 document.getElementById("number_of_ratings").innerHTML = counter;
+                updateWTSButton(rating.film);
             })
         }).catch((error) =>{
     })
@@ -175,12 +177,10 @@ function fillInUserRatings(username) {
 function createUserWtsBox(film) {
         user_wts_html =  '<div class="rating_result">'
 
-        if (username_page !== logged_in_username) {
             user_wts_html = user_wts_html +
                 '<div class="buttons_wrapper_semitop">' +
                 '<button class= "wts_button" id="wts_button_'+ film.id + '" type="button" onclick="addToWantToSee(logged_in_username,\'' + film.id + '\');">TO SEE</button>' +
                 '</div>';
-        }
 
         user_wts_html = user_wts_html + createFilmAndRatingBox(film);
 
