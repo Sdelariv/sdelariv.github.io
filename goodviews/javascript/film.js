@@ -59,19 +59,7 @@ function createFilmInfoBoxHtml(filmInfoDTO) {
     html = html + ' (' + film.releaseYear + ')</a></span></h2>'
     html = html + ' <ul style="margin-top:-15px"><span class="color_pink-purple">' + film.runTime + 'min </span> <i style="color:var(--pink-purple)">' + getNamesString(film.genres, 'genre') + '. </i></ul>'
 
-
-    if (wtsId === null && user_rating === null) {
-        html = html + createWTSButtonHTML(film.id);
-    }
-        // TODO: make function of creating the button that also calls a fetch afterwards that changes what's been made, if need be
-    if (wtsId !== null && user_rating === null) {
-        html = html + createRemoveWTSButton(wtsId,film.id, "No interest");
-    }
-
-
-    html = html +  createYourRating(user_rating, film)
-
-
+    html = html +  createYourRating(user_rating, film, true)
 
     html = html +
         ' <p> Directed by <i>' + getNamesString(film.director, 'crewname') + '.</i></p>' +
@@ -82,6 +70,16 @@ function createFilmInfoBoxHtml(filmInfoDTO) {
             '<ul style="color:var(--lightpurple)"> TAGS:' + getNamesString(film.tags, 'tag'); + '</ul>';
 
     }
+
+
+    if (wtsId === null && user_rating === null) {
+        html = html + createWTSButtonHTML(film.id);
+    }
+    // TODO: make function of creating the button that also calls a fetch afterwards that changes what's been made, if need be
+    if (wtsId !== null && user_rating === null) {
+        html = html + createRemoveWTSButton(wtsId,film.id, "No interest");
+    }
+
 
     html = html + '</div>'
 

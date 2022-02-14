@@ -292,7 +292,7 @@ function createFriendRequestString(notification) {
 
     html = html + '<a href="' + user_url + notification.friendRequest.friendA.username + '">' + notification.friendRequest.friendA.username + '</a> wants to be friends with you </p>';
 
-    html = html + '<p><a onclick="acceptFriendship(\'' + notification.id + '\')">ACCEPT</a> | <a onclick="denyFriendship(\'' + notification.id + '\')"> DECLINE </u></p>'
+    html = html + '<p><a onclick="acceptFriendship(\'' + notification.friendRequest.id + '\')">ACCEPT</a> | <a onclick="denyFriendship(\'' + notification.friendRequest.id + '\')"> DECLINE </u></p>'
 
     return html
 }
@@ -317,13 +317,12 @@ function denyFriendship(friendId) {
     console.log('denying ' + friendId);
 
     fetch(server_url + "/friendship/denyFriendRequest?friendshipRequestId=" + friendId,  {
-        method: 'POST',
+        method: 'DELETE',
         headers: {
             'Accept': 'application/json',
-            'Content-Type': 'application/json'
         }})
         .then(resp => {
-            if (resp.status === 200) console.log('Friend accepted');
+            if (resp.status === 200) console.log('Friendship denied');
             updateNotifications();
         })
 }
@@ -572,8 +571,11 @@ function createCommentsString(commentList) {
 
 
 function fillInFriendList() {
+    friendlist_element = document.getElementById("friend_list_bar");
+    if (friendlist_element === null) return
+
     friendlist_html = '';
-    document.getElementById("friend_list_bar").innerHTML = '<p>No friends yet</p>';
+    friendlist_element.innerHTML = '<p>No friends yet</p>';
 
     fetch(server_url + "/friendship/" + logged_in_username + "/friendlist")
         .then(resp => resp.json())
@@ -770,7 +772,7 @@ function createRatePopup(username, filmId) {
 }
 
 function createDeleteRatingButton(rating) {
-    html = '<button id="delete_rating" lass="delete_rating_button" type="button" title="Delete this rating" onclick="deleteRating(\'' + rating.id + '\')">DELETE RATING</button>';
+    html = '<button id="delete_rating" class="delete_rating_button" type="button" title="Delete this rating" onclick="deleteRating(\'' + rating.id + '\')">DELETE RATING</button>';
 
     return html;
 }
@@ -783,6 +785,10 @@ function deleteRating(ratingId) {
         }
     }).then(resp => {
         fillInWantToSees();
+        var pop_up_wrapper = document.getElementById("pop_up_wrapper").innerHTML;
+        if (pop_up_wrapper === '') {
+            fillInFilm(check_page_film());
+        }
         closePopup();
 
     })
@@ -805,7 +811,7 @@ function createFilmRatingInfo(rating) {
 
     // RATING
     // Your rating
-    html = html + createYourRating(rating, rating.film);
+    html = html + createYourRating(rating, rating.film, false);
 
 
     html = html +
@@ -826,14 +832,20 @@ function createFilmRatingInfo(rating) {
     return html;
 }
 
-function createYourRating(rating, film) {
+function createYourRating(rating, film, addDelete) {
     html = '';
 
-    if (rating !== null && rating.ratingValue !== null) html = html +          '<ul class="your_current_rating">YOUR RATING: <span id="dynamic_rating_value">' + getRatingString(rating.ratingValue) + '</span>'
-    else {
+    if (rating !== null && rating.ratingValue !== null) {
+        html = html +          '<ul class="your_current_rating"><span style="font-size:small">YOUR RATING: </span><span id="dynamic_rating_value">' + getRatingString(rating.ratingValue) + '</span>'
+        if (addDelete) {
+            html = html +   '<button type="button" title="Delete this rating" onclick="deleteRating(\'' + rating.id + '\')">DELETE RATING</button>'
+        }
+    } else {
         html = html + '<ul class="your_future_rating"> RATE: <span id="dynamic_rating_value">' + getRatingString(0) + '</span>'
     }
+
     html = html +  '<select id="future_rating" onchange="updateRatingBasedOnSelect()"> ' +
+        '<option value="-1">rate</option> ' +
         '<option value="100">10</option> ' +
         '<option value="90">9</option> ' +
         '<option value="80">8</option> ' +
@@ -846,6 +858,8 @@ function createYourRating(rating, film) {
         '<option value="10">1</option> ' +
         '<option value="0">0</option> ' +
         '</select>  <input id="submit_rating_button" type="submit" value="RATE" onclick="submitRating(\'' + film.id + '\',\'' + logged_in_username +'\')"></ul>'
+
+
 
 
     html = html + '<div class="rating_box"><ul style="font-size:12px;">'
@@ -907,6 +921,10 @@ function submitRating(filmId, username) {
     var item = document.getElementById("future_rating");
     var rating_value= item.options[item.selectedIndex].value;
 
+    if (rating_value < 0) {
+        return;
+    }
+
     var rating = {
         "ratingValue": rating_value,
         "film": {
@@ -925,7 +943,13 @@ function submitRating(filmId, username) {
         },
         body: JSON.stringify(rating)
     }).then(resp => {
-        createRatePopup(username,filmId);
+        var pop_up_wrapper = document.getElementById("pop_up_wrapper").innerHTML;
+        if (pop_up_wrapper === '') {
+            fillInFilm(check_page_film());
+        } else {
+            createRatePopup(username,filmId);
+        }
+
     })
 
 }

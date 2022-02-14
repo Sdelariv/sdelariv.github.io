@@ -609,7 +609,7 @@ h3, h2, h1, h4, p, a, ul {
     background:none;
     font-size:17px;
     color: white;
-    width:87%;
+    width:100%;
 }
 
 
@@ -662,6 +662,7 @@ h3, h2, h1, h4, p, a, ul {
     z-index: 99;
     overflow:hidden;
     box-shadow: 0 0px 50px black;
+
 }
 
 #pop_up_rating_window p {
@@ -718,7 +719,7 @@ h3, h2, h1, h4, p, a, ul {
 
 .rating_wrapper, .search_wrapper {
     margin:20px;
-    margin-right:10px;
+    margin-right:0px;
     margin-top:10px;
     height:90%;
     overflow-y:scroll;
@@ -739,7 +740,7 @@ h3, h2, h1, h4, p, a, ul {
 
 .rate_info {
     text-align:left;
-    width:54%;
+    width:55%;
     float:left;
     overflow:hidden;
 }
