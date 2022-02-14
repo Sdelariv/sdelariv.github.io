@@ -198,7 +198,7 @@ a {
     color:white;
 }
 
-input {
+input, textarea {
     margin-top:10px;
     padding-top:5px;
     padding-bottom:5px;
@@ -209,6 +209,7 @@ input {
     font-size:18px;
     padding-left:5px;
     width:80%;
+    resize:none;
 }
 
 button {
@@ -231,7 +232,7 @@ button:active {
     border-left: solid var(--lightpurple);
 }
 
-input:focus {
+input:focus, textarea:focus {
     outline: solid #c09dd5;
 }
 
@@ -500,7 +501,7 @@ h3, h2, h1, h4, p, a, ul {
     width:80px;
     padding:0;
     position:absolute;
-    bottom:15px;
+    bottom:25px;
     right:10px;
     letter-spacing:1px;
 }
@@ -597,6 +598,7 @@ h3, h2, h1, h4, p, a, ul {
 
 .your_current_rating {
     cursor:text;
+    margin-bottom:0;
 }
 
 .your_rating:hover {
@@ -605,7 +607,6 @@ h3, h2, h1, h4, p, a, ul {
  }
 
 .rating_wrapper .your_rating {
-    margin-bottom:-5px;
     background:none;
     font-size:17px;
     color: white;
@@ -670,6 +671,10 @@ h3, h2, h1, h4, p, a, ul {
 
 }
 
+ textarea {
+    width: 240px;
+}
+
 
 #pop_up_search_window {
     position: fixed;
@@ -721,7 +726,7 @@ h3, h2, h1, h4, p, a, ul {
     margin:20px;
     margin-right:0px;
     margin-top:10px;
-    height:90%;
+    margin-bottom:0px;
     overflow-y:scroll;
     overflow-x:hidden;
 }
@@ -745,9 +750,17 @@ h3, h2, h1, h4, p, a, ul {
     overflow:hidden;
 }
 
+.rate_info h4 {
+    margin-top:20px;
+}
+
 .rate_info ul {
     margin-left:0;
     padding-left:0;
+}
+
+.rating_box {
+    margin-bottom:25px;
 }
 
 .rating_box ul {
@@ -766,6 +779,22 @@ h3, h2, h1, h4, p, a, ul {
 
 #submit_rating_button:hover {
     background: var(--pink-purple);
+}
+
+#submit_review_button {
+    font-size:12px;
+    margin-left:0;
+    cursor:pointer;
+    display:inline;
+    width:40px;
+    color:white;
+    background-color: var(--filmwrapper-purple);
+    text-align:left;
+    padding-left:7px;
+}
+
+#submit_review_button:hover {
+    background-color: var(--pink-purple);
 }
 
 .your_current_rating #dynamic_rating_value {

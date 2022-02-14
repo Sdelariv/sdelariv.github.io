@@ -766,10 +766,76 @@ function createRatePopup(username, filmId) {
 
             if (rating.ratingValue !== null) pop_up_html = pop_up_html + createDeleteRatingButton(rating);
 
-            pop_up_html = pop_up_html + '</div>';
+            hasAlreadyRated = false;
+            if (rating.ratingValue !== null) hasAlreadyRated = true;
+            pop_up_html = pop_up_html + createReviewOption(rating, hasAlreadyRated);
 
             document.getElementById("pop_up_wrapper").innerHTML = pop_up_html;
         });
+}
+
+function createReviewOption(rating, hasAlreadyRated) {
+    html = '';
+
+    html = html + '<div id="add_review_box">' +
+        '        <label for="review_input"><p style="text-align:left; margin-bottom:0px;">REVIEW: <span style="color:grey" id="review_message"></span></p></label>\n' +
+        '        <textarea id="review_input" type="text"  rows="3" name="review" placeholder="(OPTIONAL) Type review..." >'
+
+    if (rating.review !== null) {
+        html = html + rating.review
+    }
+
+        html = html + '</textarea>' +
+        '<button id="submit_review_button" onclick="submitReview(\'' + rating.film.id + '\',' + hasAlreadyRated + ')">SUBMIT</button>' +
+        '</div>'
+    return html;
+}
+
+function submitReview(filmId, hasAlreadyRated) {
+    console.log('submit review called for ' + filmId)
+    var review = document.getElementById("review_input").value;
+    var item = document.getElementById("future_rating");
+    var rating_value= item.options[item.selectedIndex].value;
+
+    if (rating_value < 0 && hasAlreadyRated !== true) {
+        document.getElementById("review_message").innerHTML = "You need to give a rating"
+        return
+    }
+
+    if (review === '') {
+        submitRating(filmId, logged_in_username,null);
+    }
+
+    if (rating_value < 0 && hasAlreadyRated === true) {
+
+        var rating = {
+            "review":review,
+            "film": {
+                "id":filmId
+            },
+            "user": {
+                "username":logged_in_username
+            }
+        };
+
+        fetch(server_url + "/rating/addReview", {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(rating)
+        }).then(resp => {
+            var pop_up_wrapper = document.getElementById("pop_up_wrapper").innerHTML;
+            if (pop_up_wrapper === '') {
+                fillInFilm(check_page_film());
+            } else {
+                createRatePopup(logged_in_username,filmId);
+            }
+
+        })
+    }
+
 }
 
 function createDeleteRatingButton(rating) {
@@ -814,20 +880,6 @@ function createFilmRatingInfo(rating) {
     // Your rating
     html = html + createYourRating(rating, rating.film, false);
 
-
-    html = html +
-        '                        <ul> Directed by <i>' + getNamesString(film.director, 'crewname') + '.</i></ul>' +
-        '                        <ul> Written by <i>' + getNamesString(film.writer, 'crewname') +
-        '        </div>';
-
-
-    // ADD Tags
-    if (film.tags.length > 0) {
-        html = html +
-            '<ul style="color:var(--lightpurple)"> TAGS:' + getNamesString(film.tags, 'tag'); + '</ul>';
-
-    }
-
      html = html +  '</div>'
 
     return html;
@@ -858,7 +910,7 @@ function createYourRating(rating, film, addDelete) {
         '<option value="20">2</option> ' +
         '<option value="10">1</option> ' +
         '<option value="0">0</option> ' +
-        '</select>  <input id="submit_rating_button" type="submit" value="RATE" onclick="submitRating(\'' + film.id + '\',\'' + logged_in_username +'\')"></ul>'
+        '</select>  <input id="submit_rating_button" type="submit" value="RATE" onclick="submitRating(\'' + film.id + '\',\'' + logged_in_username +'\',null)"></ul>'
 
 
 
@@ -917,7 +969,7 @@ function updateRatingBasedOnSelect() {
     document.getElementById("dynamic_rating_value").innerHTML = getRatingString(itemvalue);
 }
 
-function submitRating(filmId, username) {
+function submitRating(filmId, username, review) {
     console.log('updating rating for ' + username + ' of ' + filmId);
     var item = document.getElementById("future_rating");
     var rating_value= item.options[item.selectedIndex].value;
@@ -928,6 +980,7 @@ function submitRating(filmId, username) {
 
     var rating = {
         "ratingValue": rating_value,
+        "review":review,
         "film": {
             "id":filmId
         },
