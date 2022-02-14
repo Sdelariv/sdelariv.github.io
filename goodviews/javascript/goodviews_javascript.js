@@ -67,6 +67,7 @@ function fetch_updates() {
             if (logUpdates.length === 0) document.getElementsByClassName("content-center")[0].innerHTML = '<p style="text-align:center">No updates yet.</p>'
 
             logUpdates.forEach( logUpdate => {
+                console.log(logUpdate);
 
                 if (logUpdate.type === 'FRIENDS') {
                     wall_html = wall_html + createFriendHTML(logUpdate);
