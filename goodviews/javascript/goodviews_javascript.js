@@ -503,7 +503,7 @@ function getRatingString(ratingValue) {
     if (ratingValue >= 90) ratingString = star + star + star + star + half_star;
     if (ratingValue > 99) ratingString = star + star + star + star + star;
 
-    return ratingString;
+    return '<span class="stars">' + ratingString + '</span>';
 }
 
 function getUsernames(users) {
@@ -725,7 +725,7 @@ function addToWantToSee(username,filmId) {
 }
 
 function createWTSButtonHTML(filmId) {
-    return '<button id="wts_button_' + filmId + '" type="button" onclick="addToWantToSee(logged_in_username,\'' + filmId + '\');">TO SEE</button>';
+    return '<button id="wts_button_' + filmId + '" class="wts_button" type="button" onclick="addToWantToSee(logged_in_username,\'' + filmId + '\');">TO SEE</button>';
 }
 
 

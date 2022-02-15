@@ -225,6 +225,7 @@ button {
 button:hover {
     background-color:black;
     cursor:pointer;
+    letter-spacing:1px;
 }
 
 button:active {
@@ -330,6 +331,11 @@ body {
 }
 
 /*CONTENT*/
+
+.stars {
+    display:inline-block;
+    margin-top:0px;
+}
 
 .update, .comments {
     border-top:solid 15px var(--filmwrapper-purple);
@@ -480,17 +486,20 @@ h3, h2, h1, h4, p, a, ul {
 
 
 
-#rate, #wts {
+#rate, #wts, #review {
     text-decoration:none;
     border: solid #1f182a;
     border-top: none;
     padding:5px;
     background-color:#1f182a;
+    font-family:'Pathway Gothic One', Arial, sans-serif;
+    letter-spacing:1px;
+
 }
 
 
 
-#rate:hover, #wts:hover {
+#rate:hover, #wts:hover, #review:hover {
     cursor:pointer;
     background-color: var(--pink-purple);
 }
@@ -777,6 +786,7 @@ h3, h2, h1, h4, p, a, ul {
     margin-left:0;
     cursor:pointer;
     text-align:left;
+    letter-spacing:1px;
 }
 
 #submit_rating_button:hover {
@@ -791,10 +801,11 @@ h3, h2, h1, h4, p, a, ul {
     color:white;
     background-color: var(--filmwrapper-purple);
     text-align:left;
-    padding-left:7px;
+    padding-left:4px;
     position:absolute;
     bottom:20px;
     left:240px;
+    letter-spacing:1px;
 
 }
 
@@ -1083,4 +1094,26 @@ input[type="radio"] {
 .film_info {
     min-height: 290px;
     border-bottom: solid var(--filmwrapper-purple)
+}
+
+
+#review {
+    height:20px;
+    font-size:12px;
+    padding-left:15px;
+    padding-right:15px;
+    padding-top:0;
+    padding-bottom:0;
+    margin-left:10px;
+    text-align:center;
+    background-color: var(--filmwrapper-purple);
+    font-family:'Pathway Gothic One', Arial, sans-serif;
+    color:white;
+    text-shadow: 1px 1px 5px black;
+    letter-spacing:2px;
+    border: solid var(--filmwrapper-purple);
+}
+
+#review:hover {
+    border: solid var(--pink-purple);
 }

@@ -76,15 +76,16 @@ function createFilmInfoBoxHtml(filmInfoDTO) {
         html = html + createWTSButtonHTML(film.id);
     }
     if (wtsId !== null && user_rating.id === null) {
-        html = html + createRemoveWTSButton(wtsId,film.id, "No interest");
+        html = html + createRemoveWTSButton(wtsId,film.id, "Undo to-see");
     }
 
-
+    html = html + '<span id="review" onclick="createRatePopup(logged_in_username,\'' + film.id + '\');">REVIEW</span><br>'
     html = html + '</div>'
 
     html = html + '<div class="user_ratings">' +
         '<p>USER RATINGS:</p>' + createUserRatingsList(ratings) +
         '</div>'
+
 
     return html;
 }
