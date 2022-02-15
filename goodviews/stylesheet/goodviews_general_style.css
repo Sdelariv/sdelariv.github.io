@@ -687,6 +687,7 @@ h3, h2, h1, h4, p, a, ul {
     border: solid 5px var(--lightpurple);
     z-index: 99;
     overflow:hidden;
+    padding-right:0;
     box-shadow: 0 0px 50px black;
 }
 
@@ -727,8 +728,9 @@ h3, h2, h1, h4, p, a, ul {
     margin-right:0px;
     margin-top:10px;
     margin-bottom:0px;
-    overflow-y:scroll;
+    height:600px;
     overflow-x:hidden;
+    overflow-y:scroll;
 }
 
 .rate_heading, .search_heading {
@@ -785,12 +787,15 @@ h3, h2, h1, h4, p, a, ul {
     font-size:12px;
     margin-left:0;
     cursor:pointer;
-    display:inline;
     width:40px;
     color:white;
     background-color: var(--filmwrapper-purple);
     text-align:left;
     padding-left:7px;
+    position:absolute;
+    bottom:20px;
+    left:240px;
+
 }
 
 #submit_review_button:hover {

@@ -766,16 +766,16 @@ function createRatePopup(username, filmId) {
 
             if (rating.ratingValue !== null) pop_up_html = pop_up_html + createDeleteRatingButton(rating);
 
-            hasAlreadyRated = false;
-            if (rating.ratingValue !== null) hasAlreadyRated = true;
-            pop_up_html = pop_up_html + createReviewOption(rating, hasAlreadyRated);
+            pop_up_html = pop_up_html + createReviewOption(rating);
 
             document.getElementById("pop_up_wrapper").innerHTML = pop_up_html;
         });
 }
 
-function createReviewOption(rating, hasAlreadyRated) {
+function createReviewOption(rating) {
     html = '';
+    hasAlreadyRated = false;
+    if (rating.ratingValue !== null) hasAlreadyRated = true;
 
     html = html + '<div id="add_review_box">' +
         '        <label for="review_input"><p style="text-align:left; margin-bottom:0px;">REVIEW: <span style="color:grey" id="review_message"></span></p></label>\n' +

@@ -51,7 +51,7 @@ function createFilmInfoBoxHtml(filmInfoDTO) {
 
     html ='';
 
-
+    console.log(filmInfoDTO)
 
     html = html + '<div class="film_info">'
     html = html + '<h2>' + film.title + ' <span style="font-size:small">'
@@ -72,11 +72,10 @@ function createFilmInfoBoxHtml(filmInfoDTO) {
     }
 
 
-    if (wtsId === null && user_rating === null) {
+    if (wtsId === null && user_rating.id === null) {
         html = html + createWTSButtonHTML(film.id);
     }
-    // TODO: make function of creating the button that also calls a fetch afterwards that changes what's been made, if need be
-    if (wtsId !== null && user_rating === null) {
+    if (wtsId !== null && user_rating.id === null) {
         html = html + createRemoveWTSButton(wtsId,film.id, "No interest");
     }
 
