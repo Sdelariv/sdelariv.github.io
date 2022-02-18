@@ -637,7 +637,7 @@ function fillInLatestRatings() {
     fetch(server_url + "/rating/latestRatings")
         .then( resp => resp.json() )
         .then( ratings => { ratings.forEach( rating => {
-            console.log("FETCHING LATEST RATINGS")
+            console.log("Fetching latest ratings")
             counter = counter + 1;
 
             if (counter < 4) {
@@ -659,16 +659,6 @@ function fillInLatestRatings() {
         })
         })}
 
-function hideNewlyRated() {
-    for (counter = 1; counter <= 3; counter++) {
-        document.getElementById("new_rating_poster_" + counter).setAttribute("src",'');
-        document.getElementById("new_rating_director_" + counter).innerHTML = '';
-        document.getElementById("new_rating_genres_" + counter).innerHTML = '';
-        document.getElementById("new_rating_button_" + counter).innerHTML = '';
-        document.getElementById("new_rating_title_" + counter).innerHTML =  '';
-        document.getElementById("new_rating_average_" + counter).innerHTML = ''
-    }
-}
 
 function fillInWantToSees() {
     var wts_1 = document.getElementsByClassName("wts_1");
