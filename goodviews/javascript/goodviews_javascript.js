@@ -158,6 +158,7 @@ function fillInNotificationCount() {
 }
 
 function fillInNotifications() {
+
     fetch(server_url + "/notifications/findTenNotifications?username=" + logged_in_username)
         .then( resp => resp.json() )
         .then( notifications => {
@@ -165,9 +166,27 @@ function fillInNotifications() {
             previous_comment_notification = [];
             notifications.forEach(notification => {
                 notification_html = notification_html + createNotificationString(notification, previous_comment_notification)
+
             })
 
-            notification_html = notification_html + '<a href="' + notifications_url + '" style="color:black;font-size:small;text-shadow: none;text-decoration:none"> SEE MORE NOTIFICATIONS </a><br> <br>'
+            if (notification_html !== '') notification_html = notification_html + '<span id="notification_number_button" style="color:black;font-size:small;text-shadow: none;text-decoration:none" onclick="fillInAllNotifications()"> SEE MORE NOTIFICATIONS </span><br> <br>'
+
+            document.getElementById("notification_wrapper").innerHTML =  notification_html
+        })
+}
+
+function fillInAllNotifications() {
+    fetch(server_url + "/notifications/findNotifications?username=" + logged_in_username)
+        .then( resp => resp.json() )
+        .then( notifications => {
+            var notification_html = '';
+            previous_comment_notification = [];
+            notifications.forEach(notification => {
+                console.log(notification)
+                notification_html = notification_html + createNotificationString(notification, previous_comment_notification)
+            })
+
+            notification_html = notification_html + '<span style="color:black;font-size:small;text-shadow: none;text-decoration:none" onclick="fillInNotifications()"> SEE FEWER NOTIFICATIONS </span><br> <br>'
 
             document.getElementById("notification_wrapper").innerHTML =  notification_html
         })
@@ -911,8 +930,6 @@ function createYourRating(rating, film, addDelete) {
         '<option value="10">1</option> ' +
         '<option value="0">0</option> ' +
         '</select>  <input id="submit_rating_button" type="submit" value="RATE" onclick="submitRating(\'' + film.id + '\',\'' + logged_in_username +'\',null)"></ul>'
-
-
 
 
     html = html + '<div class="rating_box"><ul style="font-size:12px;">'

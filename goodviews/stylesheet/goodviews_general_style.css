@@ -237,6 +237,14 @@ input:focus, textarea:focus {
     outline: solid #c09dd5;
 }
 
+#notification_number_button {
+    cursor:pointer;
+    font-family:'Pathway Gothic One', Arial, sans-serif;
+    letter-spacing: 2px;
+}
+
+
+
 /*CENTER WRAPPERS*/
 
 body {
