@@ -170,6 +170,7 @@ function fillInNotifications() {
             })
 
             if (notification_html !== '') notification_html = notification_html + '<span id="notification_number_button" style="color:black;font-size:small;text-shadow: none;text-decoration:none" onclick="fillInAllNotifications()"> SEE MORE NOTIFICATIONS </span><br> <br>'
+            if (notification_html === '') notification_html = notification_html + '<p>No notifications yet</p>'
 
             document.getElementById("notification_wrapper").innerHTML =  notification_html
         })
@@ -296,6 +297,8 @@ function fillInFriendRequests() {
                 console.log(notification);
                 notification_html = notification_html + createFriendRequestString(notification);
             })
+
+            if (notification_html === '') notification_html = notification_html + '<p>No friendrequests yet</p>';
 
             document.getElementById("friendrequests_wrapper").innerHTML =  notification_html
         })
