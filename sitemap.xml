@@ -1,68 +1,98 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset>
+<urlset
+      xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9
+            http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
+
 <url>
   <loc>https://sdelariv.github.io/</loc>
-  <lastmod>2021-10-14T14:34:24+00:00</lastmod>
+  <lastmod>2024-03-15T11:38:53+00:00</lastmod>
   <priority>1.00</priority>
 </url>
 <url>
   <loc>https://sdelariv.github.io/index.html</loc>
-  <lastmod>2021-10-14T14:34:24+00:00</lastmod>
+  <lastmod>2024-03-15T11:38:53+00:00</lastmod>
   <priority>0.80</priority>
 </url>
 <url>
   <loc>https://sdelariv.github.io/contact.html</loc>
-  <lastmod>2021-10-14T14:34:24+00:00</lastmod>
+  <lastmod>2024-03-15T11:38:53+00:00</lastmod>
   <priority>0.80</priority>
 </url>
 <url>
   <loc>https://sdelariv.github.io/academia.html</loc>
-  <lastmod>2021-10-14T14:34:24+00:00</lastmod>
+  <lastmod>2024-03-15T11:38:53+00:00</lastmod>
   <priority>0.80</priority>
 </url>
 <url>
   <loc>https://sdelariv.github.io/art.html</loc>
-  <lastmod>2021-10-14T14:34:24+00:00</lastmod>
+  <lastmod>2024-03-15T11:38:53+00:00</lastmod>
   <priority>0.80</priority>
 </url>
 <url>
   <loc>https://sdelariv.github.io/code.html</loc>
-  <lastmod>2021-10-14T14:34:24+00:00</lastmod>
+  <lastmod>2024-03-15T11:38:53+00:00</lastmod>
   <priority>0.80</priority>
 </url>
 <url>
   <loc>https://sdelariv.github.io/about.html</loc>
-  <lastmod>2021-10-14T14:34:24+00:00</lastmod>
+  <lastmod>2024-03-15T11:38:53+00:00</lastmod>
   <priority>0.80</priority>
 </url>
 <url>
   <loc>https://sdelariv.github.io/pdf/Delariviere%20S%20et%20al%20-%20The%20Mark%20of%20Understanding.pdf</loc>
-  <lastmod>2021-10-14T14:34:24+00:00</lastmod>
+  <lastmod>2024-03-15T11:38:53+00:00</lastmod>
   <priority>0.64</priority>
 </url>
 <url>
   <loc>https://sdelariv.github.io/pdf/Delariviere%20S%20-%20Characterising%20Understanding%20and%20the%20Understanding%20Subject.pdf</loc>
-  <lastmod>2021-10-14T14:34:24+00:00</lastmod>
+  <lastmod>2024-03-15T11:38:53+00:00</lastmod>
   <priority>0.64</priority>
 </url>
 <url>
   <loc>https://sdelariv.github.io/pdf/Delariviere%20S%20-%20Collective%20Understanding.pdf</loc>
-  <lastmod>2021-10-14T14:34:24+00:00</lastmod>
+  <lastmod>2024-03-15T11:38:53+00:00</lastmod>
   <priority>0.64</priority>
 </url>
 <url>
   <loc>https://sdelariv.github.io/pdf/Delariviere%20S%20et%20al%20-%20The%20Artificial%20Mathematician%20Objection.pdf</loc>
-  <lastmod>2021-10-14T14:34:24+00:00</lastmod>
+  <lastmod>2024-03-15T11:38:53+00:00</lastmod>
   <priority>0.64</priority>
 </url>
 <url>
   <loc>https://sdelariv.github.io/pdf/Delariviere%20S%20et%20al%20-%20Mathematical%20Explanation.pdf</loc>
-  <lastmod>2021-10-14T14:34:24+00:00</lastmod>
+  <lastmod>2024-03-15T11:38:53+00:00</lastmod>
   <priority>0.64</priority>
 </url>
 <url>
   <loc>https://sdelariv.github.io/pdf/Delariviere%20S%20-%20Artificial%20Free%20Will.pdf</loc>
-  <lastmod>2021-10-14T14:34:24+00:00</lastmod>
+  <lastmod>2024-03-15T11:38:53+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://sdelariv.github.io/film.html</loc>
+  <lastmod>2024-03-15T11:38:53+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://sdelariv.github.io/theatre.html</loc>
+  <lastmod>2024-03-15T11:38:53+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://sdelariv.github.io/graphic.html</loc>
+  <lastmod>2024-03-15T11:38:53+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://sdelariv.github.io/painting.html</loc>
+  <lastmod>2024-03-15T11:38:53+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://sdelariv.github.io/writing.html</loc>
+  <lastmod>2024-03-15T11:38:53+00:00</lastmod>
   <priority>0.64</priority>
 </url>
 
