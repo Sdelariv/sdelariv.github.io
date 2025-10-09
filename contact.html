@@ -7,7 +7,6 @@
     <meta charset="utf-8">
 	<meta name="keywords" content="Sven, Delariviere, Artist, Coder, Academic, Contact">
 	<meta name="author" content="Sven Delariviere">
-	<link rel="icon" type="image/x-icon" href="favicon.ico">
     <link rel="stylesheet" href="stylesheets/General.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -49,7 +48,7 @@
             position:center;
             width:55%;
             margin-top: 0%;
-            margin-bottom:14%;
+            margin-bottom:5%;
         }
 
         .content {
@@ -136,20 +135,35 @@
 <div class="center">
     <h1>Contact</h1>
     <div class="content">
-        <!--
-        <form action="mailto:sdelariv@gmail.com" method="POST" enctype="text/plain">
-            <label for="name">Name:</label><br>
-            <input type="text" id="name" name="name"><br>
-            <label for="email">Email:</label><br>
-            <input type="email" id="email" name="email"><br>
-            <label for="message">Message:</label><br>
-            <input type="text" id="message" name="message" ><br><br>
-            <input type="submit" value="Submit">
-        </form>
-        -->
-        <p style="text-align:center">I'm flattered.</p><br>
-        <p style="text-align:center;font-size:22px;">Message form coming soon.</p><br>
-        <a style="text-align:center;" href=mailto:sdelariv@gmail.com">Contact me via email</a>
+	
+		<section class="contact-section">
+
+		  <form class="contact-form" action="https://api.web3forms.com/submit" method="POST">
+
+			<input type="hidden" name="access_key" value="8a3d7fa0-777a-494b-9da3-48a16e891f51" />
+			<input type="hidden" name="subject" value="New Contact Form Submission from Web3Forms" />
+			<input type="hidden" name="from_name" value="My Website" />
+			<!-- More custom ization options available in the docs: https://docs.web3forms.com -->
+
+			<div class="form-group-container">
+			  <div class="form-group">
+				<label for="name" class="form-label">Name</label>
+				<input id="name" name="name" class="form-input" placeholder="Your name" type="text" />
+			  </div>
+			  <div class="form-group">
+				<label for="email" class="form-label">Email</label>
+				<input id="email" name="email" class="form-input" placeholder="Your email" type="email" />
+			  </div>
+			  <div class="form-group">
+				<label for="message" class="form-label">Message</label>
+				<textarea class="form-textarea" id="message" name="message" placeholder="Your message"></textarea>
+			  </div>
+			</div>
+			<button class="form-submit" type="submit">Send Message</button>
+		  </form>
+
+		</section>
+
     </div>
 
 </div>
