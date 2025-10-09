@@ -13,6 +13,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Cherish&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Pathway+Gothic+One&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Roboto+Condensed&display=swap" rel="stylesheet">
+	
     <style>
         h1 {
             text-align:center;
@@ -112,7 +113,70 @@
             font-family:Average;
         }
 
+		/** FORM **/
 
+		.contact-section {
+		  width: 100%;
+		  max-width: 40rem;
+		  margin-left: auto;
+		  margin-right: auto;
+		}
+
+		.form-group-container {
+		  display: grid;
+		  gap: 1rem;
+		  margin-top: 2rem;
+		}
+
+		.form-group {
+		  display: flex;
+		  flex-direction: column;
+		}
+
+		.form-label {
+		  font-family: 'Roboto Condensed', Arial, sans-serif;
+		}
+
+		.form-input,
+		.form-textarea {
+		  padding: 0.5rem;
+		  border: 1px solid #e5e7eb;
+		  display: flex;
+		  height: 2.5rem;
+		  width: 84%;
+		  border-radius: 0.375rem;
+		  font-size: 0.875rem;
+		  line-height: 1.25rem;
+		  background:black;
+		   font-family: 'Roboto Condensed', Arial, sans-serif;
+		   
+		}
+
+		.form-input::placeholder,
+		.form-textarea:focus-visible {
+		  color: #6b7280;
+		}
+
+		.form-input:focus-visible,
+		.form-textarea:focus-visible {
+		  outline: 2px solid #2563eb;
+		  outline-offset: 2px;
+		}
+
+		.form-textarea {
+		  min-height: 120px;
+		}
+
+		.form-submit {
+		  width: 86%;
+		  margin-top: 1.2rem;
+		  background-color: orange;
+		  color: #fff;
+		  padding: 13px 5px;
+		  border-radius: 0.375rem;
+		  font-family: 'Roboto Condensed', Arial, sans-serif;
+		  cursor: pointer
+		}
 
     </style>
 </head>
@@ -141,7 +205,7 @@
 		  <form class="contact-form" action="https://api.web3forms.com/submit" method="POST">
 
 			<input type="hidden" name="access_key" value="8a3d7fa0-777a-494b-9da3-48a16e891f51" />
-			<input type="hidden" name="subject" value="New Contact Form Submission from Web3Forms" />
+			<input type="hidden" name="subject" value="New Contact Form Submission from Sdelariv website" />
 			<input type="hidden" name="from_name" value="My Website" />
 			<!-- More custom ization options available in the docs: https://docs.web3forms.com -->
 
