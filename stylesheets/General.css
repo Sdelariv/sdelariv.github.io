@@ -3,6 +3,8 @@
     background-color: black;
     margin-top: 2%;
     text-color:white;
+	width:102%;
+	margin-left:-1%;
 }
 
 .topnav {
@@ -68,3 +70,11 @@
     margin-right: 10px;
     margin-top:2px;
 }
+
+body {
+	overflow-x:hidden;
+	background-repeat: no-repeat;
+}
+
+
+/** **/
