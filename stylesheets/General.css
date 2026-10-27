@@ -44,7 +44,18 @@
     opacity:0.8;
     margin-left:-10px;
     width:100%;
+	position: fixed;
+    bottom: 10vh;
 }
+
+	@media (max-height: 500px) {
+		.footer {
+			position:relative;
+			bottom: 0;
+			max-width: 100%;
+			border-radius: 0; /* Optional: flattens the bar for full-width */
+		}
+	}
 
 .info {
     width:40%;
